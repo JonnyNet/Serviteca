@@ -1,6 +1,7 @@
 package com.clases.controladores;
 
 
+import com.bd.modelos.Campo;
 import com.example.servitek.R;
 
 import android.app.Dialog;
@@ -9,28 +10,23 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
 public class Dialogo extends Dialog{
 
-	
-
 	TableLayout tabla;
 	TableLayout.LayoutParams params;
 	TextView total;
-	String placa;
-	String norden;
+	long norden;
 	TableLayout.LayoutParams layoutFila;
 	Admin_BD bd;
 	int tal = 0;
 	
-	public Dialogo(Context context, String cod, String placao, Admin_BD db) {
-		super(context);
-		setTitle("Detalles "+placao);
-		placa = placao;
+	public Dialogo(Context context, long cod, Admin_BD db) {
+		super(context,R.style.Theme_Dialog_Translucent);
+		setTitle("Detalles Orden No: " + cod);
 		norden = cod;
 		bd = db;
 	}
@@ -45,8 +41,7 @@ public class Dialogo extends Dialog{
 				TableRow.LayoutParams.WRAP_CONTENT,
 				TableRow.LayoutParams.WRAP_CONTENT);
 		
-		fondo.start();
-		
+		fondo.start();	
 	}
 	
 	private  Handler puente = new Handler() {
@@ -59,7 +54,7 @@ public class Dialogo extends Dialog{
 	private Thread fondo = new Thread(new Runnable() {
 		@Override
 		public void run() {
-			Cursor c = bd.GetDetalles((long)Long.valueOf(norden));
+			Cursor c = bd.GetDetalles(norden);
 			Detalles(c);
 		}
 	});

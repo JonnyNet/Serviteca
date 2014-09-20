@@ -1,4 +1,6 @@
-package com.clases.controladores;
+package com.bd.modelos;
+
+import com.clases.controladores.Admin_BD;
 
 import android.content.Context;
 import android.database.Cursor; 
@@ -17,7 +19,6 @@ public class BuscarItem extends CursorAdapter implements Filterable{
 	public BuscarItem(Context context, Cursor c) {
 		super(context, c, 0);
 		dbAdapter = new Admin_BD(context);
-		dbAdapter.Escribir();
 	}
 
 	@Override
@@ -58,6 +59,9 @@ public class BuscarItem extends CursorAdapter implements Filterable{
 		if (constraint != null) {
 			args = constraint.toString();
 		}
-		return dbAdapter.AutoComplete(args);
+		dbAdapter.Leer();
+		Cursor c = dbAdapter.AutoComplete(args);
+		dbAdapter.Cerrar();
+		return c;
 	}
 }

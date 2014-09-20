@@ -5,7 +5,6 @@ import com.bd.modelos.Bdhelper;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
@@ -26,14 +25,15 @@ public class Admin_BD {
 	public static final String sql0 = "CREATE TABLE " + Tabla_Cliente + " ( "
 			+ "Codter varchar primary key not null , "
 			+ "Nomter	Varchar not null, " + "Dirter	Varchar null, "
-			+ "Telter	Varchar null, " + "coddane varchar null, "
-			+ "email	varchar null )";
+			+ "Telter	Varchar null, " + "Coddane varchar null, "
+			+ "Email	varchar null ," + "syncro	Integer  not null, "
+			+ "fecha_ingreso TIMESTAMP NOT NULL DEFAULT current_timestamp )";
 
 	public static final String sql1 = "CREATE TABLE " + Tabla_Movil + " ( "
 			+ "placa  Varchar primary key not null , "
 			+ "Codter	Varchar not null, " + "Codmarca Char not null, "
 			+ "Codcolor Char not null, " + "Modelo	Integer  null, "
-			+ "Codclase Char not null,"
+			+ "Codclase Char not null," + "syncro	Integer  not null, "
 			+ "fecha_ingreso TIMESTAMP NOT NULL DEFAULT current_timestamp )";
 
 	public static final String sql2 = "CREATE TABLE " + Tabla_Tecnicos + " ( "
@@ -67,7 +67,8 @@ public class Admin_BD {
 
 	public static final String sql8 = "CREATE TABLE " + Tabla_Imagen + " ( "
 			+ "placa  Varchar primary key not null , "
-			+ "bitmap BLOB not null)";
+			+ "bitmap1 BLOB not null," + "bitmap2 BLOB not null,"
+			+ "bitmap3 BLOB not null)";
 
 	public static final String sql9 = "CREATE TABLE " + Tabla_Maeorden + " ( "
 			+ "norde Integer primary key autoincrement, "
@@ -82,8 +83,9 @@ public class Admin_BD {
 			+ "placa varchar  not null , " + "norde	Integer not null, "
 			+ "codser char  not null , " + "cantd Integer null , "
 			+ "iva	Integer null, " + "subtal Integer not null, "
-			+ "total Integer not null, " + "estado	char null,"
-			+ "syncro Integer null )";
+			+ "total Integer not null, " + "codtec Varchar not null,"
+			+ "estado	char null," + "syncro Integer null,"
+			+ "fecha  TIMESTAMP NOT NULL DEFAULT current_timestamp)";
 
 	private Bdhelper helper;
 	private SQLiteDatabase bd;
@@ -92,6 +94,7 @@ public class Admin_BD {
 	// constructor de la classe
 	public Admin_BD(Context c) {
 		helper = new Bdhelper(c);
+		bd = helper.getWritableDatabase();
 	}
 
 	// contenedores de valores para el registro del vehiculo y cliente en la
@@ -106,6 +109,7 @@ public class Admin_BD {
 		valores.put("Telter", tel);
 		valores.put("coddane", coddane);
 		valores.put("email", mail);
+		valores.put("syncro", 0);
 		return valores;
 
 	}
@@ -119,6 +123,7 @@ public class Admin_BD {
 		valores.put("Codcolor", color);
 		valores.put("Modelo", modelo);
 		valores.put("Codclase", CodigoNombre("Mov_Clases", tipo));
+		valores.put("syncro", 0);
 		return valores;
 	}
 
@@ -142,11 +147,12 @@ public class Admin_BD {
 
 	public boolean RegistrarVehiculo(String cc, String nombre, String dir,
 			String tel, String coddane, String mail, String placa, int marca,
-			String color, String modelo, int tipo, byte[] image, boolean b) {
+			String color, String modelo, int tipo, byte[] image, byte[] image2,
+			byte[] image3, boolean b) {
 
 		if (b) {
 			long v1 = InsertarMovil(placa, cc, marca, color, modelo, tipo);
-			long v3 = FotoCarro(placa, image);
+			long v3 = FotoCarro(placa, image, image2, image3);
 			long v2 = InsertarCliente(cc, nombre, dir, tel, coddane, mail);
 
 			if (v1 == -1 && v2 == -1 && v3 == -1) {
@@ -163,32 +169,44 @@ public class Admin_BD {
 
 	// query para guardar la foto del vehiculo y recuperarla
 
-	private long FotoCarro(String placa, byte[] image) {
-		return bd.insert(Tabla_Imagen, null, createContentValues(placa, image));
+	private long FotoCarro(String placa, byte[] image, byte[] image2,
+			byte[] image3) {
+		return bd.insert(Tabla_Imagen, null,
+				createContentValues(placa, image, image2, image3));
 	}
 
-	private ContentValues createContentValues(String placa, byte[] image) {
+	private ContentValues createContentValues(String placa, byte[] image,
+			byte[] image2, byte[] image3) {
 		ContentValues cv = new ContentValues();
 		cv.put("placa", placa);
-		cv.put("bitmap", image);
+		cv.put("bitmap1", image);
+		cv.put("bitmap2", image2);
+		cv.put("bitmap3", image3);
 		return cv;
 	}
 
-	public byte[] BuscarImagen(String placa) throws SQLException {
-		Cursor c = bd.query(Tabla_Imagen, new String[] { "rowid", "placa",
-				"bitmap" }, "placa =?", new String[] { placa }, null, null,
-				null);
+	public Cursor BuscarImagen(String placa) {
+		Cursor c = bd.query(Tabla_Imagen, new String[] { "placa", "bitmap1",
+				"bitmap2", "bitmap3" }, "placa =?", new String[] { placa },
+				null, null, null);
 		c.moveToFirst();
-		return c.getBlob(2);
+		return c; // c.getBlob(2);
 	}
 
 	// buscar nombre y id de los servicios, tecnicos, marca, tipo
 
-	private String CodigoNombre(String tabla, int id) {
+	public String CodigoNombre(String tabla, int id) {
 		Cursor c = bd.rawQuery("SELECT * FROM " + tabla + " WHERE _id =?",
 				new String[] { id + "" });
 		c.moveToFirst();
 		return c.getString(1);
+	}
+
+	public String NombreTecnico(int id) {
+		Cursor c = bd.rawQuery("SELECT * FROM Tecnicos WHERE _id =?",
+				new String[] { id + "" });
+		c.moveToFirst();
+		return c.getString(c.getColumnIndexOrThrow("codtec"));
 	}
 
 	public long CodigoId(String tabla, String columna, String codigo) {
@@ -203,10 +221,8 @@ public class Admin_BD {
 	// busqueda de cliente , vehiculo y actuar si no existen
 
 	public Cursor BuscarPlaca(String placa) {
-		String[] columnas = { "rowid", "placa", "Codter", "Codmarca",
-				"Codcolor", "Modelo", "Codclase" };
-		Cursor c = bd.query(Tabla_Movil, columnas, "placa =?",
-				new String[] { placa }, null, null, null);
+		Cursor c = bd.rawQuery("SELECT * FROM Vehiculos WHERE placa =?", new String[]{placa});
+		c.moveToFirst();
 		return c;
 	}
 
@@ -224,6 +240,13 @@ public class Admin_BD {
 	public Cursor Cursor(String id, String columna, String tabla) {
 		Cursor c = bd.rawQuery("SELECT " + id + " AS _id, " + columna
 				+ " FROM " + tabla, null);
+		c.moveToFirst();
+		return c;
+	}
+
+	public Cursor Cursor2(String tabla, String columna, String dato) {
+		Cursor c = bd.rawQuery("SELECT * FROM " + tabla + " WHERE " + columna
+				+ " = " + dato, null);
 		c.moveToFirst();
 		return c;
 	}
@@ -259,8 +282,8 @@ public class Admin_BD {
 	// retorna el precio del servicio requerido por la id
 
 	public Cursor BuscarServicio(String columna, String id) {
-		Cursor c = bd.rawQuery(" SELECT * FROM Servicios WHERE "+ columna+" =? ",
-				new String[] { id });
+		Cursor c = bd.rawQuery(" SELECT * FROM Servicios WHERE " + columna
+				+ " =? ", new String[] { id });
 		c.moveToFirst();
 		return c;
 	}
@@ -280,14 +303,17 @@ public class Admin_BD {
 						" SELECT norde AS _id  FROM Mov_Maeorden WHERE placa =?  AND  estado =? AND fecha  LIKE '"
 								+ fecha + "%' ", new String[] { placa, "A", });
 		if (c.moveToFirst()) {
-			return  c.getLong(0);
+			return c.getLong(0);
 		} else {
 			return -1;
 		}
 	}
-	
+
 	public Cursor GetDetalles(long norde) {
-		return bd.rawQuery("SELECT codser,cantd,iva,subtal,total FROM Mov_Detaorden WHERE norde =?", new String[]{norde+""});		
+		return bd
+				.rawQuery(
+						"SELECT codser,cantd,iva,subtal,total FROM Mov_Detaorden WHERE norde =?",
+						new String[] { norde + "" });
 	}
 
 	public int OrdeneCompra(String placa, int cod, String[] datos) {
@@ -298,7 +324,6 @@ public class Admin_BD {
 					Integer.parseInt(datos[5]), Integer.parseInt(datos[6]));
 			return cod;
 		} else {
-			Log.i("codigo", cod+"");
 			InsertItemDetalle(placa, cod, datos);
 			ActualizarMaestro(cod, Integer.parseInt(datos[4]),
 					Integer.parseInt(datos[5]), Integer.parseInt(datos[6]));
@@ -307,19 +332,22 @@ public class Admin_BD {
 	}
 
 	public long ActualizarMaestro(int cod, int subtal, int iva, int total) {
-		Cursor c = bd.rawQuery("SELECT  subtal, valfact, iva  FROM  Mov_Maeorden   WHERE norde =?", new String[]{cod+""});
+		Cursor c = bd
+				.rawQuery(
+						"SELECT  subtal, valfact, iva  FROM  Mov_Maeorden   WHERE norde =?",
+						new String[] { cod + "" });
 		c.moveToFirst();
-		int ivap = c.getInt(c.getColumnIndexOrThrow("iva"))+iva;
-		int subp = c.getInt(c.getColumnIndexOrThrow("subtal"))+subtal;
-		int talp = c.getInt(c.getColumnIndexOrThrow("valfact"))+total;
-		
-		Log.i("valores de las columnas", ivap +"  "+subp+"  "+talp);
+		int ivap = c.getInt(c.getColumnIndexOrThrow("iva")) + iva;
+		int subp = c.getInt(c.getColumnIndexOrThrow("subtal")) + subtal;
+		int talp = c.getInt(c.getColumnIndexOrThrow("valfact")) + total;
+
+		Log.i("valores de las columnas", ivap + "  " + subp + "  " + talp);
 		ContentValues valores = new ContentValues();
 		valores.put("subtal", subp);
 		valores.put("iva", ivap);
 		valores.put("valfact", talp);
-		
-		bd.update(Tabla_Maeorden, valores ,"norde = "+cod, null);
+
+		bd.update(Tabla_Maeorden, valores, "norde = " + cod, null);
 		return 0;
 	}
 
@@ -357,6 +385,7 @@ public class Admin_BD {
 		d.put("iva", datos[5]);
 		d.put("subtal", datos[4]);
 		d.put("total", datos[6]);
+		d.put("codtec", datos[7]);
 		d.put("estado", "A");
 		d.put("syncro", 0);
 		return d;
@@ -368,10 +397,36 @@ public class Admin_BD {
 		c.getInt(0);
 		return c.getInt(0) + 1;
 	}
-	
-	//
+
+	// ////////////historial 
 	public Cursor BuscarOrdenDia(String fecha) {
-		Cursor c = bd.rawQuery("SELECT norde, placa, estado, syncro FROM Mov_Maeorden  WHERE fecha  LIKE '" + fecha + "%'  ORDER BY estado", null);
+		Cursor c = bd.rawQuery(
+				"SELECT norde AS _id , * FROM Mov_Maeorden  WHERE fecha  LIKE '"+ fecha + "%'  ORDER BY estado", null);
+		return c;
+	}
+
+	public Cursor BuscarPorFecha(String fechai, String fechaf) {
+		Cursor c = bd.rawQuery(
+				"SELECT norde AS _id , * FROM Mov_Maeorden  WHERE fecha  BETWEEN  '"+ fechai + "00:00:00'  AND  '"+ fechaf + "23:59:59'", null);
+		return c;
+	}
+
+	public Cursor BuscarPorTecnico(int id,String fechai, String fechaf ) {
+		String tecnico = NombreTecnico(id);
+		Cursor c = bd.rawQuery(
+				"SELECT norde AS _id , * FROM Mov_Detaorden  WHERE codtec = "+ tecnico +" AND  fecha  BETWEEN  '"+ fechai + "00:00:00'  AND  '"+ fechaf + "23:59:59'", null);
+		return c;
+
+	}
+
+	// /////////////////////////////////////////////////metodos sincronizacion 
+	// SELECT * FROM test WHERE date BETWEEN "11/1/2011" AND "11/8/2011";
+	// norde AS _id ,norde, placa, syncro, fecha AS item
+	// con servidor sql server
+
+	public Cursor SyncroTabla(String tabla) {
+		Cursor c = bd.rawQuery("SELECT * FROM " + tabla + " WHERE syncro = 0",
+				null);
 		return c;
 	}
 

@@ -2,12 +2,7 @@
 
    
     <corners android:radius="25dp" />
-    
-    <gradient 
-        android:startColor="#0054CA"
-        android:centerColor="#0064F0"
-        android:endColor="#4391FE"
-        android:gradientRadius="180"/>
+    <solid android:color="#00000000"/>
     
     <!-- Color y tamaño del borde si les hace falta. -->
     <stroke

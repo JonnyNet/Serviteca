@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/fondo"
+    android:padding="20dp" >
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:contentDescription="@string/logo"
+        android:src="@drawable/logo2" 
+        android:layout_alignParentTop="true"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:background="@drawable/lineas"
+        android:orientation="vertical"
+        android:padding="20dp" 
+        android:layout_centerVertical="true">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/base_de_datos"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/ip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/edittext_select"
+            android:hint="@string/ip_"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/puerto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/edittext_select"
+            android:hint="@string/puerto_"  
+            android:inputType="number"/>
+
+        <EditText
+            android:id="@+id/user"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/edittext_select"
+            android:hint="@string/usuario" 
+            android:inputType="text"/>
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/edittext_select"
+            android:hint="@string/contrase_a" 
+            android:inputType="textPassword"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="end"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/editar"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="@string/editar" 
+                style="@style/MultiGradient"/>
+
+            <Button
+                android:id="@+id/guardar"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="@string/guardar" 
+                style="@style/MultiGradient"/>
+        </LinearLayout>
+    </LinearLayout>
+    
+      <Button
+        android:id="@+id/menu"
+        style="@style/MultiGradient"
+        android:layout_width="279dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/menu" 
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"/>
+
+</RelativeLayout>

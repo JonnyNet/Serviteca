@@ -1,5 +1,6 @@
 package com.clases.controladores;
 
+import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -10,7 +11,11 @@ import java.util.Map;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Bitmap.CompressFormat;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Message;
 import android.view.Gravity;
 import android.widget.TextView;
@@ -126,6 +131,33 @@ public class Util {
 			v.setGravity(Gravity.CENTER);
 		v.setTextColor(Color.rgb(225, 216, 79));
 		toast.show();
+	}
+	
+	////////////////////////////////////////internet
+	
+	public static boolean Internet(Context context) {
+		boolean bConectado = false;
+		ConnectivityManager connec = (ConnectivityManager) context
+				.getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo[] redes = connec.getAllNetworkInfo();
+		for (int i = 0; i < 2; i++) {
+			if (redes[i].getState() == NetworkInfo.State.CONNECTED) {
+				bConectado = true;
+			}
+		}
+		return bConectado;
+	}
+	
+	//////////////////////////////////img
+	
+	public static byte[] GetBytes(Bitmap bitmap) {
+		ByteArrayOutputStream stream = new ByteArrayOutputStream();
+		bitmap.compress(CompressFormat.JPEG, 100, stream);
+		return stream.toByteArray();
+	}
+
+	public static Bitmap GetImage(byte[] image) {
+		return BitmapFactory.decodeByteArray(image, 0, image.length);
 	}
 	
 }

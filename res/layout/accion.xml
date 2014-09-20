@@ -2,7 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:background="@color/fondo"
+    android:padding="20dp" >
 
     <ImageView
         android:layout_width="match_parent"
@@ -15,48 +17,74 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp" >
 
-        <TableRow android:padding="10dp" > 
+        <TableRow android:padding="15dp" >
 
             <ImageButton
                 android:id="@+id/vehiculo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
                 android:layout_weight="1"
-                android:paddingRight="5dp"
-                android:src="@drawable/auto" 
-                android:contentDescription="@string/registrar_vehiculo"/>
+                android:contentDescription="@string/registrar_vehiculo"
+                android:src="@drawable/auto" />
 
             <ImageButton
                 android:id="@+id/compras"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:layout_weight="1"
-                android:src="@drawable/compras"  
-                android:contentDescription="@string/orden_de_compra"/>
+                android:contentDescription="@string/orden_de_compra"
+                android:src="@drawable/cartvacio" />
         </TableRow>
 
-        <TableRow android:padding="10dp" >
+        <TableRow android:padding="15dp" >
 
             <ImageButton
                 android:id="@+id/det"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
                 android:layout_weight="1"
-                android:src="@drawable/detalles"
-                android:contentDescription="@string/detalles_de_compra"/>
+                android:contentDescription="@string/detalles_de_compra"
+                android:src="@drawable/ver" />
+
+            <ImageButton
+                android:id="@+id/config"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:contentDescription="@string/config"
+                android:src="@drawable/configuraciones" />
+        </TableRow>
+        
+        <TableRow android:padding="15dp">
+            
+            <ImageButton
+                android:id="@+id/user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:contentDescription="@string/detalles_de_compra"
+                android:src="@drawable/usuarios" />
 
             <ImageButton
                 android:id="@+id/salir"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:layout_weight="1"
-                android:src="@drawable/salir"
-                android:contentDescription="@string/salir" />
+                android:contentDescription="@string/config"
+                android:src="@drawable/logout" />
+            
         </TableRow>
     </TableLayout>
-
 </LinearLayout>

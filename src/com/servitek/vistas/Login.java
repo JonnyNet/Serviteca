@@ -34,7 +34,6 @@ public class Login extends ActionBarActivity implements OnClickListener {
 		me = (CheckBox) findViewById(R.id.check);
 		me.setOnClickListener(this);
 		db = new Admin_BD(this);
-		db.Escribir();
 		
 		user = (EditText) findViewById(R.id.user);
 		password = (EditText) findViewById(R.id.pass);
@@ -62,7 +61,7 @@ public class Login extends ActionBarActivity implements OnClickListener {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
+		// automatically handle clicks on the Home/Up button, so long 
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
@@ -85,6 +84,7 @@ public class Login extends ActionBarActivity implements OnClickListener {
 				Intent intent = new Intent("com.example.servitek.ACCION");
 				startActivity(intent);
 				db.Cerrar();
+				finish();
 			} else {
 				Util.MensajeCorto(Login.this, "Usuario o Password invalidos");
 			}
@@ -96,6 +96,7 @@ public class Login extends ActionBarActivity implements OnClickListener {
 				loginPrefsEditor.putBoolean("saveLogin", true);
 				loginPrefsEditor.putString("username", usuario);
 				loginPrefsEditor.putString("password", pass);
+				loginPrefsEditor.putBoolean("urlconfig", false);
 				loginPrefsEditor.commit();
 			} else {
 				loginPrefsEditor.clear();

@@ -9,11 +9,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 
-
-
 public class Accion extends Activity implements OnClickListener {
 
-	ImageButton vehiculo, detalles, compras, salir;
+	ImageButton vehiculo, detalles, compras, config, salir, registro;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -26,8 +24,12 @@ public class Accion extends Activity implements OnClickListener {
 		compras.setOnClickListener(this);
 		detalles = (ImageButton) findViewById(R.id.det);
 		detalles.setOnClickListener(this);
+		config = (ImageButton) findViewById(R.id.config);
+		config.setOnClickListener(this);
 		salir = (ImageButton) findViewById(R.id.salir);
 		salir.setOnClickListener(this);
+		registro = (ImageButton) findViewById(R.id.user);
+		registro.setOnClickListener(this);
 	}
 
 	@Override
@@ -35,20 +37,35 @@ public class Accion extends Activity implements OnClickListener {
 		int key = v.getId();
 		switch (key) {
 		case R.id.vehiculo:
-			Intent vehi = new Intent("com.example.servitek.VEHICULO");
-			startActivity(vehi);
+			Intent intent = new Intent(Accion.this, Vehiculo.class);
+			startActivity(intent);
+			finish();
 			break;
 		case R.id.compras:
-			Intent comp = new Intent("com.example.servitek.ORDEN");
-			startActivity(comp);
+			Intent ord = new Intent(Accion.this, Orden.class);
+			startActivity(ord);
+			finish();
 			break;
 		case R.id.det:
-			Intent detl = new Intent("com.example.servitek.COMPRA");
-			startActivity(detl);
+			Intent com = new Intent(Accion.this, Compra.class);
+			startActivity(com);
+			finish();
 			break;
 		case R.id.salir:
-			Intent login = new Intent("com.example.servitek.LOGIN");
-			startActivity(login);
+			Intent log = new Intent(Accion.this, Login.class);
+			startActivity(log);
+			finish();
+			break;
+		case R.id.config:
+			Intent con = new Intent(Accion.this, Config.class);
+			startActivity(con);
+			finish();
+			break;
+
+		case R.id.user:
+			Intent us = new Intent(Accion.this, RegistroUser.class);
+			startActivity(us);
+			finish();
 			break;
 		}
 

@@ -8,7 +8,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="10dp" >
+        android:padding="15dp" >
 
         <LinearLayout
             android:id="@+id/form"
@@ -36,7 +36,8 @@
                 android:layout_width="100dp"
                 android:layout_height="80dp"
                 android:layout_marginTop="5dp"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentRight="true" 
+                android:layout_alignParentEnd="true"
                 android:src="@drawable/abc_ic_ab_back_holo_light"
                 android:background="@android:color/transparent"
                 android:id="@+id/borrar" 
@@ -115,6 +116,7 @@
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:background="#fff" />
             </LinearLayout>
         </LinearLayout>
@@ -143,8 +145,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:orientation="vertical" >
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal"
+            android:weightSum="3">
 
             <ImageButton
                 android:id="@+id/foto"
@@ -154,7 +157,31 @@
                 android:adjustViewBounds="true"
                 android:background="#E1D84F"
                 android:contentDescription="@string/fotovehiculo"
-                android:src="@drawable/ic_launcherg" />
+                android:src="@drawable/ic_launcherg" 
+                android:layout_weight="1"
+                android:focusable="true"/>
+            
+            <ImageButton
+                android:id="@+id/foto2"
+                android:layout_width="250sp"
+                android:layout_height="250dp"
+                android:layout_gravity="center_horizontal"
+                android:adjustViewBounds="true"
+                android:background="#E1D84F"
+                android:contentDescription="@string/fotovehiculo"
+                android:src="@drawable/ic_launcherg" 
+                android:layout_weight="1"/>
+            
+            <ImageButton
+                android:id="@+id/foto3"
+                android:layout_width="250sp"
+                android:layout_height="250dp"
+                android:layout_gravity="center_horizontal"
+                android:adjustViewBounds="true"
+                android:background="#E1D84F"
+                android:contentDescription="@string/fotovehiculo"
+                android:src="@drawable/ic_launcherg" 
+                android:layout_weight="1"/>
         </LinearLayout>
 
         <LinearLayout

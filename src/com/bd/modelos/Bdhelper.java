@@ -39,6 +39,7 @@ public class Bdhelper extends SQLiteOpenHelper {
 			CargarServicios(db);
 		} catch (Exception e) {
 			Log.d("bd", e+"");
+			e.printStackTrace();
 		}
 		
 	}

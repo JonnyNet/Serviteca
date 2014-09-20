@@ -37,5 +37,7 @@
     <color name="disabled_and_focused_text">#B27E6B</color>
     <color name="disabled_and_focused_start_multi">#F2E08F</color>
     <color name="disabled_and_focused_end_multi">#EAC896</color>
+    <color name="black">#0000</color>
+    <color name="fondo">#E1D84F</color>
 
 </resources>

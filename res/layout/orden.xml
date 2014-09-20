@@ -26,13 +26,14 @@
             android:maxLength="9"
             android:textSize="60sp"
             android:textStyle="bold"
-            android:completionThreshold="1"/>
+            android:completionThreshold="1"/> 
 
             <ImageButton
                 android:id="@+id/limpiar"
                 android:layout_width="90dp"
                 android:layout_height="80dp"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentRight="true" 
+                android:layout_alignParentEnd="true"
                 android:layout_marginTop="5dp"
                 android:background="@android:color/transparent"
                 android:contentDescription="@string/buscar_placa"
@@ -50,7 +51,7 @@
             android:inputType="number" />
 
         <EditText
-            android:id="@+id/cedula"
+            android:id="@+id/cedula" 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
@@ -91,7 +92,7 @@
                 android:layout_width="220dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
-                android:background="@drawable/edittext_select"
+                android:background="@drawable/edittext_select" 
                 android:hint="@string/cantidad"
                 android:inputType="number" />
 
@@ -100,6 +101,7 @@
                 android:layout_width="220dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="25dp"
+                android:layout_marginStart="25dp"
                 android:layout_marginTop="3dp"
                 android:text="@string/_0" />
 
@@ -108,6 +110,7 @@
                 android:layout_width="45dp"
                 android:layout_height="37dp"
                 android:layout_marginLeft="40dp"
+                android:layout_marginStart="40dp"
                 android:contentDescription="@string/Carrito"
                 android:src="@drawable/com" />
         </LinearLayout>
@@ -117,7 +120,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="3dp"
-        android:layout_marginLeft="5dp">
+        android:layout_marginLeft="5dp"
+         android:layout_marginStart="5dp">
         
          <TextView 
         android:layout_width="50dp"
@@ -132,7 +136,8 @@
         android:id="@+id/numorden"
         android:background="#E1D84F"
         style="@style/AppTheme"
-        android:layout_marginLeft="5dp"/>
+        android:layout_marginLeft="5dp"
+         android:layout_marginStart="5dp"/>
         
     </LinearLayout>
     
@@ -207,26 +212,29 @@
             android:text="@string/total"
             android:textSize="15sp" />
     </TableRow>
-
-    <ScrollView
+    
+    
+     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="220dp" >
+        android:layout_height="0dp"
+        android:layout_weight="0.1"
+        android:orientation="horizontal" >
 
-        <TableLayout
-            android:id="@+id/tabladetalles"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:weightSum="7" >
-        </TableLayout>
-    </ScrollView>
+        <ListView
+            android:id="@+id/lista"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:dividerHeight="5dp">
+        </ListView> 
+    </LinearLayout>  
 
     <LinearLayout
         android:id="@+id/fotoscarro"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:orientation="vertical" >
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal"
+        android:weightSum="3" >
 
         <ImageButton
             android:id="@+id/foto"
@@ -236,12 +244,37 @@
             android:adjustViewBounds="true"
             android:background="#E1D84F"
             android:contentDescription="@string/todo"
-            android:src="@drawable/ic_launcherg" />
+            android:src="@drawable/ic_launcherg" 
+            android:layout_weight="1"/>
+        
+         <ImageButton
+            android:id="@+id/foto2"
+            android:layout_width="200sp"
+            android:layout_height="200dp"
+            android:layout_gravity="center_horizontal"
+            android:adjustViewBounds="true"
+            android:background="#E1D84F"
+            android:contentDescription="@string/todo"
+            android:src="@drawable/ic_launcherg"
+            android:layout_weight="1" />
+         
+         <ImageButton
+            android:id="@+id/foto3"
+            android:layout_width="200sp"
+            android:layout_height="200dp"
+            android:layout_gravity="center_horizontal"
+            android:adjustViewBounds="true"
+            android:background="#E1D84F"
+            android:contentDescription="@string/todo"
+            android:src="@drawable/ic_launcherg"
+            android:layout_weight="1" />
+         
     </LinearLayout>
 
         <Button
             android:id="@+id/menu"
             style="@style/MultiGradient"
+            android:layout_marginTop="5dp"
             android:layout_width="279dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"

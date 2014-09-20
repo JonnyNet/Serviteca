@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/fondo"
+    android:orientation="vertical" >
+
+    <TabHost
+        android:id="@android:id/tabhost"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.1" >
+
+        <LinearLayout
+            android:id="@+id/LinearLayout01"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical" >
+
+            <TabWidget
+                android:id="@android:id/tabs"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
+            </TabWidget>
+
+            <FrameLayout
+                android:id="@android:id/tabcontent"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" >
+
+                <LinearLayout
+                    android:id="@+id/tab1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="10dp" >
+
+                    <ListView
+                        android:id="@+id/ltab1"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:dividerHeight="5dp" >
+                    </ListView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/tab2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="10dp" >
+
+                    <Spinner
+                        android:id="@+id/tecnicos"
+                        android:layout_width="fill_parent"
+                        android:layout_height="50dp"
+                        android:background="@drawable/spinner_select"
+                        android:gravity="fill_horizontal" />
+
+                    <RelativeLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="125dp"
+                        android:padding="10dp" >
+
+                        <Button
+                            android:id="@+id/d"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            android:text="@string/desde" />
+
+                        <EditText
+                            android:id="@+id/desde"
+                            android:layout_width="350dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:layout_toEndOf="@id/d"
+                            android:layout_toRightOf="@id/d"
+                            android:background="@drawable/edittext_select"
+                            android:inputType="text" />
+
+                        <Button
+                            android:id="@+id/a"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/d"
+                            android:text="@string/hasta" />
+
+                        <EditText
+                            android:id="@+id/hasta"
+                            android:layout_width="350dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/desde"
+                            android:layout_marginTop="5dp"
+                            android:layout_toEndOf="@id/a"
+                            android:layout_toRightOf="@id/a"
+                            android:background="@drawable/edittext_select"
+                            android:inputType="text" />
+
+                        <ImageButton
+                            android:id="@+id/buscar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_toEndOf="@id/desde"
+                            android:layout_toRightOf="@id/desde"
+                            android:contentDescription="@string/Fecha"
+                            android:src="@drawable/abc_ic_search" />
+                    </RelativeLayout>
+
+                    <ListView
+                        android:id="@+id/ltab2"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_marginTop="5dp"
+                        android:dividerHeight="5dp" >
+                    </ListView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/tab3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="10dp" >
+
+                    <RelativeLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="125dp"
+                        android:padding="10dp" >
+
+                        <Button
+                            android:id="@+id/d2"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            android:text="@string/desde" />
+
+                        <EditText
+                            android:id="@+id/desde2"
+                            android:layout_width="350dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:layout_toEndOf="@id/d2"
+                            android:layout_toRightOf="@id/d2"
+                            android:background="@drawable/edittext_select"
+                            android:inputType="text" />
+
+                        <Button
+                            android:id="@+id/a2"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/d2"
+                            android:text="@string/hasta" />
+
+                        <EditText
+                            android:id="@+id/hasta2"
+                            android:layout_width="350dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/desde2"
+                            android:layout_marginTop="5dp"
+                            android:layout_toEndOf="@id/a2"
+                            android:layout_toRightOf="@id/a2"
+                            android:background="@drawable/edittext_select"
+                            android:inputType="text" />
+
+                        <ImageButton
+                            android:id="@+id/buscar2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_toEndOf="@id/desde2"
+                            android:layout_toRightOf="@id/desde2"
+                            android:contentDescription="@string/Fecha"
+                            android:src="@drawable/abc_ic_search" />
+                    </RelativeLayout>
+
+                    <ListView
+                        android:id="@+id/ltab3"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:dividerHeight="5dp" >
+                    </ListView>
+                </LinearLayout>
+            </FrameLayout>
+        </LinearLayout>
+    </TabHost>
+
+    <Button
+        android:id="@+id/menu"
+        style="@style/MultiGradient"
+        android:layout_width="279dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="5dp"
+        android:text="@string/menu" />
+
+</LinearLayout>

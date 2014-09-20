@@ -1,8 +1,7 @@
 package com.servitek.vistas;
 
+import com.bd.modelos.BuscarItem;
 import com.clases.controladores.Admin_BD;
-import com.clases.controladores.BuscarItem;
-import com.clases.controladores.DBimagen;
 import com.clases.controladores.Util;
 import com.example.servitek.R;
 
@@ -11,7 +10,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -32,25 +30,25 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 public class Vehiculo extends ActionBarActivity implements OnClickListener {
-	EditText cedula, nombre, direccion, celular, modelo, mail;
-	AutoCompleteTextView placa;
-	Spinner tipo, marca;
-	Button color, guardar, menu, editar;
-	ImageButton borrar, imagen;
-	Intent camara;
-	static TextView carcolor;
-	final static int cons = 0;
-	static int cc = 0;
-	Admin_BD bd;
-	boolean sw = true;
-	BuscarItem buscar;
+	private EditText cedula, nombre, direccion, celular, modelo, mail;
+	private AutoCompleteTextView placa;
+	private Spinner tipo, marca;
+	private Button color, guardar, menu, editar;
+	private ImageButton borrar, imagen, imagen2, imagen3;
+	private Intent camara;
+	private static TextView carcolor;
+	private final static int cons = 0;
+	private static int cc = 0;
+	private Admin_BD bd;
+	private boolean sw = true;
+	private BuscarItem buscar;
+	private int in = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.vehiculo);
 		bd = new Admin_BD(this);
-		bd.Escribir();
 		BusquedaAuto();
 		init();
 	}
@@ -60,6 +58,7 @@ public class Vehiculo extends ActionBarActivity implements OnClickListener {
 		placa = (AutoCompleteTextView) findViewById(R.id.Autocom);
 		placa.setThreshold(1);
 		Cursor cursor = bd.AutoComplete("");
+		cursor.close();
 		buscar = new BuscarItem(getApplicationContext(), cursor);
 		placa.setAdapter(buscar);
 		placa.addTextChangedListener(new TextWatcher() {
@@ -101,7 +100,7 @@ public class Vehiculo extends ActionBarActivity implements OnClickListener {
 						editar.setEnabled(true);
 						DesAct(false, false);
 						OculTeclado(placa);
-						
+
 					}
 				}
 			}
@@ -118,6 +117,8 @@ public class Vehiculo extends ActionBarActivity implements OnClickListener {
 		tipo = (Spinner) findViewById(R.id.tipos);
 		marca = (Spinner) findViewById(R.id.marcas);
 		imagen = (ImageButton) findViewById(R.id.foto);
+		imagen2 = (ImageButton) findViewById(R.id.foto2);
+		imagen3 = (ImageButton) findViewById(R.id.foto3);
 		borrar = (ImageButton) findViewById(R.id.borrar);
 		menu = (Button) findViewById(R.id.menu);
 		editar = (Button) findViewById(R.id.editar);
@@ -126,6 +127,8 @@ public class Vehiculo extends ActionBarActivity implements OnClickListener {
 		guardar = (Button) findViewById(R.id.guardar);
 
 		imagen.setOnClickListener(this);
+		imagen2.setOnClickListener(this);
+		imagen3.setOnClickListener(this);
 		menu.setOnClickListener(this);
 		editar.setOnClickListener(this);
 		color.setOnClickListener(this);
@@ -161,14 +164,21 @@ public class Vehiculo extends ActionBarActivity implements OnClickListener {
 		int key = v.getId();
 		switch (key) {
 		case R.id.foto:
-			bd.Cerrar();
-			camara = new Intent(
-					android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-			startActivityForResult(camara, cons);
+			in = R.id.foto;
+			TomarFoto();
+			break;
+		case R.id.foto2:
+			in = R.id.foto2;
+			TomarFoto();
+			break;
+		case R.id.foto3:
+			in = R.id.foto3;
+			TomarFoto();
 			break;
 		case R.id.menu:
-			Intent acc = new Intent("com.example.servitek.ACCION");
-			startActivity(acc);
+			Intent intent = new Intent(Vehiculo.this, Accion.class);
+        	startActivity(intent);
+        	finish();
 			break;
 		case R.id.btcolor:
 			color_carro();
@@ -192,6 +202,12 @@ public class Vehiculo extends ActionBarActivity implements OnClickListener {
 			break;
 		}
 
+	}
+
+	private void TomarFoto() {
+		bd.Cerrar();
+		camara = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+		startActivityForResult(camara, cons);
 	}
 
 	private void Editar() {
@@ -223,8 +239,12 @@ public class Vehiculo extends ActionBarActivity implements OnClickListener {
 							.toString(), placa.getText().toString(), marca
 							.getSelectedItemPosition(), cc + "", modelo
 							.getText().toString(), tipo
-							.getSelectedItemPosition(), DBimagen
+							.getSelectedItemPosition(), Util
 							.GetBytes(((BitmapDrawable) imagen.getDrawable())
+									.getBitmap()), Util
+							.GetBytes(((BitmapDrawable) imagen2.getDrawable())
+									.getBitmap()), Util
+							.GetBytes(((BitmapDrawable) imagen3.getDrawable())
 									.getBitmap()), sw)) {
 				Util.MensajeCorto(this, "Registro Exitoso");
 				Reset();
@@ -233,13 +253,13 @@ public class Vehiculo extends ActionBarActivity implements OnClickListener {
 			}
 
 		} else {
-			
+
 			Util.MensajeCorto(this, "Llene todos los campos");
 		}
 	}
 
 	protected void LlenarCampos(Cursor c) {
-		byte[] i = bd.BuscarImagen(c.getString(1));
+		Cursor imgs = bd.BuscarImagen(c.getString(1));
 		Cursor b = bd.BuscarCliente(c.getString(2));
 		cedula.setText(c.getString(2));
 		String m = c.getString(3);
@@ -252,9 +272,12 @@ public class Vehiculo extends ActionBarActivity implements OnClickListener {
 		mail.setText(b.getString(6));
 		tipo.setSelection((int) bd.CodigoId("Mov_Clases", "codclase", t));
 		marca.setSelection((int) bd.CodigoId("Mov_Marcas", "codmarca", m));
-		imagen.setImageBitmap(DBimagen.GetImage(i));
+		imagen.setImageBitmap(Util.GetImage(imgs.getBlob(1)));
+		imagen2.setImageBitmap(Util.GetImage(imgs.getBlob(2)));
+		imagen3.setImageBitmap(Util.GetImage(imgs.getBlob(3)));
 		b.close();
 		c.close();
+		imgs.close();
 	}
 
 	private void DesAct(boolean b1, boolean b2) {
@@ -285,23 +308,30 @@ public class Vehiculo extends ActionBarActivity implements OnClickListener {
 		if (ResultCode == Activity.RESULT_OK) {
 			Bundle ext = data.getExtras();
 			Bitmap bmt = (Bitmap) ext.get("data");
-			imagen.setImageBitmap(bmt);
+			if (in == R.id.foto) {
+				imagen.setImageBitmap(bmt);
+			} else if (in == R.id.foto2) {
+				imagen2.setImageBitmap(bmt);
+			} else {
+				imagen3.setImageBitmap(bmt);
+			}
+
 		}
 	}
 
 	@Override
 	protected void onDestroy() {
-		super.onDestroy();
 		bd.Cerrar();
+		super.onDestroy();
 	}
-	
+
 	public static Handler puente = new Handler() {
 		public void handleMessage(Message msg) {
 			cc = (Integer) msg.obj;
 			carcolor.setBackgroundColor(cc);
 		}
 	};
-	
+
 	private void Reset() {
 		Intent intent = getIntent();
 		finish();
