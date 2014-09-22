@@ -21,6 +21,7 @@ public class Admin_BD {
 	private static final String Tabla_Imagen = "Mov_Imagenes";
 	private static final String Tabla_Maeorden = "Mov_Maeorden";
 	private static final String Tabla_Detaorden = "Mov_Detaorden";
+	private static final String Tabla_Login = "Login";
 
 	public static final String sql0 = "CREATE TABLE " + Tabla_Cliente + " ( "
 			+ "Codter varchar primary key not null , "
@@ -85,6 +86,14 @@ public class Admin_BD {
 			+ "iva	Integer null, " + "subtal Integer not null, "
 			+ "total Integer not null, " + "codtec Varchar not null,"
 			+ "estado	char null," + "syncro Integer null,"
+			+ "fecha  TIMESTAMP NOT NULL DEFAULT current_timestamp)";
+
+	public static final String sql11 = "CREATE TABLE " + Tabla_Login + " ( "
+			+ "user  Varchar primary key, " + "pass varchar  not null , "
+			+ "nombre	Varchar not null, " + "Cedula Varchar  not null , "
+			+ "Direccion Varchar null , " + "Celular	Integer null, "
+			+ "Email Integer not null, " + "Tipo Varchar not null, "
+			+ "Foto BLOB null,"
 			+ "fecha  TIMESTAMP NOT NULL DEFAULT current_timestamp)";
 
 	private Bdhelper helper;
@@ -221,7 +230,8 @@ public class Admin_BD {
 	// busqueda de cliente , vehiculo y actuar si no existen
 
 	public Cursor BuscarPlaca(String placa) {
-		Cursor c = bd.rawQuery("SELECT * FROM Vehiculos WHERE placa =?", new String[]{placa});
+		Cursor c = bd.rawQuery("SELECT * FROM Vehiculos WHERE placa =?",
+				new String[] { placa });
 		c.moveToFirst();
 		return c;
 	}
@@ -274,6 +284,14 @@ public class Admin_BD {
 	public Cursor AutoComplete(String textSearch) {
 		Cursor c = bd.rawQuery(
 				"SELECT rowid  AS _id, placa AS item  FROM  Vehiculos WHERE placa LIKE '"
+						+ textSearch + "%' ", null);
+		c.moveToFirst();
+		return c;
+	}
+
+	public Cursor LoginAutoComplete(String textSearch) {
+		Cursor c = bd.rawQuery(
+				"SELECT rowid  AS _id, user AS item  FROM  Login WHERE placa LIKE '"
 						+ textSearch + "%' ", null);
 		c.moveToFirst();
 		return c;
@@ -398,28 +416,33 @@ public class Admin_BD {
 		return c.getInt(0) + 1;
 	}
 
-	// ////////////historial 
+	// ////////////historial
 	public Cursor BuscarOrdenDia(String fecha) {
 		Cursor c = bd.rawQuery(
-				"SELECT norde AS _id , * FROM Mov_Maeorden  WHERE fecha  LIKE '"+ fecha + "%'  ORDER BY estado", null);
+				"SELECT norde AS _id , * FROM Mov_Maeorden  WHERE fecha  LIKE '"
+						+ fecha + "%'  ORDER BY estado", null);
 		return c;
 	}
 
 	public Cursor BuscarPorFecha(String fechai, String fechaf) {
 		Cursor c = bd.rawQuery(
-				"SELECT norde AS _id , * FROM Mov_Maeorden  WHERE fecha  BETWEEN  '"+ fechai + "00:00:00'  AND  '"+ fechaf + "23:59:59'", null);
+				"SELECT norde AS _id , * FROM Mov_Maeorden  WHERE fecha  BETWEEN  '"
+						+ fechai + "00:00:00'  AND  '" + fechaf + "23:59:59'",
+				null);
 		return c;
 	}
 
-	public Cursor BuscarPorTecnico(int id,String fechai, String fechaf ) {
+	public Cursor BuscarPorTecnico(int id, String fechai, String fechaf) {
 		String tecnico = NombreTecnico(id);
 		Cursor c = bd.rawQuery(
-				"SELECT norde AS _id , * FROM Mov_Detaorden  WHERE codtec = "+ tecnico +" AND  fecha  BETWEEN  '"+ fechai + "00:00:00'  AND  '"+ fechaf + "23:59:59'", null);
+				"SELECT norde AS _id , * FROM Mov_Detaorden  WHERE codtec = "
+						+ tecnico + " AND  fecha  BETWEEN  '" + fechai
+						+ "00:00:00'  AND  '" + fechaf + "23:59:59'", null);
 		return c;
 
 	}
 
-	// /////////////////////////////////////////////////metodos sincronizacion 
+	// /////////////////////////////////////////////////metodos sincronizacion
 	// SELECT * FROM test WHERE date BETWEEN "11/1/2011" AND "11/8/2011";
 	// norde AS _id ,norde, placa, syncro, fecha AS item
 	// con servidor sql server

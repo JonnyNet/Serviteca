@@ -2,30 +2,35 @@ package com.servitek.vistas;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
 import com.clases.controladores.Admin_BD;
+import com.clases.controladores.AutoCompleteUser;
 import com.clases.controladores.Util;
 import com.example.servitek.R;
 
 public class Login extends ActionBarActivity implements OnClickListener {
 
 	private Button boton;
-	private EditText user, password;
+	private EditText  password;
+	private AutoCompleteTextView user;
 	private Admin_BD db;
 	private CheckBox me;
 	private String usuario, pass;
 	private SharedPreferences loginPreferences;
 	private SharedPreferences.Editor loginPrefsEditor;
 	private Boolean saveLogin;
+	private AutoCompleteUser adapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +40,7 @@ public class Login extends ActionBarActivity implements OnClickListener {
 		me.setOnClickListener(this);
 		db = new Admin_BD(this);
 		
-		user = (EditText) findViewById(R.id.user);
+		user =  (AutoCompleteTextView) findViewById(R.id.user);
 		password = (EditText) findViewById(R.id.pass);
 		boton = (Button) findViewById(R.id.bvehi);
 		boton.setOnClickListener(this);
@@ -49,26 +54,41 @@ public class Login extends ActionBarActivity implements OnClickListener {
 			password.setText(loginPreferences.getString("password", ""));
 			me.setChecked(true);
 		}
+		
+		AutoUser();
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
+	
+
+	private void AutoUser() {
+		user.setThreshold(1);
+		Cursor cursor = db.LoginAutoComplete("");
+		adapter = new AutoCompleteUser(getApplicationContext(), cursor, db);
+		user.setAdapter(adapter);
+		user.addTextChangedListener(new TextWatcher() {
+			
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void afterTextChanged(Editable s) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 	}
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long 
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
+
 
 	@Override
 	protected void onDestroy() {

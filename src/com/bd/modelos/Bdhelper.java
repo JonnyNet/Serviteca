@@ -1,6 +1,5 @@
 package com.bd.modelos;
 
-
 import com.clases.controladores.Admin_BD;
 
 import android.content.Context;
@@ -13,6 +12,7 @@ public class Bdhelper extends SQLiteOpenHelper {
 	private static final String BD_NAME = "servitek.sqlite";
 	private static final int BD_VERSION = 1;
 	Context c;
+
 	public Bdhelper(Context context) {
 		super(context, BD_NAME, null, BD_VERSION);
 		c = context;
@@ -32,17 +32,24 @@ public class Bdhelper extends SQLiteOpenHelper {
 			db.execSQL(Admin_BD.sql8);
 			db.execSQL(Admin_BD.sql9);
 			db.execSQL(Admin_BD.sql10);
-			
+			db.execSQL(Admin_BD.sql11);
+
 			CargarTipos(db);
 			CargarMarcas(db);
 			CargarTecicos(db);
 			CargarServicios(db);
+			CargarLoginPorDefecto(db);
 		} catch (Exception e) {
-			Log.d("bd", e+"");
+			Log.d("bd", e + "");
 			e.printStackTrace();
 		}
-		
+
 	}
+
+	private void CargarLoginPorDefecto(SQLiteDatabase db) {
+		db.execSQL("INSERT INTO Login (user,pass,nombre,cedula,Direccion,Celular,Email,Tipo,Foto) VALUES ('Admin','admin','Admin','Admin','Admin','Admin','Admin','Admin',null) ");
+	}
+
 	private void CargarServicios(SQLiteDatabase db) {
 		db.execSQL("INSERT INTO Servicios (codser,nomser,codcue,valser,ivaser,tasacomis,codins,concesion) VALUES ('0','Servicios','A','0','0','0','B','c') ");
 		db.execSQL("INSERT INTO Servicios (codser,nomser,codcue,valser,ivaser,tasacomis,codins,concesion) VALUES ('159','ALineacion','A','2000','320','50','B','c') ");
@@ -81,7 +88,7 @@ public class Bdhelper extends SQLiteOpenHelper {
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		
+
 		db.execSQL("DROP TABLE IF EXISTS Clientes");
 		db.execSQL("DROP TABLE IF EXISTS Vehiculos");
 		db.execSQL("DROP TABLE IF EXISTS Tecnicos");

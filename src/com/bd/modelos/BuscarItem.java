@@ -16,9 +16,9 @@ import android.widget.TextView;
 public class BuscarItem extends CursorAdapter implements Filterable{
 	private Admin_BD dbAdapter;
 
-	public BuscarItem(Context context, Cursor c) {
+	public BuscarItem(Context context, Cursor c, Admin_BD bd) {
 		super(context, c, 0);
-		dbAdapter = new Admin_BD(context);
+		dbAdapter = bd;
 	}
 
 	@Override
@@ -59,9 +59,7 @@ public class BuscarItem extends CursorAdapter implements Filterable{
 		if (constraint != null) {
 			args = constraint.toString();
 		}
-		dbAdapter.Leer();
 		Cursor c = dbAdapter.AutoComplete(args);
-		dbAdapter.Cerrar();
 		return c;
 	}
 }

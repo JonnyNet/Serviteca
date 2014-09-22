@@ -63,7 +63,7 @@ public class Orden extends Activity implements OnClickListener {
 		placa.setThreshold(1);
 		Cursor cursor = bd.AutoComplete("");
 		cursor.close();
-		buscar = new BuscarItem(getApplicationContext(), cursor);
+		buscar = new BuscarItem(getApplicationContext(), cursor,bd);
 		placa.setAdapter(buscar);
 		placa.addTextChangedListener(new TextWatcher() {
 

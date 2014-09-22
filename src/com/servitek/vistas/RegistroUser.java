@@ -19,7 +19,7 @@ public class RegistroUser extends Activity implements OnClickListener{
 	Button menu,eliminar,crear,editar;
 	ImageButton foto;
 	Spinner opt;
-	String[] tipos = {"Tipo de Cuenta","Administrador","Estandar"};
+	String[] tipos = {"Tipo de Cuenta","Admin","Estandar"};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

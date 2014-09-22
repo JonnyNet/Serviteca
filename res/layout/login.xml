@@ -27,8 +27,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="35dp"
             android:paddingTop="20dp"
+            android:layout_marginLeft="35dp"
+            android:layout_marginStart="35dp" 
             android:text="@string/sing_in"
             android:textColor="#E1D84F"
             android:textSize="50sp" />
@@ -41,7 +42,7 @@
             android:paddingLeft="30dp"
             android:paddingRight="30dp" >
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/user"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -71,6 +72,7 @@
                     android:checked="false" 
                     android:text="@string/remenber_me" 
                     android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
                     android:button="@drawable/check_box"/>
 
                 <Button
@@ -79,6 +81,7 @@
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_marginTop="10dp"
                     android:onClick="alarma"
                     android:text="@string/entrar" />

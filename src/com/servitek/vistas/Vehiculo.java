@@ -24,6 +24,7 @@ import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
@@ -43,6 +44,7 @@ public class Vehiculo extends ActionBarActivity implements OnClickListener {
 	private boolean sw = true;
 	private BuscarItem buscar;
 	private int in = 0;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -54,12 +56,10 @@ public class Vehiculo extends ActionBarActivity implements OnClickListener {
 	}
 
 	private void BusquedaAuto() {
-		bd.Leer();
 		placa = (AutoCompleteTextView) findViewById(R.id.Autocom);
 		placa.setThreshold(1);
 		Cursor cursor = bd.AutoComplete("");
-		cursor.close();
-		buscar = new BuscarItem(getApplicationContext(), cursor);
+		buscar = new BuscarItem(getApplicationContext(), cursor,bd);
 		placa.setAdapter(buscar);
 		placa.addTextChangedListener(new TextWatcher() {
 			@Override
