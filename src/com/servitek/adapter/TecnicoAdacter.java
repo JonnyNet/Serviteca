@@ -1,7 +1,8 @@
-package com.bd.modelos;
+package com.servitek.adapter;
 
 import java.util.ArrayList;
 
+import com.bd.modelos.Item;
 import com.example.servitek.R;
 
 import android.content.Context;

@@ -1,4 +1,4 @@
-package com.clases.controladores;
+package com.servitek.adapter;
 
 
 import android.content.Context;
@@ -11,6 +11,8 @@ import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.clases.controladores.Admin_BD;
+import com.clases.controladores.Util;
 import com.example.servitek.R;
 
 public class FechaAdapter extends CursorAdapter{

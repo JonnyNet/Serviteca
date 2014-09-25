@@ -1,4 +1,6 @@
-package com.clases.controladores;
+package com.servitek.adapter;
+
+import com.clases.controladores.Admin_BD;
 
 import android.content.Context;
 import android.database.Cursor;

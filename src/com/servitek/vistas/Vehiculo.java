@@ -1,9 +1,9 @@
 package com.servitek.vistas;
 
-import com.bd.modelos.BuscarItem;
 import com.clases.controladores.Admin_BD;
 import com.clases.controladores.Util;
 import com.example.servitek.R;
+import com.servitek.adapter.BuscarItem;
 
 import android.app.Activity;
 import android.content.Context;
@@ -24,7 +24,6 @@ import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;

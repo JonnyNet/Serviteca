@@ -21,7 +21,7 @@
     <string name="placa">Placa</string>
     <string name="cedula">Cedula</string>
     <string name="nombre">Nombre</string>
-    <string name="direccion">Direccion</string>
+    <string name="direccion">Direccion:</string>
     <string name="celular">Celular:</string>
     <string name="email">Email:</string>
     <string name="modelo">Modelo</string>
@@ -75,5 +75,15 @@
     <string name="ip_">Ip:</string>
     <string name="puerto_">Puerto:</string>
     <string name="base_de_datos">Base de Datos</string>
+    <string name="n_tecnico">Nuevo Tecnico</string>
+    <string name="n_servicio">Nuevo Servicio</string>
+    <string name="consecutivo">No. Consecutivo Orden</string>
+    <string name="codigo_">Codigo:</string>
+    <string name="valor_">Valor:</string>
+    <string name="comision">Comision:</string>
+    <string name="atras">Atras</string>
+    <string name="addt">Gestion Tecnico</string>
+    <string name="adds">Gestion Servicio</string>
+    
 
 </resources>

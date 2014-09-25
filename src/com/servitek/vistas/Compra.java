@@ -30,13 +30,13 @@ import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TextView;
 
 import com.clases.controladores.Admin_BD;
-import com.clases.controladores.CursorDiaAdapter;
 import com.clases.controladores.Dialogo;
-import com.clases.controladores.FechaAdapter;
 import com.clases.controladores.Util;
 import com.example.servitek.R;
+import com.servitek.adapter.CursorDiaAdapter;
+import com.servitek.adapter.FechaAdapter;
+import com.servitek.adapter.TecnicoAdacter;
 import com.bd.modelos.Item;
-import com.bd.modelos.TecnicoAdacter;
 
 public class Compra extends Activity implements OnClickListener,
 		OnItemClickListener {

@@ -133,6 +133,32 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        
+         <activity
+            android:name="com.servitek.vistas.Tecnico"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:label="Server"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" >
+            <intent-filter>
+                <action android:name="com.example.servitek.Tecnico" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+         <activity
+            android:name="com.servitek.vistas.Servicios"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:label="Server"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" >
+            <intent-filter>
+                <action android:name="com.example.servitek.Servicios" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

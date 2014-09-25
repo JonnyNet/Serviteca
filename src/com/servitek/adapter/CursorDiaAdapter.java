@@ -1,5 +1,7 @@
-package com.clases.controladores;
+package com.servitek.adapter;
 
+import com.clases.controladores.Admin_BD;
+import com.clases.controladores.Util;
 import com.example.servitek.R;
 
 import android.content.Context;

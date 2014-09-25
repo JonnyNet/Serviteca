@@ -1,4 +1,4 @@
-package com.bd.modelos;
+package com.servitek.adapter;
 
 import com.clases.controladores.Admin_BD;
 

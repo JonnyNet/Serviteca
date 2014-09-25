@@ -2,12 +2,12 @@ package com.servitek.vistas;
 
 import java.util.ArrayList;
 
-import com.bd.modelos.BuscarItem;
 import com.bd.modelos.Item;
 import com.clases.controladores.Admin_BD;
-import com.clases.controladores.CampoItem;
 import com.clases.controladores.Util;
 import com.example.servitek.R;
+import com.servitek.adapter.BuscarItem;
+import com.servitek.adapter.CampoItem;
 
 import android.app.Activity;
 import android.app.ProgressDialog;

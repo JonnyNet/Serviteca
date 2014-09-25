@@ -15,14 +15,14 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 
 import com.clases.controladores.Admin_BD;
-import com.clases.controladores.AutoCompleteUser;
 import com.clases.controladores.Util;
 import com.example.servitek.R;
+import com.servitek.adapter.AutoCompleteUser;
 
 public class Login extends ActionBarActivity implements OnClickListener {
 
 	private Button boton;
-	private EditText  password;
+	private EditText password;
 	private AutoCompleteTextView user;
 	private Admin_BD db;
 	private CheckBox me;
@@ -39,8 +39,8 @@ public class Login extends ActionBarActivity implements OnClickListener {
 		me = (CheckBox) findViewById(R.id.check);
 		me.setOnClickListener(this);
 		db = new Admin_BD(this);
-		
-		user =  (AutoCompleteTextView) findViewById(R.id.user);
+
+		user = (AutoCompleteTextView) findViewById(R.id.user);
 		password = (EditText) findViewById(R.id.pass);
 		boton = (Button) findViewById(R.id.bvehi);
 		boton.setOnClickListener(this);
@@ -49,16 +49,14 @@ public class Login extends ActionBarActivity implements OnClickListener {
 		loginPrefsEditor = loginPreferences.edit();
 
 		saveLogin = loginPreferences.getBoolean("saveLogin", false);
-		if (saveLogin == true) {
+		if (saveLogin) {
 			user.setText(loginPreferences.getString("username", ""));
 			password.setText(loginPreferences.getString("password", ""));
 			me.setChecked(true);
 		}
-		
+
 		AutoUser();
 	}
-
-	
 
 	private void AutoUser() {
 		user.setThreshold(1);
@@ -66,29 +64,39 @@ public class Login extends ActionBarActivity implements OnClickListener {
 		adapter = new AutoCompleteUser(getApplicationContext(), cursor, db);
 		user.setAdapter(adapter);
 		user.addTextChangedListener(new TextWatcher() {
-			
+
 			@Override
-			public void onTextChanged(CharSequence s, int start, int before, int count) {
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count,
 					int after) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void afterTextChanged(Editable s) {
-				// TODO Auto-generated method stub
-				
+				if (saveLogin == true) {
+					if (s.toString().equals(
+							loginPreferences.getString("username", ""))) {
+						password.setText(loginPreferences.getString("password",
+								""));
+						me.setChecked(true);
+					} else {
+						password.setText("");
+						me.setChecked(false);
+
+					}
+				}
+
 			}
 		});
 	}
-
-
 
 	@Override
 	protected void onDestroy() {
@@ -99,14 +107,11 @@ public class Login extends ActionBarActivity implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		if (v.getId() == R.id.bvehi) {
-			if (user.getText().toString().equals("admin")
-					&& password.getText().toString().equals("admin")) {
-				Intent intent = new Intent("com.example.servitek.ACCION");
-				startActivity(intent);
-				db.Cerrar();
-				finish();
+			if (!user.getText().toString().equals("")
+					&& !password.getText().toString().equals("")) {
+				Log();
 			} else {
-				Util.MensajeCorto(Login.this, "Usuario o Password invalidos");
+				Util.MensajeCorto(Login.this, "Se necesita Usuario Y Password");
 			}
 
 			usuario = user.getText().toString();
@@ -123,5 +128,22 @@ public class Login extends ActionBarActivity implements OnClickListener {
 				loginPrefsEditor.commit();
 			}
 		}
+	}
+
+	private boolean Log() {
+		Cursor c = db.Login(user.getText().toString(), password.getText()
+				.toString());
+		if (c.moveToFirst()) {
+			String p = c.getString(c.getColumnIndexOrThrow("pass"));
+			if (p.equals(password.getText().toString())) {
+				Intent intent = new Intent("com.example.servitek.ACCION");
+				startActivity(intent);
+				finish();
+			} else
+				Util.MensajeCorto(this, "Password Incorrecto");
+		} else
+			Util.MensajeCorto(this, "Usuario NO Registrado");
+		return saveLogin;
+
 	}
 }

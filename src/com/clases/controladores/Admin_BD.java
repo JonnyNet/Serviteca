@@ -39,8 +39,10 @@ public class Admin_BD {
 
 	public static final String sql2 = "CREATE TABLE " + Tabla_Tecnicos + " ( "
 			+ "_id  integer primary key autoincrement, "
-			+ "codtec varchar  not null , " + "nomtec varchar not null, "
-			+ "dirtec varchar not null, " + "teltec	varchar not null )";
+			+ "codtec Varchar  not null , " + "nomtec Varchar not null, "
+			+ "dirtec Varchar not null, " + "teltec	Varchar not null, "
+			+ "email Varchar not null, " + "foto BLOB null, "
+			+ "fecha_ingreso TIMESTAMP NOT NULL DEFAULT current_timestamp )";
 
 	public static final String sql3 = "CREATE TABLE " + Tabla_Servicios + " ( "
 			+ "_id  integer primary key autoincrement, "
@@ -90,10 +92,10 @@ public class Admin_BD {
 
 	public static final String sql11 = "CREATE TABLE " + Tabla_Login + " ( "
 			+ "user  Varchar primary key, " + "pass varchar  not null , "
-			+ "nombre	Varchar not null, " + "Cedula Varchar  not null , "
-			+ "Direccion Varchar null , " + "Celular	Integer null, "
-			+ "Email Integer not null, " + "Tipo Varchar not null, "
-			+ "Foto BLOB null,"
+			+ "nombre	Varchar not null, " + "cedula Varchar  not null , "
+			+ "direccion Varchar null , " + "celular	Varchar null, "
+			+ "email Varchar not null, " + "tipo Integer not null, "
+			+ "foto BLOB null,"
 			+ "fecha  TIMESTAMP NOT NULL DEFAULT current_timestamp)";
 
 	private Bdhelper helper;
@@ -256,14 +258,14 @@ public class Admin_BD {
 
 	public Cursor Cursor2(String tabla, String columna, String dato) {
 		Cursor c = bd.rawQuery("SELECT * FROM " + tabla + " WHERE " + columna
-				+ " = " + dato, null);
+				+ " =?", new String[] { dato });
 		c.moveToFirst();
 		return c;
 	}
 
 	// editar datos del cliente
 
-	public long EditarCliente(String cc, String nombre, String dir, String tel,
+	public long EditarCliente(String cc, String nombre, String dir, String tel, 
 			String dane, String email, String placa) {
 		Cursor c = BuscarCliente(cc);
 		if (c.moveToFirst()) {
@@ -279,7 +281,7 @@ public class Admin_BD {
 		}
 	}
 
-	// cursor para autocompletetextview en las clases vehiculos y orden
+	// cursor para autocompletetextview
 
 	public Cursor AutoComplete(String textSearch) {
 		Cursor c = bd.rawQuery(
@@ -291,8 +293,26 @@ public class Admin_BD {
 
 	public Cursor LoginAutoComplete(String textSearch) {
 		Cursor c = bd.rawQuery(
-				"SELECT rowid  AS _id, user AS item  FROM  Login WHERE placa LIKE '"
+				"SELECT rowid  AS _id, user AS item  FROM  Login WHERE user LIKE '"
 						+ textSearch + "%' ", null);
+		c.moveToFirst();
+		return c;
+	}
+
+	public Cursor TecnicoAutoComplete(String textSearch) {
+		Cursor c = bd
+				.rawQuery(
+						"SELECT _id  AS _id, nomtec AS item  FROM  Tecnicos  WHERE nomtec !=?  AND  nomtec  LIKE '"
+								+ textSearch + "%' ", new String[] { "Tecnico" });
+		c.moveToFirst();
+		return c;
+	}
+	
+	public Cursor ServicioAutoComplete(String textSearch) {
+		Cursor c = bd
+				.rawQuery(
+						"SELECT rowid  AS _id, nomser AS item  FROM  Servicios  WHERE nomser != Servicios  AND  LIKE '"
+								+ textSearch + "%' ", null);
 		c.moveToFirst();
 		return c;
 	}
@@ -303,6 +323,14 @@ public class Admin_BD {
 		Cursor c = bd.rawQuery(" SELECT * FROM Servicios WHERE " + columna
 				+ " =? ", new String[] { id });
 		c.moveToFirst();
+		return c;
+	}
+
+	// ////login
+
+	public Cursor Login(String user, String password) {
+		Cursor c = bd.rawQuery(" SELECT pass FROM Login WHERE user =? ",
+				new String[] { user });
 		return c;
 	}
 
@@ -442,6 +470,65 @@ public class Admin_BD {
 
 	}
 
+	// /////// Registrar actualizar y eliminar usuario login
+
+	public void User(String user, String pass, String nombre, String cedula,
+			String direccion, String celular, String email, String tipo,
+			byte[] image) {
+
+		Cursor c = Cursor2("Login", "user", user);
+		if (c.moveToFirst()) {
+			ActualizarUser(user, pass, nombre, cedula, direccion, celular,
+					email, tipo, image);
+		} else
+			RegistrarUser(user, pass, nombre, cedula, direccion, celular,
+					email, tipo, image);
+	}
+
+	private void RegistrarUser(String user, String pass, String nombre,
+			String cedula, String direccion, String celular, String email,
+			String tipo, byte[] image) {
+		ContentValues v = ContenedorUser(user, pass, nombre, cedula, direccion,
+				celular, email, tipo, image);
+
+		bd.insert("Login", null, v);
+	}
+
+	private ContentValues ContenedorUser(String user, String pass,
+			String nombre, String cedula, String direccion, String celular,
+			String email, String tipo, byte[] image) {
+		ContentValues valores = new ContentValues();
+		valores.put("user", user);
+		valores.put("pass", pass);
+		valores.put("nombre", nombre);
+		valores.put("cedula", cedula);
+		valores.put("direccion", direccion);
+		valores.put("celular", celular);
+		valores.put("email", email);
+		valores.put("tipo", tipo);
+		valores.put("foto", image);
+		return valores;
+	}
+
+	private void ActualizarUser(String user, String pass, String nombre,
+			String cedula, String direccion, String celular, String email,
+			String tipo, byte[] image) {
+		ContentValues v = ContenedorUser(user, pass, nombre, cedula, direccion,
+				celular, email, tipo, image);
+
+		bd.update("Login", v, "user=?", new String[] { user });
+	}
+
+	public boolean EliminarUser(String user) {
+		Cursor c = Cursor2("Login", "user", user);
+		if (c.getCount() > 1) {
+			bd.delete("Login", "WHERE user =? ", new String[] { user });
+			return true;
+		}
+		return false;
+
+	}
+
 	// /////////////////////////////////////////////////metodos sincronizacion
 	// SELECT * FROM test WHERE date BETWEEN "11/1/2011" AND "11/8/2011";
 	// norde AS _id ,norde, placa, syncro, fecha AS item
@@ -451,6 +538,57 @@ public class Admin_BD {
 		Cursor c = bd.rawQuery("SELECT * FROM " + tabla + " WHERE syncro = 0",
 				null);
 		return c;
+	}
+
+	// //////////// Inseryar y eliminar tecnico
+
+	public void Tecnicos(String nombre, String cedula, String direccion,
+			String telefono, String email, byte[] foto) {
+
+		Cursor c = Cursor2(Tabla_Tecnicos, "codtec", cedula);
+
+		if (c.moveToFirst())
+			UpdateTecnico(nombre, cedula, direccion, telefono, email, foto);
+		else
+			InsertTecnico(nombre, cedula, direccion, telefono, email, foto);
+
+	}
+
+	private void UpdateTecnico(String nombre, String cedula, String direccion,
+			String telefono, String email, byte[] foto) {
+		ContentValues values = ContenedorTecnico(nombre, cedula, direccion,
+				telefono, email, foto);
+		bd.update(Tabla_Tecnicos, values, "codte c=?", new String[] { cedula });
+
+	}
+
+	private void InsertTecnico(String nombre, String cedula, String direccion,
+			String telefono, String email, byte[] foto) {
+		ContentValues r = ContenedorTecnico(nombre, cedula, direccion,
+				telefono, email, foto);
+		bd.insert(Tabla_Tecnicos, null, r);
+	}
+
+	private ContentValues ContenedorTecnico(String nombre, String cedula,
+			String direccion, String telefono, String email, byte[] foto) {
+		ContentValues valores = new ContentValues();
+		valores.put("codtec", cedula);
+		valores.put("nomtec", nombre);
+		valores.put("dirtec", direccion);
+		valores.put("teltec", telefono);
+		valores.put("email", email);
+		valores.put("foto", foto);
+		return valores;
+	}
+	
+	public boolean EliminarTecnico(String cedula) {
+		Cursor c = Cursor2(Tabla_Tecnicos, "codtec", cedula);
+		if (c.getCount() > 1) {
+			bd.delete("Login", "WHERE codtec =? ", new String[] { cedula });
+			return true;
+		}
+		return false;
+
 	}
 
 	// metodos para apertura y cierre de la base de datos

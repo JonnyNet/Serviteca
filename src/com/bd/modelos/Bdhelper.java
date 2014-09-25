@@ -47,7 +47,7 @@ public class Bdhelper extends SQLiteOpenHelper {
 	}
 
 	private void CargarLoginPorDefecto(SQLiteDatabase db) {
-		db.execSQL("INSERT INTO Login (user,pass,nombre,cedula,Direccion,Celular,Email,Tipo,Foto) VALUES ('Admin','admin','Admin','Admin','Admin','Admin','Admin','Admin',null) ");
+		db.execSQL("INSERT INTO Login (user,pass,nombre,cedula,Direccion,Celular,Email,Tipo,Foto) VALUES ('Admin','admin','Admin','Admin','Admin','Admin','Admin',1,null) ");
 	}
 
 	private void CargarServicios(SQLiteDatabase db) {
@@ -59,11 +59,7 @@ public class Bdhelper extends SQLiteOpenHelper {
 	}
 
 	private void CargarTecicos(SQLiteDatabase db) {
-		db.execSQL("INSERT INTO Tecnicos (codtec,nomtec,dirtec,teltec) VALUES ('0','Tecnico','tecnico','tecnico')");
-		db.execSQL("INSERT INTO Tecnicos (codtec,nomtec,dirtec,teltec) VALUES ('132565','juan perez','calamares','654885')");
-		db.execSQL("INSERT INTO Tecnicos (codtec,nomtec,dirtec,teltec) VALUES ('535343','pedro pablo','campestre','654885')");
-		db.execSQL("INSERT INTO Tecnicos (codtec,nomtec,dirtec,teltec) VALUES ('588565','jose mendez','socorro','654885')");
-
+		db.execSQL("INSERT INTO Tecnicos (codtec,nomtec,dirtec,teltec,email) VALUES ('0','Tecnico','tecnico','tecnico','Tecnico')");
 	}
 
 	private void CargarMarcas(SQLiteDatabase db) {
