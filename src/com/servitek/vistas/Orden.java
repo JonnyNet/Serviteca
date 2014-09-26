@@ -169,13 +169,13 @@ public class Orden extends Activity implements OnClickListener {
 	}
 
 	protected void LlenarCampos(Cursor c) {
-		Cursor imgs = bd.BuscarImagen(c.getString(1));
-		cedula.setText(c.getString(2));
-		Cursor b = bd.BuscarCliente(c.getString(2));
-		nombre.setText(b.getString(2));
-		imagen.setImageBitmap(Util.GetImage(imgs.getBlob(1)));
-		imagen2.setImageBitmap(Util.GetImage(imgs.getBlob(2)));
-		imagen3.setImageBitmap(Util.GetImage(imgs.getBlob(3)));
+		Cursor imgs = bd.BuscarImagen(c.getString(c.getColumnIndexOrThrow("placa")));
+		cedula.setText(c.getString(c.getColumnIndexOrThrow("Codter")));
+		Cursor b = bd.BuscarCliente(c.getString(c.getColumnIndexOrThrow("Codter")));
+		nombre.setText(b.getString(b.getColumnIndexOrThrow("Nomter")));
+		imagen.setImageBitmap(Util.GetImage(imgs.getBlob(imgs.getColumnIndexOrThrow("bitmap1"))));
+		imagen2.setImageBitmap(Util.GetImage(imgs.getBlob(imgs.getColumnIndexOrThrow("bitmap2"))));
+		imagen3.setImageBitmap(Util.GetImage(imgs.getBlob(imgs.getColumnIndexOrThrow("bitmap3"))));
 	}
 
 	private void CargarSpinner() {

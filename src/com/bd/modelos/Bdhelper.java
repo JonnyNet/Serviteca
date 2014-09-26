@@ -52,10 +52,6 @@ public class Bdhelper extends SQLiteOpenHelper {
 
 	private void CargarServicios(SQLiteDatabase db) {
 		db.execSQL("INSERT INTO Servicios (codser,nomser,codcue,valser,ivaser,tasacomis,codins,concesion) VALUES ('0','Servicios','A','0','0','0','B','c') ");
-		db.execSQL("INSERT INTO Servicios (codser,nomser,codcue,valser,ivaser,tasacomis,codins,concesion) VALUES ('159','ALineacion','A','2000','320','50','B','c') ");
-		db.execSQL("INSERT INTO Servicios (codser,nomser,codcue,valser,ivaser,tasacomis,codins,concesion) VALUES ('486','Lavado','A','3000','480','150','B','c') ");
-		db.execSQL("INSERT INTO Servicios (codser,nomser,codcue,valser,ivaser,tasacomis,codins,concesion) VALUES ('795','Lubricacion','A','4000','720','200','B','c') ");
-		db.execSQL("INSERT INTO Servicios (codser,nomser,codcue,valser,ivaser,tasacomis,codins,concesion) VALUES ('268','Balanceo','A','5000','880','250','B','c') ");
 	}
 
 	private void CargarTecicos(SQLiteDatabase db) {

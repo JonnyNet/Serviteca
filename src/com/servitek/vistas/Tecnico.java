@@ -92,7 +92,7 @@ public class Tecnico extends Activity implements OnClickListener {
 
 	private void Activar(boolean b, boolean a) {
 		nombre.setFocusableInTouchMode(a);
-		cedula.setFocusableInTouchMode(b);
+		cedula.setFocusableInTouchMode(a);
 		direccion.setFocusableInTouchMode(b);
 		tel.setFocusableInTouchMode(b);
 		email.setFocusableInTouchMode(b);
@@ -112,7 +112,7 @@ public class Tecnico extends Activity implements OnClickListener {
 
 		if (v == eliminar) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setMessage("¿Desea eliminar este usuario?")
+			builder.setMessage("¿Desea eliminar este Tecnico?")
 					.setTitle("Advertencia")
 					.setCancelable(false)
 					.setNegativeButton("Cancelar",
@@ -129,7 +129,7 @@ public class Tecnico extends Activity implements OnClickListener {
 									if (!db.EliminarTecnico(cedula.getText()
 											.toString()))
 										Util.MensajeCorto(Tecnico.this,
-												"No se puede eliminar este usuario");
+												"No se puede eliminar este Tecnico");
 									else
 										Reset();
 								}

@@ -5,6 +5,7 @@ import com.example.servitek.R;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -42,9 +43,13 @@ public class Servicios extends Activity implements OnClickListener{
 		comision = (EditText) findViewById(R.id.comi);
 		
 		atras = (Button) findViewById(R.id.menu);
+		atras.setOnClickListener(this);
 		editar = (Button) findViewById(R.id.editar);
+		editar.setOnClickListener(this);
 		guardar = (Button) findViewById(R.id.guardar);
+		guardar.setOnClickListener(this);
 		eliminar = (Button) findViewById(R.id.eliminar);
+		eliminar.setOnClickListener(this);
 		
 		progres = (ProgressBar) findViewById(R.id.progressBar1);
 		
@@ -52,7 +57,11 @@ public class Servicios extends Activity implements OnClickListener{
 
 	@Override
 	public void onClick(View v) {
-		// TODO Auto-generated method stub
+		if (v == atras) {
+			Intent intent = new Intent(Servicios.this, Config.class);
+			startActivity(intent);
+			finish();
+		}
 		
 	}
 	

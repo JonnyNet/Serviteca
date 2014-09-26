@@ -258,22 +258,22 @@ public class Vehiculo extends ActionBarActivity implements OnClickListener {
 	}
 
 	protected void LlenarCampos(Cursor c) {
-		Cursor imgs = bd.BuscarImagen(c.getString(1));
-		Cursor b = bd.BuscarCliente(c.getString(2));
-		cedula.setText(c.getString(2));
+		Cursor imgs = bd.BuscarImagen(c.getString(c.getColumnIndexOrThrow("placa")));
+		Cursor b = bd.BuscarCliente(c.getString(c.getColumnIndexOrThrow("Codter")));
+		cedula.setText(c.getString(c.getColumnIndexOrThrow("Codter")));
 		String m = c.getString(3);
 		carcolor.setBackgroundColor(c.getInt(4));
 		modelo.setText(c.getString(5));
 		String t = c.getString(6);
-		nombre.setText(b.getString(2));
-		direccion.setText(b.getString(3));
-		celular.setText(b.getString(4));
-		mail.setText(b.getString(6));
+		nombre.setText(b.getString(b.getColumnIndexOrThrow("Nomter")));
+		direccion.setText(b.getString(b.getColumnIndexOrThrow("Dirter")));
+		celular.setText(b.getString(b.getColumnIndexOrThrow("Telter")));
+		mail.setText(b.getString(b.getColumnIndexOrThrow("Email")));
 		tipo.setSelection((int) bd.CodigoId("Mov_Clases", "codclase", t));
 		marca.setSelection((int) bd.CodigoId("Mov_Marcas", "codmarca", m));
-		imagen.setImageBitmap(Util.GetImage(imgs.getBlob(1)));
-		imagen2.setImageBitmap(Util.GetImage(imgs.getBlob(2)));
-		imagen3.setImageBitmap(Util.GetImage(imgs.getBlob(3)));
+		imagen.setImageBitmap(Util.GetImage(imgs.getBlob(imgs.getColumnIndexOrThrow("bitmap1"))));
+		imagen2.setImageBitmap(Util.GetImage(imgs.getBlob(imgs.getColumnIndexOrThrow("bitmap2"))));
+		imagen3.setImageBitmap(Util.GetImage(imgs.getBlob(imgs.getColumnIndexOrThrow("bitmap3"))));
 		b.close();
 		c.close();
 		imgs.close();

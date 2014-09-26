@@ -311,8 +311,8 @@ public class Admin_BD {
 	public Cursor ServicioAutoComplete(String textSearch) {
 		Cursor c = bd
 				.rawQuery(
-						"SELECT rowid  AS _id, nomser AS item  FROM  Servicios  WHERE nomser != Servicios  AND  LIKE '"
-								+ textSearch + "%' ", null);
+						"SELECT rowid  AS _id, nomser AS item  FROM  Servicios  WHERE nomser !=?  AND  nomser  LIKE '"
+								+ textSearch + "%' ", new String[] { "Servicios" });
 		c.moveToFirst();
 		return c;
 	}
@@ -558,7 +558,7 @@ public class Admin_BD {
 			String telefono, String email, byte[] foto) {
 		ContentValues values = ContenedorTecnico(nombre, cedula, direccion,
 				telefono, email, foto);
-		bd.update(Tabla_Tecnicos, values, "codte c=?", new String[] { cedula });
+		bd.update(Tabla_Tecnicos, values, "codte c=?", new String[] { cedula }); 
 
 	}
 
