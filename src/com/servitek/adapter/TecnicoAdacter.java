@@ -35,15 +35,6 @@ public class TecnicoAdacter  extends ArrayAdapter<Item>{
 		TextView placa = (TextView) item.findViewById(R.id.placa);
 		placa.setText(datos.get(position).getPlaca());
 
-		TextView marca = (TextView) item.findViewById(R.id.marca);
-		marca.setText(datos.get(position).getMarca());
-
-		TextView cliente = (TextView) item.findViewById(R.id.cliente);
-		cliente.setText(datos.get(position).getCliente());
-
-		TextView orden = (TextView) item.findViewById(R.id.orden);
-		orden.setText(datos.get(position).getOrden());
-
 		TextView servicio = (TextView) item.findViewById(R.id.servicio);
 		servicio.setText(datos.get(position).getServicio());
 
@@ -55,6 +46,11 @@ public class TecnicoAdacter  extends ArrayAdapter<Item>{
 		
 		TextView fecha = (TextView) item.findViewById(R.id.fecha);
 		fecha.setText(datos.get(position).getFecha());
+		
+		if (position % 2 == 0)
+			item.setBackgroundResource(R.drawable.odd_row);
+		else
+			item.setBackgroundResource(R.drawable.even_row);
 
 		return item;
 	}

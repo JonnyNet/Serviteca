@@ -22,16 +22,14 @@ public class CampoItem extends ArrayAdapter<Item> {
 		context = contex;
 		datos = dato;
 	}
-	
-	
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-
+		
 		LayoutInflater inflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-		View item = inflater.inflate(R.layout.listview, parent, false); 
+		View item = inflater.inflate(R.layout.listview, parent, false);
 
 		TextView codigo = (TextView) item.findViewById(R.id.a1);
 		codigo.setText(datos.get(position).getCodigo());
@@ -53,6 +51,11 @@ public class CampoItem extends ArrayAdapter<Item> {
 
 		TextView total = (TextView) item.findViewById(R.id.a7);
 		total.setText(datos.get(position).getTotal());
+		
+		if (position % 2 == 0)
+			item.setBackgroundResource(R.drawable.odd_row);
+		else
+			item.setBackgroundResource(R.drawable.even_row);
 
 		return item;
 	}

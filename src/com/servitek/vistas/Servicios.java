@@ -1,10 +1,9 @@
 package com.servitek.vistas;
 
-import com.clases.controladores.Admin_BD;
-import com.example.servitek.R;
-
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -12,36 +11,41 @@ import android.os.Bundle;
 import android.support.v4.widget.CursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FilterQueryProvider;
 import android.widget.Filterable;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
-public class Servicios extends Activity implements OnClickListener{
-	
+import com.clases.controladores.Admin_BD;
+import com.clases.controladores.Util;
+import com.example.servitek.R;
+
+public class Servicios extends Activity implements OnClickListener {
+
 	AutoCompleteTextView servicio;
-	EditText codigo, valor , iva ,comision;
-	Button atras, editar,guardar,eliminar;
-	ProgressBar progres;
+	EditText codigo, valor, iva, comision;
+	Button atras, editar, guardar, eliminar;
 	Admin_BD db;
+	AutoServicio adapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.newservicio);
-		
+
 		db = new Admin_BD(this);
 		servicio = (AutoCompleteTextView) findViewById(R.id.servicio);
 		codigo = (EditText) findViewById(R.id.codigo);
 		valor = (EditText) findViewById(R.id.valor);
 		iva = (EditText) findViewById(R.id.iva);
 		comision = (EditText) findViewById(R.id.comi);
-		
+
 		atras = (Button) findViewById(R.id.menu);
 		atras.setOnClickListener(this);
 		editar = (Button) findViewById(R.id.editar);
@@ -50,9 +54,39 @@ public class Servicios extends Activity implements OnClickListener{
 		guardar.setOnClickListener(this);
 		eliminar = (Button) findViewById(R.id.eliminar);
 		eliminar.setOnClickListener(this);
-		
-		progres = (ProgressBar) findViewById(R.id.progressBar1);
-		
+
+		eliminar.setEnabled(false);
+		editar.setEnabled(false);
+
+		servicio.setThreshold(1);
+		Cursor cursor = db.ServicioAutoComplete("");
+		adapter = new AutoServicio(getApplicationContext(), cursor);
+		servicio.setAdapter(adapter);
+		servicio.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				Cursor c = db.Cursor2("Servicios", "nomser", servicio.getText()
+						.toString());
+				if (c.moveToFirst())
+					LlenarCampos(c);
+
+			}
+		});
+
+	}
+
+	protected void LlenarCampos(Cursor c) {
+		codigo.setText(c.getString(c.getColumnIndexOrThrow("codser")));
+		valor.setText(c.getInt(c.getColumnIndexOrThrow("valser")) + "");
+		iva.setText(c.getInt(c.getColumnIndexOrThrow("ivaser")) + "");
+		comision.setText(c.getInt(c.getColumnIndexOrThrow("tasacomis")) + "");
+		Activar(false, false);
+		guardar.setEnabled(false);
+		eliminar.setEnabled(true);
+		editar.setEnabled(true);
+
 	}
 
 	@Override
@@ -62,9 +96,76 @@ public class Servicios extends Activity implements OnClickListener{
 			startActivity(intent);
 			finish();
 		}
-		
+
+		if (v == guardar)
+			Guardar();
+
+		if (v == editar) {
+			Activar(true, false);
+			eliminar.setEnabled(false);
+			guardar.setEnabled(true);
+			editar.setEnabled(false);
+		}
+
+		if (v == eliminar) {
+			AlertDialog.Builder builder = new AlertDialog.Builder(this,android.R.style.Theme_Holo_Dialog_MinWidth);
+			builder.setMessage("¿Desea eliminar este Servicio?")
+					.setTitle("Advertencia")
+					.setCancelable(false)
+					.setNegativeButton("Cancelar",
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,
+										int id) {
+									dialog.cancel();
+								}
+							})
+					.setPositiveButton("Continuar",
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,
+										int id) {
+									db.EliminarServicio(codigo.getText()
+											.toString());
+									Util.MensajeCorto(Servicios.this, "Servicio Eliminado");
+									Reset();
+								}
+							});
+			AlertDialog alert = builder.create();
+			alert.show();
+		}
 	}
-	
+
+	private void Activar(boolean b, boolean c) {
+		servicio.setFocusableInTouchMode(c);
+		codigo.setFocusableInTouchMode(c);
+		valor.setFocusableInTouchMode(b);
+		iva.setFocusableInTouchMode(b);
+		comision.setFocusableInTouchMode(b);
+
+	}
+
+	private void Guardar() {
+		if (!servicio.getText().toString().equals("")
+				&& !codigo.getText().toString().equals("")
+				&& !valor.getText().toString().equals("")
+				&& !iva.getText().toString().equals("")
+				&& !comision.getText().toString().equals("")) {
+
+			db.Servicio(servicio.getText().toString(), codigo.getText()
+					.toString(), Integer.parseInt(valor.getText().toString()),
+					Integer.parseInt(iva.getText().toString()), Integer
+							.parseInt(comision.getText().toString()));
+			Util.MensajeCorto(this, "Servicio Guardado");
+			Reset();
+		} else
+			Util.MensajeCorto(this, "Llene Todos Los Campos");
+	}
+
+	protected void Reset() {
+		Intent intent = getIntent();
+		finish();
+		startActivity(intent);
+	}
+
 	public class AutoServicio extends CursorAdapter implements Filterable {
 
 		public AutoServicio(Context context, Cursor c) {
@@ -108,7 +209,7 @@ public class Servicios extends Activity implements OnClickListener{
 			if (constraint != null) {
 				args = constraint.toString();
 			}
-			Cursor c = db.TecnicoAutoComplete(args);
+			Cursor c = db.ServicioAutoComplete(args);
 			return c;
 		}
 

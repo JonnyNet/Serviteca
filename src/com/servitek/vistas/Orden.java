@@ -20,6 +20,7 @@ import android.support.v4.widget.SimpleCursorAdapter;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
@@ -29,6 +30,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -40,7 +42,8 @@ public class Orden extends Activity implements OnClickListener {
 	private TextView precio, numorden;
 	private Spinner servicio, tecnico;
 	private Button menu;
-	private ImageButton agregar, borrar, imagen, imagen2, imagen3;
+	private ImageButton agregar, borrar;
+	private ImageView imagen, imagen2, imagen3;
 	private ListView lista;
 	private Admin_BD bd;
 	private BuscarItem buscar;
@@ -48,18 +51,24 @@ public class Orden extends Activity implements OnClickListener {
 	private Cursor s;
 	private ArrayList<Item> item;
 	private CampoItem adapter;
+	private String activity;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		activity = getIntent().getStringExtra("activity");
+		String p = getIntent().getStringExtra("placa");
 		setContentView(R.layout.orden);
 		bd = new Admin_BD(this);
 		BusquedaAuto();
 		init();
+		if (p != null) {
+			placa.setText(p);
+		}
 	}
 
 	private void BusquedaAuto() {
-		placa = (AutoCompleteTextView) findViewById(R.id.Autocom);
+		placa = (AutoCompleteTextView) findViewById(R.id.Autocom);		
 		placa.setThreshold(1);
 		Cursor cursor = bd.AutoComplete("");
 		cursor.close();
@@ -106,9 +115,9 @@ public class Orden extends Activity implements OnClickListener {
 		cedula = (EditText) findViewById(R.id.cedula);
 		nombre = (EditText) findViewById(R.id.nombre);
 		menu = (Button) findViewById(R.id.menu);
-		imagen = (ImageButton) findViewById(R.id.foto);
-		imagen2 = (ImageButton) findViewById(R.id.foto2);
-		imagen3 = (ImageButton) findViewById(R.id.foto3);
+		imagen = (ImageView) findViewById(R.id.foto);
+		imagen2 = (ImageView) findViewById(R.id.foto2);
+		imagen3 = (ImageView) findViewById(R.id.foto3);
 		servicio = (Spinner) findViewById(R.id.servi);
 		cantidad = (EditText) findViewById(R.id.Cantidad);
 		agregar = (ImageButton) findViewById(R.id.agregar);
@@ -116,7 +125,7 @@ public class Orden extends Activity implements OnClickListener {
 		precio = (TextView) findViewById(R.id.Precio);
 		numorden = (TextView) findViewById(R.id.numorden);
 		tecnico = (Spinner) findViewById(R.id.tecnicos);
-		lista = (ListView) findViewById(R.id.lista);
+		lista =  (ListView) findViewById(R.id.lista);
 
 		menu.setOnClickListener(this);
 		agregar.setOnClickListener(this);
@@ -205,7 +214,7 @@ public class Orden extends Activity implements OnClickListener {
 			AgregarOrden();
 			break;
 		case R.id.menu:
-			Intent intent = new Intent(Orden.this, Accion.class);
+			Intent intent = new Intent(activity);
 			startActivity(intent);
 			finish();
 			break;
@@ -219,7 +228,8 @@ public class Orden extends Activity implements OnClickListener {
 	private void AgregarOrden() {
 		String[] str = new String[8];
 		if (!cantidad.getText().toString().equals("")
-				&& servicio.getSelectedItemPosition() != 0) {
+				&& servicio.getSelectedItemPosition() != 0
+				&& tecnico.getSelectedItemPosition() != 0) {
 			str[0] = s.getString(1);
 			str[1] = s.getString(2);
 			str[2] = cantidad.getText().toString();
@@ -229,7 +239,8 @@ public class Orden extends Activity implements OnClickListener {
 			str[5] = s.getInt(5)
 					* Integer.parseInt(cantidad.getText().toString()) + "";
 			str[6] = (s.getInt(4) + s.getInt(5)) + "";
-			str[7] = bd.NombreTecnico(tecnico.getSelectedItemPosition()+1);
+			Log.e("tecnico", tecnico.getSelectedItemPosition()+"");
+			str[7] = bd.NombreTecnico(tecnico.getSelectedItemPosition());
 			crearfila(str[0], str[1], str[2], str[3], str[4], str[5], str[6]);
 			if (numorden.getText().toString().equals("")) {
 				int id = bd.OrdeneCompra(placa.getText().toString(), 0, str);
@@ -241,6 +252,7 @@ public class Orden extends Activity implements OnClickListener {
 
 			cantidad.setText("");
 			servicio.setSelection(0);
+			precio.setText("0");
 			s = null;
 		} else {
 			Util.MensajeCorto(this, "Llene todos los campos");

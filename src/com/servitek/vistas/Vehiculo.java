@@ -6,11 +6,15 @@ import com.example.servitek.R;
 import com.servitek.adapter.BuscarItem;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -33,7 +37,7 @@ public class Vehiculo extends ActionBarActivity implements OnClickListener {
 	private EditText cedula, nombre, direccion, celular, modelo, mail;
 	private AutoCompleteTextView placa;
 	private Spinner tipo, marca;
-	private Button color, guardar, menu, editar;
+	private Button color, guardar, menu;
 	private ImageButton borrar, imagen, imagen2, imagen3;
 	private Intent camara;
 	private static TextView carcolor;
@@ -43,10 +47,11 @@ public class Vehiculo extends ActionBarActivity implements OnClickListener {
 	private boolean sw = true;
 	private BuscarItem buscar;
 	private int in = 0;
-	
+	private String activity;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		activity = getIntent().getStringExtra("activity");
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.vehiculo);
 		bd = new Admin_BD(this);
@@ -58,7 +63,7 @@ public class Vehiculo extends ActionBarActivity implements OnClickListener {
 		placa = (AutoCompleteTextView) findViewById(R.id.Autocom);
 		placa.setThreshold(1);
 		Cursor cursor = bd.AutoComplete("");
-		buscar = new BuscarItem(getApplicationContext(), cursor,bd);
+		buscar = new BuscarItem(getApplicationContext(), cursor, bd);
 		placa.setAdapter(buscar);
 		placa.addTextChangedListener(new TextWatcher() {
 			@Override
@@ -93,14 +98,7 @@ public class Vehiculo extends ActionBarActivity implements OnClickListener {
 
 				if (aux.length() == 9) {
 					cedula.requestFocus();
-					Cursor c = bd.BuscarPlaca(aux);
-					if (c.moveToFirst()) {
-						LlenarCampos(c);
-						editar.setEnabled(true);
-						DesAct(false, false);
-						OculTeclado(placa);
-
-					}
+					Buscar(aux);
 				}
 			}
 		});
@@ -120,7 +118,6 @@ public class Vehiculo extends ActionBarActivity implements OnClickListener {
 		imagen3 = (ImageButton) findViewById(R.id.foto3);
 		borrar = (ImageButton) findViewById(R.id.borrar);
 		menu = (Button) findViewById(R.id.menu);
-		editar = (Button) findViewById(R.id.editar);
 		color = (Button) findViewById(R.id.btcolor);
 		carcolor = (TextView) findViewById(R.id.carcolor);
 		guardar = (Button) findViewById(R.id.guardar);
@@ -129,11 +126,9 @@ public class Vehiculo extends ActionBarActivity implements OnClickListener {
 		imagen2.setOnClickListener(this);
 		imagen3.setOnClickListener(this);
 		menu.setOnClickListener(this);
-		editar.setOnClickListener(this);
 		color.setOnClickListener(this);
 		borrar.setOnClickListener(this);
 		guardar.setOnClickListener(this);
-		editar.setEnabled(false);
 		CargarCursor();
 	}
 
@@ -175,9 +170,9 @@ public class Vehiculo extends ActionBarActivity implements OnClickListener {
 			TomarFoto();
 			break;
 		case R.id.menu:
-			Intent intent = new Intent(Vehiculo.this, Accion.class);
-        	startActivity(intent);
-        	finish();
+			Intent intent = new Intent(activity);
+			startActivity(intent);
+			finish();
 			break;
 		case R.id.btcolor:
 			color_carro();
@@ -257,9 +252,12 @@ public class Vehiculo extends ActionBarActivity implements OnClickListener {
 		}
 	}
 
-	protected void LlenarCampos(Cursor c) {
-		Cursor imgs = bd.BuscarImagen(c.getString(c.getColumnIndexOrThrow("placa")));
-		Cursor b = bd.BuscarCliente(c.getString(c.getColumnIndexOrThrow("Codter")));
+	protected void LlenarCampos(Cursor[] cur) {
+		Cursor c = cur[0];
+		Cursor imgs = cur[1];
+		Cursor b = cur[2];
+		
+		
 		cedula.setText(c.getString(c.getColumnIndexOrThrow("Codter")));
 		String m = c.getString(3);
 		carcolor.setBackgroundColor(c.getInt(4));
@@ -271,12 +269,45 @@ public class Vehiculo extends ActionBarActivity implements OnClickListener {
 		mail.setText(b.getString(b.getColumnIndexOrThrow("Email")));
 		tipo.setSelection((int) bd.CodigoId("Mov_Clases", "codclase", t));
 		marca.setSelection((int) bd.CodigoId("Mov_Marcas", "codmarca", m));
-		imagen.setImageBitmap(Util.GetImage(imgs.getBlob(imgs.getColumnIndexOrThrow("bitmap1"))));
-		imagen2.setImageBitmap(Util.GetImage(imgs.getBlob(imgs.getColumnIndexOrThrow("bitmap2"))));
-		imagen3.setImageBitmap(Util.GetImage(imgs.getBlob(imgs.getColumnIndexOrThrow("bitmap3"))));
+		imagen.setImageBitmap(Util.GetImage(imgs.getBlob(imgs
+				.getColumnIndexOrThrow("bitmap1"))));
+		imagen2.setImageBitmap(Util.GetImage(imgs.getBlob(imgs
+				.getColumnIndexOrThrow("bitmap2"))));
+		imagen3.setImageBitmap(Util.GetImage(imgs.getBlob(imgs
+				.getColumnIndexOrThrow("bitmap3"))));
 		b.close();
 		c.close();
 		imgs.close();
+	}
+
+	private void Cliente(final Cursor c) {
+		final ProgressDialog pro = new ProgressDialog(Vehiculo.this,
+				android.R.style.Theme_Holo_Dialog_MinWidth);
+		new AsyncTask<Cursor, Void, Cursor[]>() {
+
+			@Override
+			protected void onPreExecute() {
+				pro.setTitle("Buscando Vehiculo...");
+				pro.setMessage("Espere Porfavor");
+				pro.show();
+			}
+
+			@Override
+			protected Cursor[] doInBackground(Cursor... params) {
+				Cursor c = params[0];
+				Cursor[] cursor = new Cursor[3];
+				cursor[0] = params[0];
+				cursor[1] = bd.BuscarImagen(c.getString(c.getColumnIndexOrThrow("placa")));
+				cursor[2] = bd.BuscarCliente(c.getString(c.getColumnIndexOrThrow("Codter")));
+				return cursor;
+			}
+
+			@Override
+			protected void onPostExecute(Cursor[] result) {
+				pro.dismiss();
+				LlenarCampos(result);
+			}
+		}.execute(c);
 	}
 
 	private void DesAct(boolean b1, boolean b2) {
@@ -315,6 +346,69 @@ public class Vehiculo extends ActionBarActivity implements OnClickListener {
 				imagen3.setImageBitmap(bmt);
 			}
 
+		}
+	}
+
+	private void Buscar(String placa) {
+		final ProgressDialog pro = new ProgressDialog(Vehiculo.this,
+				android.R.style.Theme_Holo_Dialog_MinWidth);
+		new AsyncTask<String, Void, Cursor>() {
+
+			@Override
+			protected void onPreExecute() {
+				pro.setTitle("Buscando Vehiculo...");
+				pro.setMessage("Espere Porfavor");
+				pro.show();
+			}
+
+			@Override
+			protected Cursor doInBackground(String... params) {
+				Cursor c = bd.BuscarPlaca(params[0]);
+				return c;
+			}
+
+			@Override
+			protected void onPostExecute(Cursor result) {
+				pro.dismiss();
+				Listener(result);
+			}
+
+		}.execute(placa);
+	}
+
+	protected void Listener(final Cursor c) {
+		if (c.moveToFirst()) {
+			AlertDialog.Builder builder = new AlertDialog.Builder(
+					Vehiculo.this, android.R.style.Theme_Holo_Dialog_MinWidth);
+			builder.setMessage("¿Que desea hacer?")
+					.setTitle("Vehiculo Registrado")
+					.setCancelable(false)
+					.setNegativeButton("Editar Cliente",
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,
+										int id) {
+									Cliente(c);
+									DesAct(false, true);
+									OculTeclado(placa);
+									dialog.cancel();
+								}
+							})
+					.setPositiveButton("Cargar Servicios",
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,
+										int id) {
+									Intent log = new Intent(Vehiculo.this,
+											Orden.class);
+									log.putExtra("placa", placa.getText()
+											.toString());
+									log.putExtra("activity", activity);
+									dialog.cancel();
+									startActivity(log);
+									finish();
+								}
+							});
+			AlertDialog alert = builder.create();
+			alert.show();
 		}
 	}
 

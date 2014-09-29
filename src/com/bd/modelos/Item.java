@@ -27,14 +27,11 @@ public class Item {
 		this.total = total;
 	}
 
-	public Item(String servicio, String placa, String orden,
-			String valor, String marca, String cantidad, String cliente,
+	public Item(String servicio, String placa, String valor, String cantidad, String cliente,
 			String fecha) {
 		this.servicio = servicio;
 		this.placa = placa;
-		this.orden = orden;
 		this.valor = valor;
-		this.marca = marca;
 		this.cantidad = cantidad;
 		this.cliente = cliente;
 		this.fecha = fecha;

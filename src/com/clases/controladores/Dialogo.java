@@ -25,7 +25,7 @@ public class Dialogo extends Dialog{
 	int tal = 0;
 	
 	public Dialogo(Context context, long cod, Admin_BD db) {
-		super(context,R.style.Theme_Dialog_Translucent);
+		super(context,android.R.style.Theme_Holo_Dialog_MinWidth);
 		setTitle("Detalles Orden No: " + cod);
 		norden = cod;
 		bd = db;

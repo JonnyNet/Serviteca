@@ -12,6 +12,7 @@ import android.widget.ImageButton;
 public class Accion extends Activity implements OnClickListener {
 
 	ImageButton vehiculo, detalles, compras, config, salir, registro;
+	public static final String activity = "com.example.servitek.ACCION";
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -38,16 +39,19 @@ public class Accion extends Activity implements OnClickListener {
 		switch (key) {
 		case R.id.vehiculo:
 			Intent intent = new Intent(Accion.this, Vehiculo.class);
+			intent.putExtra("activity", activity);
 			startActivity(intent);
 			finish();
 			break;
 		case R.id.compras:
 			Intent ord = new Intent(Accion.this, Orden.class);
+			ord.putExtra("activity", activity);
 			startActivity(ord);
 			finish();
 			break;
 		case R.id.det:
 			Intent com = new Intent(Accion.this, Compra.class);
+			com.putExtra("activity", activity);
 			startActivity(com);
 			finish();
 			break;

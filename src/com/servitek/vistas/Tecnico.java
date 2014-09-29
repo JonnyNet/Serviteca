@@ -13,6 +13,7 @@ import android.support.v4.widget.CursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -58,6 +59,9 @@ public class Tecnico extends Activity implements OnClickListener {
 		guardar.setOnClickListener(this);
 		atras.setOnClickListener(this);
 		foto.setOnClickListener(this);
+		
+		eliminar.setEnabled(false);
+		editar.setEnabled(false);
 
 		nombre.setThreshold(1);
 		Cursor cursor = db.TecnicoAutoComplete("");
@@ -72,6 +76,8 @@ public class Tecnico extends Activity implements OnClickListener {
 						.toString());
 				if (c.moveToFirst())
 					LlenarCampos(c);
+				eliminar.setEnabled(true);
+				OculTeclado(nombre);
 			}
 		});
 
@@ -82,6 +88,9 @@ public class Tecnico extends Activity implements OnClickListener {
 		direccion.setText(c.getString(c.getColumnIndexOrThrow("dirtec")));
 		tel.setText(c.getString(c.getColumnIndexOrThrow("teltec")));
 		email.setText(c.getString(c.getColumnIndexOrThrow("email")));
+		eliminar.setEnabled(true);
+		editar.setEnabled(true);
+		guardar.setEnabled(false);
 		byte[] img = c.getBlob(c.getColumnIndexOrThrow("foto"));
 		if (img != null) {
 			foto.setImageBitmap(Util.GetImage(img));
@@ -111,8 +120,8 @@ public class Tecnico extends Activity implements OnClickListener {
 		}
 
 		if (v == eliminar) {
-			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setMessage("Â¿Desea eliminar este Tecnico?")
+			AlertDialog.Builder builder = new AlertDialog.Builder(this,android.R.style.Theme_Holo_Dialog_MinWidth);
+			builder.setMessage("¿Desea eliminar este Tecnico?")
 					.setTitle("Advertencia")
 					.setCancelable(false)
 					.setNegativeButton("Cancelar",
@@ -126,11 +135,10 @@ public class Tecnico extends Activity implements OnClickListener {
 							new DialogInterface.OnClickListener() {
 								public void onClick(DialogInterface dialog,
 										int id) {
-									if (!db.EliminarTecnico(cedula.getText()
-											.toString()))
+									db.EliminarTecnico(cedula.getText()
+											.toString());
 										Util.MensajeCorto(Tecnico.this,
-												"No se puede eliminar este Tecnico");
-									else
+												"Tecnico Eliminado");
 										Reset();
 								}
 							});
@@ -162,6 +170,8 @@ public class Tecnico extends Activity implements OnClickListener {
 					.toString(), email.getText().toString(),
 					Util.GetBytes(((BitmapDrawable) foto.getDrawable())
 							.getBitmap()));
+			Util.MensajeCorto(Tecnico.this, "Tecnico Guardado");
+			Reset();
 		} else
 			Util.MensajeCorto(this, "Llene Todos Los Campos");
 
@@ -220,6 +230,11 @@ public class Tecnico extends Activity implements OnClickListener {
 		Intent intent = getIntent();
 		finish();
 		startActivity(intent);
+	}
+	
+	protected void OculTeclado(View v) {
+		InputMethodManager tecladoVirtual = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+		tecladoVirtual.hideSoftInputFromWindow(v.getWindowToken(), 0);
 	}
 
 }

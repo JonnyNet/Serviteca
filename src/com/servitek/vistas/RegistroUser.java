@@ -31,7 +31,7 @@ public class RegistroUser extends Activity implements OnClickListener {
 	private Button menu, eliminar, crear, editar;
 	private ImageButton foto;
 	private Spinner opt;
-	private String[] tipos = { "Tipo de Cuenta", "Admin", "Estandar", "Tecnico" };
+	private String[] tipos = { "Tipo de Cuenta", "Admin", "Estandar"};
 	private AutoCompleteUser adap;
 	private Admin_BD db;
 	private Intent camara;
@@ -111,14 +111,14 @@ public class RegistroUser extends Activity implements OnClickListener {
 						nombre.getText().toString(), cedula.getText()
 								.toString(), direccion.getText().toString(),
 						celular.getText().toString(), email.getText()
-								.toString(), opt.getSelectedItem().toString(),
+								.toString(), opt.getSelectedItemPosition(),
 						Util.GetBytes(((BitmapDrawable) foto.getDrawable())
 								.getBitmap()));
 
 			} else
 				Util.MensajeCorto(this, "Llene Todos Los Campos");
 		} else
-			Util.MensajeCorto(this, "ContraseÃ±as No Coinciden");
+			Util.MensajeCorto(this, "Contraseñas No Coinciden");
 	}
 
 	@Override

@@ -52,12 +52,13 @@ public class Compra extends Activity implements OnClickListener,
 	private FechaAdapter fdate;
 	private TecnicoAdacter tec;
 	private boolean sw = true;
-	private ProgressDialog pd;
 	private Button d, d2, a, a2;
+	private String activity;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		activity = getIntent().getStringExtra("activity");
 		setContentView(R.layout.archivos);
 		bd = new Admin_BD(this);
 		ltab1 = (ListView) findViewById(R.id.ltab1);
@@ -191,7 +192,7 @@ public class Compra extends Activity implements OnClickListener,
 	@Override
 	public void onClick(View v) {
 		if (v == menu) {
-			Intent intent = new Intent(Compra.this, Accion.class);
+			Intent intent = new Intent(activity);
 			startActivity(intent);
 			finish();
 		}
@@ -288,16 +289,15 @@ public class Compra extends Activity implements OnClickListener,
 	}
 
 	private void operacion() {
+		final ProgressDialog pro = new ProgressDialog(Compra.this,
+				android.R.style.Theme_Holo_Dialog_MinWidth);
 		new AsyncTask<Void, Void, Cursor>() {
 
 			@Override
 			protected void onPreExecute() {
-				if (pd == null) {
-					pd = ProgressDialog.show(Compra.this, "Buscando",
-							"Espere unos segundos...", true, false);
-				} else {
-					pd.onStart();
-				}
+				pro.setTitle("Buscando...");
+				pro.setMessage("Espere Porfavor");
+				pro.show();
 			}
 
 			@Override
@@ -307,7 +307,7 @@ public class Compra extends Activity implements OnClickListener,
 					return c;
 				} else if (tabs.getCurrentTabTag().equals("mitab2")) {
 					Cursor c = bd.BuscarPorTecnico(tecnico
-							.getSelectedItemPosition() + 1, desde.getText()
+							.getSelectedItemPosition(), desde.getText()
 							.toString(), hasta.getText().toString());
 					return c;
 				} else {
@@ -319,6 +319,8 @@ public class Compra extends Activity implements OnClickListener,
 
 			@Override
 			protected void onPostExecute(Cursor result) {
+				pro.dismiss();
+				
 				if (tabs.getCurrentTabTag().equals("mitab1")) {
 					ListaTabs1(result);
 				} else if (tabs.getCurrentTabTag().equals("mitab2")) {
@@ -326,7 +328,7 @@ public class Compra extends Activity implements OnClickListener,
 				} else {
 					ListaTabs3(result);
 				}
-				pd.dismiss();
+				
 			}
 		}.execute();
 	}
@@ -341,23 +343,13 @@ public class Compra extends Activity implements OnClickListener,
 			Cursor movil = bd.BuscarPlaca(placa);
 			String cc = movil.getString(movil.getColumnIndexOrThrow("Codter"));
 			Cursor usuario = bd.BuscarCliente(cc);
-			
-			String mar = movil.getString(movil.getColumnIndexOrThrow("Codmarca"));
-			Log.e("gkgkh", cod);
-			
-			Cursor marcas = bd.Cursor2("Mov_Marcas", "codmarca", mar);
 			Cursor servi = bd.Cursor2("Servicios", "codser", cod);
-			
-			String marca = marcas.getString(marcas.getColumnIndexOrThrow("nombre"));
-
 			String cliente = usuario.getString(usuario.getColumnIndexOrThrow("Nomter"));
-			String orden = c.getString(c.getColumnIndexOrThrow("norde"));
 			String servicio = servi.getString(servi.getColumnIndexOrThrow("nomser"));
 			String valor = c.getInt(c.getColumnIndexOrThrow("total")) + "";
 			String cant = c.getInt(c.getColumnIndexOrThrow("cantd")) + "";
 			String fecha = c.getString(c.getColumnIndexOrThrow("fecha"));
-			Item item = new Item(servicio, placa, orden, valor, marca, cant,
-					cliente, fecha);
+			Item item = new Item(servicio, placa, valor, cant, cliente, fecha);
 			list.add(item);
 
 		}

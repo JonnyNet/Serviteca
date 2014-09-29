@@ -136,9 +136,16 @@ public class Login extends ActionBarActivity implements OnClickListener {
 		if (c.moveToFirst()) {
 			String p = c.getString(c.getColumnIndexOrThrow("pass"));
 			if (p.equals(password.getText().toString())) {
-				Intent intent = new Intent("com.example.servitek.ACCION");
-				startActivity(intent);
-				finish();
+				int aux = c.getInt(c.getColumnIndexOrThrow("tipo"));
+				if (aux == 1) {
+					Intent intent = new Intent(Login.this, Accion.class);
+					startActivity(intent);
+					finish();
+				} else {
+					Intent intent = new Intent(Login.this, Standar.class);
+					startActivity(intent);
+					finish();
+				}
 			} else
 				Util.MensajeCorto(this, "Password Incorrecto");
 		} else
