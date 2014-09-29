@@ -15,9 +15,11 @@
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp" >
+        android:layout_marginTop="70dp" >
 
-        <TableRow android:padding="15dp" >
+        <TableRow
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp" >
 
             <ImageButton
                 android:id="@+id/vehiculo"
@@ -44,15 +46,34 @@
                 android:src="@drawable/cartvacio" />
         </TableRow>
 
-        <TableRow android:padding="15dp" >
+        <TableRow android:weightSum="2" >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:text="VEHICULO" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:text="SERVICIOS" />
+        </TableRow>
+
+        <TableRow
+            android:layout_marginTop="30dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp" >
 
             <ImageButton
                 android:id="@+id/det"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="30dp"
-                android:layout_marginRight="30dp"
                 android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
                 android:layout_weight="1"
                 android:background="@drawable/imgbutton"
                 android:contentDescription="@string/detalles_de_compra"
@@ -63,23 +84,43 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
-                android:layout_marginStart="30dp"
                 android:layout_marginRight="30dp"
+                android:layout_marginStart="30dp"
                 android:layout_weight="1"
                 android:background="@drawable/imgbutton"
                 android:contentDescription="@string/config"
                 android:src="@drawable/configuraciones" />
         </TableRow>
 
-        <TableRow android:padding="15dp" >
+        <TableRow android:weightSum="2" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:text="DETALLES" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:text="CONFIGURAR" />
+        </TableRow>
+
+        <TableRow
+            android:layout_marginTop="30dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp" >
 
             <ImageButton
                 android:id="@+id/user"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="30dp"
-                android:layout_marginRight="30dp"
                 android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
                 android:layout_weight="1"
                 android:background="@drawable/imgbutton"
                 android:contentDescription="@string/detalles_de_compra"
@@ -90,12 +131,29 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
-                android:layout_marginStart="30dp"
                 android:layout_marginRight="30dp"
+                android:layout_marginStart="30dp"
                 android:layout_weight="1"
                 android:background="@drawable/imgbutton"
                 android:contentDescription="@string/config"
                 android:src="@drawable/logout" />
+        </TableRow>
+
+        <TableRow android:weightSum="2" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:text="USUARIOS" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:text="SALIR" />
         </TableRow>
     </TableLayout>
 
