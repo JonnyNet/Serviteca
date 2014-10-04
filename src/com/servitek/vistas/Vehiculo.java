@@ -13,6 +13,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -227,24 +228,22 @@ public class Vehiculo extends ActionBarActivity implements OnClickListener {
 				&& marca.getSelectedItemPosition() != 0
 				&& tipo.getSelectedItemPosition() != 0 && cc != 0) {
 
-			if (bd.RegistrarVehiculo(cedula.getText().toString(), nombre
+			bd.RegistrarVehiculo(cedula.getText().toString(), nombre
 					.getText().toString(), direccion.getText().toString(),
 					celular.getText().toString(), "hola", mail.getText()
 							.toString(), placa.getText().toString(), marca
-							.getSelectedItemPosition(), cc + "", modelo
-							.getText().toString(), tipo
+							.getSelectedItemPosition(), cc , Integer.parseInt(modelo 
+									.getText().toString()), tipo
 							.getSelectedItemPosition(), Util
 							.GetBytes(((BitmapDrawable) imagen.getDrawable())
 									.getBitmap()), Util
 							.GetBytes(((BitmapDrawable) imagen2.getDrawable())
 									.getBitmap()), Util
 							.GetBytes(((BitmapDrawable) imagen3.getDrawable())
-									.getBitmap()), sw)) {
+									.getBitmap())); 
+			
 				Util.MensajeCorto(this, "Registro Exitoso");
-				Reset();
-			} else {
-				Util.MensajeCorto(this, "Error al registrar");
-			}
+				Limpiar();
 
 		} else {
 
@@ -424,6 +423,22 @@ public class Vehiculo extends ActionBarActivity implements OnClickListener {
 			carcolor.setBackgroundColor(cc);
 		}
 	};
+	
+	private void Limpiar(){
+		placa.setText("");
+		cedula.setText("");
+		nombre.setText("");
+		direccion.setText("");
+		celular.setText("");
+		mail.setText("");
+		modelo.setText("");
+		tipo.setSelection(0);
+		marca.setSelection(0);
+		color.setBackgroundColor(Color.TRANSPARENT);
+		imagen.setBackgroundResource(R.drawable.ic_launcherg);
+		imagen2.setBackgroundResource(R.drawable.ic_launcherg);
+		imagen3.setBackgroundResource(R.drawable.ic_launcherg);
+	}
 
 	private void Reset() {
 		Intent intent = getIntent();

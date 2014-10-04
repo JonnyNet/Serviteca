@@ -33,7 +33,7 @@ public class Admin_BD {
 	public static final String sql1 = "CREATE TABLE " + Tabla_Movil + " ( "
 			+ "placa  Varchar primary key not null , "
 			+ "Codter	Varchar not null, " + "Codmarca Char not null, "
-			+ "Codcolor Char not null, " + "Modelo	Integer  null, "
+			+ "Codcolor Integer not null, " + "Modelo	Integer  null, "
 			+ "Codclase Char not null," + "syncro	Integer  not null, "
 			+ "fecha_ingreso TIMESTAMP NOT NULL DEFAULT current_timestamp )";
 
@@ -101,11 +101,13 @@ public class Admin_BD {
 	private Bdhelper helper;
 	private SQLiteDatabase bd;
 	public static final String tag = "mytag";
+	private ListenerDB syncro;
 
 	// constructor de la classe
 	public Admin_BD(Context c) {
 		helper = new Bdhelper(c);
 		bd = helper.getWritableDatabase();
+		syncro = new Syncro(c);
 	}
 
 	// contenedores de valores para el registro del vehiculo y cliente en la
@@ -126,7 +128,7 @@ public class Admin_BD {
 	}
 
 	private ContentValues ContenedorMovil(String placa, String cc, int marca,
-			String color, String modelo, int tipo) {
+			int color, int modelo, int tipo) {
 		ContentValues valores = new ContentValues();
 		valores.put("placa", placa);
 		valores.put("Codter", cc);
@@ -148,33 +150,40 @@ public class Admin_BD {
 		return v;
 	}
 
-	private long InsertarMovil(String placa, String cc, int marca,
-			String color, String modelo, int tipo) {
+	private long InsertarMovil(String placa, String cc, int marca, int color,
+			int modelo, int tipo) {
 		ContentValues datos = ContenedorMovil(placa, cc, marca, color, modelo,
 				tipo);
 		long v = bd.insert(Tabla_Movil, null, datos);
 		return v;
 	}
 
-	public boolean RegistrarVehiculo(String cc, String nombre, String dir,
+	public void RegistrarVehiculo(String cc, String nombre, String dir,
 			String tel, String coddane, String mail, String placa, int marca,
-			String color, String modelo, int tipo, byte[] image, byte[] image2,
-			byte[] image3, boolean b) {
+			int color, int modelo, int tipo, byte[] image, byte[] image2,
+			byte[] image3) {
+		syncro.NuevoCliente(cc, nombre, dir, tel, mail, placa, marca, color, modelo, tipo);
+		InsertarMovil(placa, cc, marca, color, modelo, tipo);
+		FotoCarro(placa, image, image2, image3);
+		InsertarCliente(cc, nombre, dir, tel, coddane, mail);
 
-		if (b) {
-			long v1 = InsertarMovil(placa, cc, marca, color, modelo, tipo);
-			long v3 = FotoCarro(placa, image, image2, image3);
-			long v2 = InsertarCliente(cc, nombre, dir, tel, coddane, mail);
+	}
 
-			if (v1 == -1 && v2 == -1 && v3 == -1) {
-				return false;
-			} else {
-				return true;
-			}
+	// editar datos del cliente
 
+	public long EditarCliente(String cc, String nombre, String dir, String tel,
+			String dane, String email, String placa) {
+		Cursor c = BuscarCliente(cc);
+		if (c.moveToFirst()) {
+			return bd.update(Tabla_Cliente,
+					ContenedorCliente(cc, nombre, dir, tel, dane, email),
+					"Codter =? ", new String[] { cc });
 		} else {
-
-			return false;
+			Log.i(tag, placa);
+			ContentValues valor = new ContentValues();
+			valor.put("Codter", cc);
+			bd.update(Tabla_Movil, valor, "placa =?", new String[] { placa });
+			return InsertarCliente(cc, nombre, dir, tel, dane, email);
 		}
 	}
 
@@ -215,7 +224,7 @@ public class Admin_BD {
 
 	public String NombreTecnico(int id) {
 		Cursor c = bd.rawQuery("SELECT * FROM Tecnicos WHERE _id =?",
-				new String[] { id +"" });
+				new String[] { id + "" });
 		c.moveToFirst();
 		return c.getString(c.getColumnIndexOrThrow("codtec"));
 	}
@@ -261,24 +270,6 @@ public class Admin_BD {
 				+ " =?", new String[] { dato });
 		c.moveToFirst();
 		return c;
-	}
-
-	// editar datos del cliente
-
-	public long EditarCliente(String cc, String nombre, String dir, String tel,
-			String dane, String email, String placa) {
-		Cursor c = BuscarCliente(cc);
-		if (c.moveToFirst()) {
-			return bd.update(Tabla_Cliente,
-					ContenedorCliente(cc, nombre, dir, tel, dane, email),
-					"Codter =? ", new String[] { cc });
-		} else {
-			Log.i(tag, placa);
-			ContentValues valor = new ContentValues();
-			valor.put("Codter", cc);
-			bd.update(Tabla_Movil, valor, "placa =?", new String[] { placa });
-			return InsertarCliente(cc, nombre, dir, tel, dane, email);
-		}
 	}
 
 	// cursor para autocompletetextview
