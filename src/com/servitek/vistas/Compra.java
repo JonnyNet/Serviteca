@@ -15,6 +15,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -103,18 +104,19 @@ public class Compra extends Activity implements OnClickListener,
 
 		TabHost.TabSpec spec = tabs.newTabSpec("mitab1");
 		spec.setContent(R.id.tab1);
-		spec.setIndicator("", res.getDrawable(android.R.drawable.ic_menu_view));
+		spec.setIndicator("", res.getDrawable(R.drawable.icomsol));
 		tabs.addTab(spec);
 
 		spec = tabs.newTabSpec("mitab2");
 		spec.setContent(R.id.tab2);
-		spec.setIndicator("", res.getDrawable(android.R.drawable.ic_dialog_map));
+		spec.setIndicator("", res.getDrawable(R.drawable.icomtec));
 		tabs.addTab(spec);
 
 		spec = tabs.newTabSpec("mitab3");
 		spec.setContent(R.id.tab3);
-		spec.setIndicator("", res.getDrawable(android.R.drawable.ic_dialog_map));
+		spec.setIndicator("", res.getDrawable(R.drawable.icomcal));
 		tabs.addTab(spec);
+
 		tabs.setOnTabChangedListener(new OnTabChangeListener() {
 
 			@Override
@@ -194,6 +196,7 @@ public class Compra extends Activity implements OnClickListener,
 		if (v == menu) {
 			Intent intent = new Intent(activity);
 			startActivity(intent);
+			overridePendingTransition(R.anim.left_in, R.anim.left_out);
 			finish();
 		}
 		if (v == d | v == d2) {
@@ -354,5 +357,13 @@ public class Compra extends Activity implements OnClickListener,
 
 		}
 		return list;
+	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			return false;
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 }

@@ -35,6 +35,14 @@ public class Util {
 		return c;
 	}
 	
+	public static long NunOrden() {
+		Calendar hoy = Calendar.getInstance();
+		SimpleDateFormat formato = new SimpleDateFormat("yyyyMMdd",Locale.US);
+		String id = formato.format(hoy.getTime()).toString()+"001";
+		long c = Long.parseLong(id);
+		return c;
+	}
+	
 	
 	/////////////////////////////////////Color del carro
 	

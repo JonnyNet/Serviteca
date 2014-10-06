@@ -4,11 +4,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
+
+
 
 import com.clases.controladores.Util;
 import com.example.servitek.R;
@@ -17,7 +19,7 @@ public class Config extends Activity implements OnClickListener {
 
 	EditText ip, puerto, user, pass, nombre;
 	Button menu, guardar, editar;
-	ImageButton servicio, tecnico;
+	Button servicio, tecnico;
 	private SharedPreferences bdsgl;
 	private SharedPreferences.Editor sqleditor;
 
@@ -32,9 +34,9 @@ public class Config extends Activity implements OnClickListener {
 		user = (EditText) findViewById(R.id.user);
 		pass = (EditText) findViewById(R.id.password);
 
-		servicio = (ImageButton) findViewById(R.id.servicio);
+		servicio = (Button) findViewById(R.id.servicio);
 		servicio.setOnClickListener(this);
-		tecnico = (ImageButton) findViewById(R.id.tecnico);
+		tecnico = (Button) findViewById(R.id.tecnico);
 		tecnico.setOnClickListener(this);
 
 		menu = (Button) findViewById(R.id.menu);
@@ -64,6 +66,7 @@ public class Config extends Activity implements OnClickListener {
 		if (v == menu) {
 			Intent intent = new Intent(Config.this, Accion.class);
 			startActivity(intent);
+			overridePendingTransition(R.anim.zoom_forward_in, R.anim.zoom_forward_out);
 			finish();
 		}
 
@@ -76,12 +79,14 @@ public class Config extends Activity implements OnClickListener {
 		if (v == servicio) {
 			Intent intent = new Intent(Config.this, Servicios.class);
 			startActivity(intent);
+			overridePendingTransition(R.anim.right_in, R.anim.right_out);
 			finish();
 		}
 
 		if (v == tecnico) {
 			Intent intent = new Intent(Config.this, Tecnico.class);
 			startActivity(intent);
+			overridePendingTransition(R.anim.left_in, R.anim.left_out); 
 			finish();
 		}
 
@@ -111,6 +116,14 @@ public class Config extends Activity implements OnClickListener {
 		puerto.setFocusableInTouchMode(b);
 		user.setFocusableInTouchMode(b);
 		pass.setFocusableInTouchMode(b);
+	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			return false;
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 
 }

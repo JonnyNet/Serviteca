@@ -13,11 +13,10 @@ public class SplashActivity extends Activity{
 
 	 
 	  @Override
-	    public void onCreate(Bundle savedInstanceState) {
+	    public void onCreate(Bundle savedInstanceState) {  
 		  super.onCreate(savedInstanceState);
 		  
 		  setContentView(R.layout.splash);
-		  
 	        new Handler().postDelayed(new Runnable(){
 	            public void run(){
 	        	Intent intent = new Intent(SplashActivity.this, Login.class);

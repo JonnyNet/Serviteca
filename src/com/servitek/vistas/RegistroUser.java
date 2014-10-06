@@ -2,14 +2,17 @@ package com.servitek.vistas;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
@@ -31,7 +34,7 @@ public class RegistroUser extends Activity implements OnClickListener {
 	private Button menu, eliminar, crear, editar;
 	private ImageButton foto;
 	private Spinner opt;
-	private String[] tipos = { "Tipo de Cuenta", "Admin", "Estandar"};
+	private String[] tipos = { "Tipo de Cuenta", "Admin", "Estandar" };
 	private AutoCompleteUser adap;
 	private Admin_BD db;
 	private Intent camara;
@@ -65,7 +68,7 @@ public class RegistroUser extends Activity implements OnClickListener {
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_spinner_dropdown_item, tipos);
 		opt.setAdapter(adapter);
-		
+
 		user.setThreshold(1);
 		Cursor cursor = db.LoginAutoComplete("");
 		adap = new AutoCompleteUser(getApplicationContext(), cursor, db);
@@ -77,8 +80,12 @@ public class RegistroUser extends Activity implements OnClickListener {
 					int position, long id) {
 				Cursor c = db.Cursor2("Login", "user", user.getText()
 						.toString());
-				if (c.moveToFirst())
+				if (c.moveToFirst()) {
 					LlenarCampos(c);
+					Activar(false);
+					OculTeclado(user);
+					crear.setEnabled(false);
+				}
 			}
 		});
 
@@ -98,7 +105,7 @@ public class RegistroUser extends Activity implements OnClickListener {
 	}
 
 	private void Registrar() {
-		if (pass1.getText().toString().equals(pass2.getText().toString())) {
+		if (pass1.getText().toString().equals(pass2.getText().toString()) && !pass1.getText().toString().equals("")) {
 			if (!user.getText().toString().equals("")
 					&& !nombre.getText().toString().equals("")
 					&& !cedula.getText().toString().equals("")
@@ -114,6 +121,7 @@ public class RegistroUser extends Activity implements OnClickListener {
 								.toString(), opt.getSelectedItemPosition(),
 						Util.GetBytes(((BitmapDrawable) foto.getDrawable())
 								.getBitmap()));
+				Reset();
 
 			} else
 				Util.MensajeCorto(this, "Llene Todos Los Campos");
@@ -126,18 +134,24 @@ public class RegistroUser extends Activity implements OnClickListener {
 		if (v == menu) {
 			Intent intent = new Intent(RegistroUser.this, Accion.class);
 			startActivity(intent);
+			overridePendingTransition(R.anim.zoom_back_in, R.anim.zoom_back_out);
 			finish();
 		}
 
-		if (v == crear | v == editar){
+		if (v == crear) {
 			Registrar();
-			Reset();
+		}
+
+		if (v == editar) {
+			Activar(true);
+			crear.setEnabled(true);
+			editar.setEnabled(false);
+			eliminar.setEnabled(false);
 		}
 
 		if (v == eliminar) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setMessage(
-					"¿Desea eliminar este usuario?")
+			builder.setMessage("¿Desea eliminar este usuario?")
 					.setTitle("Advertencia")
 					.setCancelable(false)
 					.setNegativeButton("Cancelar",
@@ -151,8 +165,10 @@ public class RegistroUser extends Activity implements OnClickListener {
 							new DialogInterface.OnClickListener() {
 								public void onClick(DialogInterface dialog,
 										int id) {
-									if (!db.EliminarUser(user.getText().toString()))
-										Util.MensajeCorto(RegistroUser.this, "No se puede eliminar este usuario");
+									if (!db.EliminarUser(user.getText()
+											.toString()))
+										Util.MensajeCorto(RegistroUser.this,
+												"No se puede eliminar este usuario");
 									else
 										Reset();
 								}
@@ -163,6 +179,19 @@ public class RegistroUser extends Activity implements OnClickListener {
 		if (v == foto)
 			TomarFoto();
 
+	}
+
+	private void Activar(boolean b) {
+		user.setEnabled(b);
+		nombre.setFocusableInTouchMode(b);
+		cedula.setFocusableInTouchMode(b);
+		direccion.setFocusableInTouchMode(b);
+		celular.setFocusableInTouchMode(b);
+		email.setFocusableInTouchMode(b);
+		opt.setEnabled(b);
+		pass1.setFocusableInTouchMode(b);
+		pass2.setFocusableInTouchMode(b);
+		foto.setEnabled(b);
 	}
 
 	private void TomarFoto() {
@@ -181,11 +210,24 @@ public class RegistroUser extends Activity implements OnClickListener {
 			foto.setImageBitmap(bmt);
 		}
 	}
-	
+
 	private void Reset() {
 		Intent intent = getIntent();
 		finish();
 		startActivity(intent);
+	}
+	
+	protected void OculTeclado(View v) {
+		InputMethodManager tecladoVirtual = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+		tecladoVirtual.hideSoftInputFromWindow(v.getWindowToken(), 0);
+	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			return false;
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 
 }

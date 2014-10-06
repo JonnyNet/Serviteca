@@ -1,212 +1,227 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#E1D84F" >
+    android:background="@drawable/fondoapp1"
+    android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="fill_parent"
+        android:id="@+id/form"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="15dp" >
+        android:orientation="vertical" 
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:layout_marginTop="15dp">
 
-        <LinearLayout
-            android:id="@+id/form"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
-
-            <RelativeLayout
+        <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent" >
-            
-            <AutoCompleteTextView 
-            android:id="@+id/Autocom"
+
+            <AutoCompleteTextView
+                android:id="@+id/Autocom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/edittext_select"
+                android:completionThreshold="1"
+                android:hint="@string/placa"
+                android:maxLength="9"
+                android:textSize="60sp"
+                android:textStyle="bold" />
+
+            <ImageButton
+                android:id="@+id/borrar"
+                android:layout_width="100dp"
+                android:layout_height="80dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="5dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/borrar_pantalla"
+                android:src="@drawable/abc_ic_ab_back_holo_light" />
+        </RelativeLayout>
+
+        <EditText
+            android:id="@+id/cedula"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
             android:background="@drawable/edittext_select"
-            android:hint="@string/placa"
-            android:maxLength="9"
-            android:textSize="60sp"
-            android:textStyle="bold"
-            android:completionThreshold="1"/>
-            
-            <ImageButton 
-                android:layout_width="100dp"
-                android:layout_height="80dp"
-                android:layout_marginTop="5dp"
-                android:layout_alignParentRight="true" 
-                android:layout_alignParentEnd="true"
-                android:src="@drawable/abc_ic_ab_back_holo_light"
-                android:background="@android:color/transparent"
-                android:id="@+id/borrar" 
-                android:contentDescription="@string/borrar_pantalla"/> 
-        </RelativeLayout>
+            android:hint="@string/cedula"
+            android:inputType="number"
+            android:singleLine="true" />
 
-            <EditText
-                android:id="@+id/cedula"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:background="@drawable/edittext_select"
-                android:hint="@string/cedula"
-                android:inputType="number" 
-                android:singleLine="true"/>
-
-            <EditText
-                android:id="@+id/nombre"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:background="@drawable/edittext_select"
-                android:hint="@string/nombre"
-                android:inputType="text" />
-
-            <EditText
-                android:id="@+id/dir"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:background="@drawable/edittext_select"
-                android:hint="@string/direccion"
-                android:inputType="text" />
-
-            <EditText
-                android:id="@+id/tel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:background="@drawable/edittext_select"
-                android:hint="@string/celular"
-                android:inputType="phone" />
-
-            <EditText
-                android:id="@+id/mail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:background="@drawable/edittext_select"
-                android:hint="@string/email"
-                android:inputType="textEmailAddress" />
-
-            <EditText
-                android:id="@+id/model"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:background="@drawable/edittext_select"
-                android:hint="@string/modelo"
-                android:inputType="number" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal" 
-                android:layout_marginTop="7dp">
-
-                <Button
-                    android:id="@+id/btcolor"
-                    android:layout_width="110dp"
-                    android:layout_height="wrap_content" 
-                    android:text="@string/color"/>
-
-                <TextView
-                    android:id="@+id/carcolor"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginStart="10dp"
-                    android:background="#fff" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/nombre"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal" >
+            android:layout_marginTop="3dp"
+            android:background="@drawable/edittext_select"
+            android:hint="@string/nombre"
+            android:inputType="text" />
 
-            <Spinner
-                android:id="@+id/marcas"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/spinner_select"/>
+        <EditText
+            android:id="@+id/dir"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:background="@drawable/edittext_select"
+            android:hint="@string/direccion"
+            android:inputType="text" />
 
-            <Spinner
-                android:id="@+id/tipos"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/spinner_select" />
-        </LinearLayout>
+        <EditText
+            android:id="@+id/tel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:background="@drawable/edittext_select"
+            android:hint="@string/celular"
+            android:inputType="phone" />
+
+        <EditText
+            android:id="@+id/mail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:background="@drawable/edittext_select"
+            android:hint="@string/email"
+            android:inputType="textEmailAddress" />
+
+        <EditText
+            android:id="@+id/model"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:background="@drawable/edittext_select"
+            android:hint="@string/modelo"
+            android:inputType="number" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal"
-            android:weightSum="3">
-
-            <ImageButton
-                android:id="@+id/foto"
-                android:layout_width="250sp"
-                android:layout_height="250dp"
-                android:layout_gravity="center_horizontal"
-                android:adjustViewBounds="true"
-                android:background="#E1D84F"
-                android:contentDescription="@string/fotovehiculo"
-                android:src="@drawable/ic_launcherg" 
-                android:layout_weight="1"
-                android:focusable="true"/>
-            
-            <ImageButton
-                android:id="@+id/foto2"
-                android:layout_width="250sp"
-                android:layout_height="250dp"
-                android:layout_gravity="center_horizontal"
-                android:adjustViewBounds="true"
-                android:background="#E1D84F"
-                android:contentDescription="@string/fotovehiculo"
-                android:src="@drawable/ic_launcherg" 
-                android:layout_weight="1"/>
-            
-            <ImageButton
-                android:id="@+id/foto3"
-                android:layout_width="250sp"
-                android:layout_height="250dp"
-                android:layout_gravity="center_horizontal"
-                android:adjustViewBounds="true"
-                android:background="#E1D84F"
-                android:contentDescription="@string/fotovehiculo"
-                android:src="@drawable/ic_launcherg" 
-                android:layout_weight="1"/>
-        </LinearLayout>
-
-     <LinearLayout
-            android:id="@+id/botones"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="7dp"
             android:orientation="horizontal" >
 
             <Button
-                android:id="@+id/guardar"
-                android:layout_width="wrap_content"
+                android:id="@+id/btcolor"
+                android:layout_width="110dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/guardar" 
-                style="@style/MultiGradient"/>
+                android:text="@string/color"
+                style="@style/MultiGradient" />
 
-            <Button
-                android:id="@+id/menu"
-                android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/carcolor"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/menu" 
-                style="@style/MultiGradient"/>
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:background="#fff" />
         </LinearLayout>
     </LinearLayout>
 
-</ScrollView>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal" 
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+        <Spinner
+            android:id="@+id/marcas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/spinner_select" />
+
+        <Spinner
+            android:id="@+id/tipos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/spinner_select" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal"
+        android:weightSum="3" 
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+        <ImageButton
+            android:id="@+id/foto"
+            android:layout_width="250sp"
+            android:layout_height="250dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:background="@drawable/fotoimg"
+            android:contentDescription="@string/fotovehiculo"
+            android:focusable="true"
+            android:src="@drawable/ic_launcherg"
+            android:layout_marginLeft="5dp" 
+            android:layout_marginStart="5dp"/>
+
+        <ImageButton
+            android:id="@+id/foto2"
+            android:layout_width="250sp"
+            android:layout_height="250dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:background="@drawable/fotoimg"
+            android:contentDescription="@string/fotovehiculo"
+            android:src="@drawable/ic_launcherg" 
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"/>
+
+        <ImageButton
+            android:id="@+id/foto3"
+            android:layout_width="250sp"
+            android:layout_height="250dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:background="@drawable/fotoimg"
+            android:contentDescription="@string/fotovehiculo"
+            android:src="@drawable/ic_launcherg" 
+            android:layout_marginRight="5dp"
+            android:layout_marginEnd="5dp"/>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/botones"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_weight="0.1"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+        <Button
+            android:id="@+id/guardar"
+            style="@style/MultiGradient"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:text="@string/guardar" />
+        
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/menu"
+        android:layout_width="fill_parent"
+        android:layout_height="60sp"
+        android:background="@drawable/atras"
+        android:drawableLeft="@drawable/menorque" 
+        android:drawableStart="@drawable/menorque"
+        android:text="@string/menu"
+        android:textColor="#FFFFFF"
+        android:typeface="monospace" />
+
+</LinearLayout>

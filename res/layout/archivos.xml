@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@color/fondo"
+    android:background="@drawable/fondoapp1"
     android:orientation="vertical" >
 
     <TabHost
@@ -39,7 +39,7 @@
                         android:id="@+id/ltab1"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
-                        android:dividerHeight="5dp" >
+                        android:dividerHeight="0dp" >
                     </ListView>
                 </LinearLayout>
 
@@ -116,7 +116,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         android:layout_marginTop="5dp"
-                        android:dividerHeight="5dp" >
+                        android:dividerHeight="0dp" >
                     </ListView>
                 </LinearLayout>
 
@@ -185,7 +185,7 @@
                         android:id="@+id/ltab3"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
-                        android:dividerHeight="5dp" >
+                        android:dividerHeight="0dp" >
                     </ListView>
                 </LinearLayout>
             </FrameLayout>
@@ -194,11 +194,14 @@
 
     <Button
         android:id="@+id/menu"
-        style="@style/MultiGradient"
-        android:layout_width="279dp"
+		android:background="@drawable/atras"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="5dp"
-        android:text="@string/menu" />
+        android:text="@string/menu"
+        android:drawableLeft="@drawable/menorque" 
+        android:drawableStart="@drawable/menorque"
+        android:textColor="#FFFFFF"/>
 
 </LinearLayout>

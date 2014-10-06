@@ -2,146 +2,170 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@color/fondo"
-    android:orientation="vertical"
-    android:padding="20dp" >
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/logo"
-        android:src="@drawable/logo2" />
+    android:background="@drawable/fondoapp1"
+    android:orientation="vertical" >
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="0.1"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/lineas"
         android:orientation="vertical"
-        android:padding="20dp" >
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp" 
+        android:layout_marginTop="10dp">
 
-        <TextView
+        <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/base_de_datos"
-            android:textStyle="bold" 
-            android:layout_marginTop="10dp"
-            android:textSize="50sp"/>
+            android:contentDescription="@string/logo"
+            android:src="@drawable/logo2" />
 
-        <EditText
-            android:id="@+id/ip"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/lineas"
+            android:orientation="vertical"
+            android:padding="20dp" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/base_de_datos"
+                android:textSize="50sp"
+                android:textStyle="bold" 
+                android:textColor="#FFFFFF" />
+
+            <EditText
+                android:id="@+id/ip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/edittext_select"
+                android:hint="@string/ip_"
+                android:inputType="text"
+                android:textSize="30sp" />
+
+            <EditText
+                android:id="@+id/puerto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/edittext_select"
+                android:hint="@string/puerto_"
+                android:inputType="number"
+                android:textSize="30sp" />
+
+            <EditText
+                android:id="@+id/nombre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/edittext_select"
+                android:hint="@string/Nombre"
+                android:inputType="text"
+                android:textSize="30sp" />
+
+            <EditText
+                android:id="@+id/user"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/edittext_select"
+                android:hint="@string/usuario"
+                android:inputType="text"
+                android:textSize="30sp" />
+
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/edittext_select"
+                android:hint="@string/contrase_a"
+                android:inputType="textPassword"
+                android:textSize="30sp" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:background="@drawable/edittext_select"
-            android:hint="@string/ip_"
-            android:inputType="text"
-            android:textSize="30sp" />
+            android:orientation="horizontal"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp" >
 
-        <EditText
-            android:id="@+id/puerto"
+            <Button
+                android:id="@+id/editar"
+                style="@style/MultiGradient"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:text="@string/editar" />
+
+            <Button
+                android:id="@+id/guardar"
+                style="@style/MultiGradient"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:text="@string/guardar" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/edittext_select"
-            android:hint="@string/puerto_"
-            android:inputType="number" 
-            android:textSize="30sp" />
-        
-        <EditText
-            android:id="@+id/nombre"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/edittext_select"
-            android:hint="@string/Nombre"
-            android:inputType="text" 
-            android:textSize="30sp" />
+            android:layout_marginTop="40dp"
+            android:orientation="horizontal"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:weightSum="2" >
 
-        <EditText
-            android:id="@+id/user"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/edittext_select"
-            android:hint="@string/usuario"
-            android:inputType="text"
-            android:textSize="30sp"  />
+            <Button
+                android:id="@+id/servicio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_weight="1"
+                android:background="@drawable/imgbutton"
+                android:contentDescription="@string/registrar_vehiculo"
+                android:drawableTop="@drawable/servicio"
+                android:text="@string/servicios" 
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"/>
 
-        <EditText
-            android:id="@+id/password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/edittext_select"
-            android:hint="@string/contrase_a"
-            android:inputType="textPassword" 
-            android:textSize="30sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal" >
-
-        <Button
-            android:id="@+id/editar"
-            style="@style/MultiGradient"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:text="@string/editar"
-            android:layout_marginRight="10dp"
-            android:layout_marginEnd="10dp" 
-            android:layout_weight="1" />
-
-        <Button
-            android:id="@+id/guardar"
-            style="@style/MultiGradient"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:text="@string/guardar" 
-            android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_weight="1"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal"
-        android:weightSum="2" >
-
-        <ImageButton
-            android:id="@+id/servicio"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_weight="1"
-            android:contentDescription="@string/registrar_vehiculo"
-            android:src="@drawable/servicio" />
-
-        <ImageButton
-            android:id="@+id/tecnico"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_weight="1"
-            android:contentDescription="@string/orden_de_compra"
-            android:src="@drawable/casco" />
+            <Button
+                android:id="@+id/tecnico"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_weight="1"
+                android:background="@drawable/imgbutton"
+                android:contentDescription="@string/orden_de_compra"
+                android:drawableTop="@drawable/casco" 
+                android:textColor="#FFFFFF"
+                android:text="@string/tecnicos" 
+                android:textSize="20sp"/>
+        </LinearLayout>
     </LinearLayout>
 
     <Button
         android:id="@+id/menu"
-        style="@style/MultiGradient"
-        android:layout_width="279dp"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
         android:layout_marginTop="20dp"
-        android:text="@string/menu" />
+        android:background="@drawable/atras"
+        android:drawableLeft="@drawable/menorque"
+        android:drawableStart="@drawable/menorque"
+        android:text="@string/menu"
+        android:textColor="#FFFFFF" />
 
 </LinearLayout>

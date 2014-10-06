@@ -74,7 +74,7 @@ public class Admin_BD {
 			+ "bitmap3 BLOB not null)";
 
 	public static final String sql9 = "CREATE TABLE " + Tabla_Maeorden + " ( "
-			+ "norde Integer primary key autoincrement, "
+			+ "norde Integer primary key, "
 			+ "placa varchar not null , " + "subtal Integer  not null, "
 			+ "iva	Integer null," + "valfact Integer  not null, "
 			+ "estado char not null, " + "syncro  Integer not null,"
@@ -127,15 +127,15 @@ public class Admin_BD {
 
 	}
 
-	private ContentValues ContenedorMovil(String placa, String cc, int marca,
-			int color, int modelo, int tipo) {
+	private ContentValues ContenedorMovil(String placa, String cc,
+			String marca, int color, int modelo, String tipo) {
 		ContentValues valores = new ContentValues();
 		valores.put("placa", placa);
 		valores.put("Codter", cc);
-		valores.put("Codmarca", CodigoNombre("Mov_Marcas", marca));
+		valores.put("Codmarca", marca);
 		valores.put("Codcolor", color);
 		valores.put("Modelo", modelo);
-		valores.put("Codclase", CodigoNombre("Mov_Clases", tipo));
+		valores.put("Codclase", tipo);
 		valores.put("syncro", 0);
 		return valores;
 	}
@@ -150,8 +150,8 @@ public class Admin_BD {
 		return v;
 	}
 
-	private long InsertarMovil(String placa, String cc, int marca, int color,
-			int modelo, int tipo) {
+	private long InsertarMovil(String placa, String cc, String marca,
+			int color, int modelo, String tipo) {
 		ContentValues datos = ContenedorMovil(placa, cc, marca, color, modelo,
 				tipo);
 		long v = bd.insert(Tabla_Movil, null, datos);
@@ -162,24 +162,31 @@ public class Admin_BD {
 			String tel, String coddane, String mail, String placa, int marca,
 			int color, int modelo, int tipo, byte[] image, byte[] image2,
 			byte[] image3) {
-		syncro.NuevoCliente(cc, nombre, dir, tel, mail, placa, marca, color, modelo, tipo);
-		InsertarMovil(placa, cc, marca, color, modelo, tipo);
+
+		String m = CodigoNombre("Mov_Marcas", marca);
+		String t = CodigoNombre("Mov_Clases", tipo);
+
+		syncro.NuevoCliente(cc, nombre, dir, tel, mail, placa,
+				Integer.parseInt(m), color, modelo, Integer.parseInt(t));
+
+		InsertarMovil(placa, cc, m, color, modelo, t);
 		FotoCarro(placa, image, image2, image3);
 		InsertarCliente(cc, nombre, dir, tel, coddane, mail);
 
 	}
 
 	// editar datos del cliente
-
 	public long EditarCliente(String cc, String nombre, String dir, String tel,
 			String dane, String email, String placa) {
+
+		syncro.UpdateCliente(cc, nombre, dir, tel, dane, email, placa);
+
 		Cursor c = BuscarCliente(cc);
 		if (c.moveToFirst()) {
 			return bd.update(Tabla_Cliente,
 					ContenedorCliente(cc, nombre, dir, tel, dane, email),
 					"Codter =? ", new String[] { cc });
 		} else {
-			Log.i(tag, placa);
 			ContentValues valor = new ContentValues();
 			valor.put("Codter", cc);
 			bd.update(Tabla_Movil, valor, "placa =?", new String[] { placa });
@@ -355,11 +362,12 @@ public class Admin_BD {
 						new String[] { norde + "" });
 	}
 
-	public int OrdeneCompra(String placa, int cod, String[] datos) {
+	public long OrdeneCompra(String placa, long cod, String[] datos) {
 		if (cod == 0) {
 			cod = NextOrden();
+			Log.i("dfhsdhsyheryhseryheryhrehryhrtyhrsty", cod+"");
 			InsertItemDetalle(placa, cod, datos);
-			InsertMaestroDetalles(placa, Integer.parseInt(datos[4]),
+			InsertMaestroDetalles(cod, placa, Integer.parseInt(datos[4]),
 					Integer.parseInt(datos[5]), Integer.parseInt(datos[6]));
 			return cod;
 		} else {
@@ -370,7 +378,7 @@ public class Admin_BD {
 		}
 	}
 
-	public long ActualizarMaestro(int cod, int subtal, int iva, int total) {
+	public long ActualizarMaestro(long cod, int subtal, int iva, int total) {
 		Cursor c = bd
 				.rawQuery(
 						"SELECT  subtal, valfact, iva  FROM  Mov_Maeorden   WHERE norde =?",
@@ -380,7 +388,6 @@ public class Admin_BD {
 		int subp = c.getInt(c.getColumnIndexOrThrow("subtal")) + subtal;
 		int talp = c.getInt(c.getColumnIndexOrThrow("valfact")) + total;
 
-		Log.i("valores de las columnas", ivap + "  " + subp + "  " + talp);
 		ContentValues valores = new ContentValues();
 		valores.put("subtal", subp);
 		valores.put("iva", ivap);
@@ -390,20 +397,37 @@ public class Admin_BD {
 		return 0;
 	}
 
-	private long InsertItemDetalle(String placa, int id, String[] datos) {
+	private long NextOrden() {
+		String fecha = Util.facha();
+		Cursor c = bd.rawQuery(
+				"SELECT MAX(norde) FROM Mov_Maeorden WHERE fecha LIKE '"
+						+ fecha + "%'", null);
+		if (c.moveToFirst() && c.getLong(0) != 0) {
+			long id = c.getLong(0);
+			Log.e("SI", id+"");
+			return (id + 1);
+		} else {
+			long id = Util.NunOrden();
+			Log.e("NO", id+"");
+			return id;
+		}
+	}
+
+	private long InsertItemDetalle(String placa, long id, String[] datos) {
 		ContentValues d = ContenedorDetalles(placa, id, datos);
 		return bd.insert(Tabla_Detaorden, null, d);
 	}
 
-	private long InsertMaestroDetalles(String placa, int subtal, int iva,
+	private long InsertMaestroDetalles(long id, String placa, int subtal, int iva,
 			int valfact) {
-		ContentValues r = ContenedorMaestro(placa, subtal, iva, valfact);
+		ContentValues r = ContenedorMaestro(id, placa, subtal, iva, valfact);
 		return bd.insert(Tabla_Maeorden, null, r);
 	}
 
-	private ContentValues ContenedorMaestro(String placa, int subtal, int iva,
+	private ContentValues ContenedorMaestro(long id,String placa, int subtal, int iva,
 			int valfact) {
 		ContentValues d = new ContentValues();
+		d.put("norde", id);
 		d.put("placa", placa);
 		d.put("subtal", subtal);
 		d.put("iva", iva);
@@ -414,9 +438,15 @@ public class Admin_BD {
 		return d;
 	}
 
-	private ContentValues ContenedorDetalles(String placa, int id,
+	private ContentValues ContenedorDetalles(String placa, long id,
 			String[] datos) {
 		ContentValues d = new ContentValues();
+
+		syncro.ItemOrden(placa, id, Integer.parseInt(datos[0]),
+				Integer.parseInt(datos[2]), Integer.parseInt(datos[5]),
+				Integer.parseInt(datos[4]), Integer.parseInt(datos[6]),
+				datos[7]);
+
 		d.put("placa", placa);
 		d.put("norde", id);
 		d.put("codser", datos[0]);
@@ -428,13 +458,6 @@ public class Admin_BD {
 		d.put("estado", "A");
 		d.put("syncro", 0);
 		return d;
-	}
-
-	public int NextOrden() {
-		Cursor c = bd.rawQuery("SELECT MAX(norde) FROM Mov_Maeorden", null);
-		c.moveToFirst();
-		c.getInt(0);
-		return c.getInt(0) + 1;
 	}
 
 	// ////////////historial

@@ -20,10 +20,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.widget.SimpleCursorAdapter;
-import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
@@ -34,7 +34,7 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-public class Vehiculo extends ActionBarActivity implements OnClickListener {
+public class Vehiculo extends Activity implements OnClickListener {
 	private EditText cedula, nombre, direccion, celular, modelo, mail;
 	private AutoCompleteTextView placa;
 	private Spinner tipo, marca;
@@ -173,6 +173,7 @@ public class Vehiculo extends ActionBarActivity implements OnClickListener {
 		case R.id.menu:
 			Intent intent = new Intent(activity);
 			startActivity(intent);
+			overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
 			finish();
 			break;
 		case R.id.btcolor:
@@ -403,6 +404,7 @@ public class Vehiculo extends ActionBarActivity implements OnClickListener {
 									log.putExtra("activity", activity);
 									dialog.cancel();
 									startActivity(log);
+									overridePendingTransition(R.anim.left_in, R.anim.left_out);
 									finish();
 								}
 							});
@@ -444,5 +446,13 @@ public class Vehiculo extends ActionBarActivity implements OnClickListener {
 		Intent intent = getIntent();
 		finish();
 		startActivity(intent);
+	}
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			return false;
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 }

@@ -21,6 +21,7 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
@@ -216,6 +217,7 @@ public class Orden extends Activity implements OnClickListener {
 		case R.id.menu:
 			Intent intent = new Intent(activity);
 			startActivity(intent);
+			overridePendingTransition(R.anim.right_in, R.anim.right_out);
 			finish();
 			break;
 		case R.id.limpiar:
@@ -243,11 +245,11 @@ public class Orden extends Activity implements OnClickListener {
 			str[7] = bd.NombreTecnico(tecnico.getSelectedItemPosition());
 			crearfila(str[0], str[1], str[2], str[3], str[4], str[5], str[6]);
 			if (numorden.getText().toString().equals("")) {
-				int id = bd.OrdeneCompra(placa.getText().toString(), 0, str);
+				long id = bd.OrdeneCompra(placa.getText().toString(), 0, str);
 				numorden.setText(id + "");
 			} else {
 				bd.OrdeneCompra(placa.getText().toString(),
-						Integer.parseInt(numorden.getText().toString()), str);
+						Long.parseLong(numorden.getText().toString()), str);
 			}
 
 			cantidad.setText("");
@@ -344,5 +346,13 @@ public class Orden extends Activity implements OnClickListener {
 		Intent intent = getIntent();
 		finish();
 		startActivity(intent);
+	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			return false;
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 }

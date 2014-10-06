@@ -3,15 +3,18 @@ package com.servitek.vistas;
 import com.example.servitek.R;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ImageButton;
+import android.widget.Button;
 
 public class Accion extends Activity implements OnClickListener {
 
-	ImageButton vehiculo, detalles, compras, config, salir, registro;
+	Button vehiculo, detalles, compras, config, salir, registro;
 	public static final String activity = "com.example.servitek.ACCION";
 
 	@Override
@@ -19,17 +22,17 @@ public class Accion extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.accion);
 
-		vehiculo = (ImageButton) findViewById(R.id.vehiculo);
+		vehiculo = (Button) findViewById(R.id.vehiculo);
 		vehiculo.setOnClickListener(this);
-		compras = (ImageButton) findViewById(R.id.compras);
+		compras = (Button) findViewById(R.id.compras);
 		compras.setOnClickListener(this);
-		detalles = (ImageButton) findViewById(R.id.det);
+		detalles = (Button) findViewById(R.id.det);
 		detalles.setOnClickListener(this);
-		config = (ImageButton) findViewById(R.id.config);
+		config = (Button) findViewById(R.id.config);
 		config.setOnClickListener(this);
-		salir = (ImageButton) findViewById(R.id.salir);
+		salir = (Button) findViewById(R.id.salir);
 		salir.setOnClickListener(this);
-		registro = (ImageButton) findViewById(R.id.user);
+		registro = (Button) findViewById(R.id.user);
 		registro.setOnClickListener(this);
 	}
 
@@ -41,18 +44,21 @@ public class Accion extends Activity implements OnClickListener {
 			Intent intent = new Intent(Accion.this, Vehiculo.class);
 			intent.putExtra("activity", activity);
 			startActivity(intent);
+			overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 			finish();
 			break;
 		case R.id.compras:
 			Intent ord = new Intent(Accion.this, Orden.class);
 			ord.putExtra("activity", activity);
 			startActivity(ord);
+			overridePendingTransition(R.anim.left_in, R.anim.left_out);
 			finish();
 			break;
 		case R.id.det:
 			Intent com = new Intent(Accion.this, Compra.class);
 			com.putExtra("activity", activity);
 			startActivity(com);
+			overridePendingTransition(R.anim.right_in, R.anim.right_out);
 			finish();
 			break;
 		case R.id.salir:
@@ -63,15 +69,45 @@ public class Accion extends Activity implements OnClickListener {
 		case R.id.config:
 			Intent con = new Intent(Accion.this, Config.class);
 			startActivity(con);
+			overridePendingTransition(R.anim.zoom_back_in, R.anim.zoom_back_out);
 			finish();
 			break;
 
 		case R.id.user:
 			Intent us = new Intent(Accion.this, RegistroUser.class);
 			startActivity(us);
-			finish();
+			overridePendingTransition(R.anim.zoom_forward_in,
+					R.anim.zoom_forward_out);
 			break;
 		}
 
 	}
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+
+			new AlertDialog.Builder(this,android.R.style.Theme_Holo_Dialog_MinWidth)
+					.setIcon(android.R.drawable.ic_dialog_alert)
+					.setTitle("Salir")
+					.setMessage("Estás seguro?")
+					.setNegativeButton(android.R.string.cancel, null)
+					// sin listener
+					.setPositiveButton(android.R.string.ok,
+							new DialogInterface.OnClickListener() {
+						
+								@Override
+								public void onClick(DialogInterface dialog,
+										int which) {
+									// Salir
+									Accion.this.finish();
+								}
+							}).show();
+
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
+	}
+
 }

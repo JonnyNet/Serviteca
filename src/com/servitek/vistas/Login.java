@@ -107,8 +107,7 @@ public class Login extends ActionBarActivity implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		if (v.getId() == R.id.bvehi) {
-			if (!user.getText().toString().equals("")
-					&& !password.getText().toString().equals("")) {
+			if (!user.getText().toString().equals("")) {
 				Log();
 			} else {
 				Util.MensajeCorto(Login.this, "Se necesita Usuario Y Password");

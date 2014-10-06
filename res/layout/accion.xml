@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/fondo"
+    android:background="@drawable/fondoapp1"
     android:orientation="vertical"
     android:padding="20dp" >
 
@@ -21,7 +21,7 @@
             android:paddingLeft="15dp"
             android:paddingRight="15dp" >
 
-            <ImageButton
+            <Button
                 android:id="@+id/vehiculo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -31,9 +31,13 @@
                 android:layout_weight="1"
                 android:background="@drawable/imgbutton"
                 android:contentDescription="@string/registrar_vehiculo"
-                android:src="@drawable/auto" />
-
-            <ImageButton
+                android:drawableTop="@drawable/auto"
+                android:text="@string/vehiculo"
+                android:textColor="#FFFFFF"
+                android:typeface="monospace" 
+                android:textSize="20sp"/>
+            
+            <Button
                 android:id="@+id/compras"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -43,31 +47,20 @@
                 android:layout_weight="1"
                 android:background="@drawable/imgbutton"
                 android:contentDescription="@string/orden_de_compra"
-                android:src="@drawable/cartvacio" />
-        </TableRow>
+                android:drawableTop="@drawable/cartvacio"
+                android:text="@string/servicios"
+                android:textColor="#FFFFFF"
+                android:typeface="sans"
+                android:textSize="20sp" />
 
-        <TableRow android:weightSum="2" >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                android:text="VEHICULO" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                android:text="SERVICIOS" />
         </TableRow>
 
         <TableRow
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="40dp"
             android:paddingLeft="15dp"
             android:paddingRight="15dp" >
 
-            <ImageButton
+            <Button
                 android:id="@+id/det"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -77,9 +70,12 @@
                 android:layout_weight="1"
                 android:background="@drawable/imgbutton"
                 android:contentDescription="@string/detalles_de_compra"
-                android:src="@drawable/ver" />
+                android:drawableTop="@drawable/ver"
+                android:text="@string/detalles"
+                android:textColor="#FFFFFF"				android:textSize="20sp"
+                android:typeface="sans" />
 
-            <ImageButton
+            <Button
                 android:id="@+id/config"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -89,32 +85,20 @@
                 android:layout_weight="1"
                 android:background="@drawable/imgbutton"
                 android:contentDescription="@string/config"
-                android:src="@drawable/configuraciones" />
-        </TableRow>
+                android:drawableTop="@drawable/configuraciones"
+                android:text="@string/configurar"
+                android:textColor="#FFFFFF"
+                android:typeface="sans"
+                android:textSize="20sp" />
 
-        <TableRow android:weightSum="2" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                android:text="DETALLES" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                android:text="CONFIGURAR" />
         </TableRow>
 
         <TableRow
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="40dp"
             android:paddingLeft="15dp"
             android:paddingRight="15dp" >
 
-            <ImageButton
+            <Button
                 android:id="@+id/user"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -124,9 +108,13 @@
                 android:layout_weight="1"
                 android:background="@drawable/imgbutton"
                 android:contentDescription="@string/detalles_de_compra"
-                android:src="@drawable/usuarios" />
+                android:drawableTop="@drawable/usuarios"
+                android:text="@string/usuarios"
+                android:textColor="#FFFFFF"
+                android:typeface="sans" 
+                android:textSize="20sp"/>
 
-            <ImageButton
+            <Button
                 android:id="@+id/salir"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -136,25 +124,12 @@
                 android:layout_weight="1"
                 android:background="@drawable/imgbutton"
                 android:contentDescription="@string/config"
-                android:src="@drawable/logout" />
-        </TableRow>
+                android:drawableTop="@drawable/logout"
+                android:text="@string/salir"
+                android:textColor="#FFFFFF"
+                android:typeface="sans"
+                android:textSize="20sp" />
 
-        <TableRow android:weightSum="2" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                android:text="USUARIOS" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                android:text="SALIR" />
         </TableRow>
     </TableLayout>
-
 </LinearLayout>

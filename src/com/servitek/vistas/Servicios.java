@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.CursorAdapter;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -94,6 +95,7 @@ public class Servicios extends Activity implements OnClickListener {
 		if (v == atras) {
 			Intent intent = new Intent(Servicios.this, Config.class);
 			startActivity(intent);
+			overridePendingTransition(R.anim.left_in, R.anim.left_out);
 			finish();
 		}
 
@@ -213,6 +215,14 @@ public class Servicios extends Activity implements OnClickListener {
 			return c;
 		}
 
+	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			return false;
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 
 }

@@ -2,15 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#E1D84F"
-    android:orientation="vertical"
-    android:padding="10dp" >
+    android:background="@drawable/fondoapp1"
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/form"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:orientation="vertical" 
+        android:paddingLeft="15dp" 
+        android:paddingRight="15dp" >
 
         <RelativeLayout
             android:layout_width="fill_parent"
@@ -75,10 +76,12 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
                 android:adjustViewBounds="true"
-                android:background="#E1D84F"
+                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:contentDescription="@string/todo"
                 android:src="@drawable/ic_launcherg"
-                android:padding="2dp"/>
+                android:padding="2dp"
+                android:background="@drawable/fotoimg"/>
 
             <ImageView
                 android:id="@+id/foto2"
@@ -86,11 +89,13 @@
                 android:layout_height="200dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 android:adjustViewBounds="true"
-                android:background="#E1D84F"
                 android:contentDescription="@string/todo"
                 android:src="@drawable/ic_launcherg" 
-                android:padding="2dp"/>
+                android:padding="2dp"
+                android:background="@drawable/fotoimg"/>
 
             <ImageView
                 android:id="@+id/foto3"
@@ -98,11 +103,13 @@
                 android:layout_height="200dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
+                android:layout_marginRight="5dp"
+                android:layout_marginEnd="5dp" 
                 android:adjustViewBounds="true"
-                android:background="#E1D84F"
                 android:contentDescription="@string/todo"
                 android:src="@drawable/ic_launcherg"
-                android:padding="2dp"/>
+                android:padding="2dp"
+                android:background="@drawable/fotoimg"/>
         </LinearLayout>
 
         <LinearLayout
@@ -149,16 +156,18 @@
                 android:layout_marginLeft="25dp"
                 android:layout_marginStart="25dp"
                 android:layout_marginTop="3dp"
+                android:textColor="#FFFFFF"
                 android:text="@string/_0" />
 
             <ImageButton
                 android:id="@+id/agregar"
-                android:layout_width="45dp"
-                android:layout_height="37dp"
+                android:layout_width="50dp"
+                android:layout_height="40dp"
                 android:layout_marginLeft="40dp"
                 android:layout_marginStart="40dp"
                 android:contentDescription="@string/Carrito"
-                android:src="@drawable/com" />
+                android:src="@drawable/com" 
+                android:background="@drawable/imgbutton"/>
         </LinearLayout>
     </LinearLayout>
 
@@ -168,14 +177,16 @@
         android:layout_marginLeft="5dp"
         android:layout_marginStart="5dp"
         android:layout_marginTop="3dp"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:paddingLeft="15dp" 
+        android:paddingRight="15dp" >
 
         <TextView
             style="@style/AppTheme"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:background="#E1D84F"
-            android:text="@string/No" />
+            android:text="@string/No" 
+            android:textColor="#FFFFFF"/>
 
         <TextView
             android:id="@+id/numorden"
@@ -184,7 +195,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_marginStart="5dp"
-            android:background="#E1D84F" />
+            android:textColor="#FFFFFF" />
     </LinearLayout>
 
     <TableRow
@@ -192,7 +203,9 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:weightSum="7" >
+        android:weightSum="7" 
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -263,7 +276,8 @@
         android:layout_height="0dp"
         android:layout_weight="0.1"
         android:orientation="horizontal"
-        android:layout_marginTop="5dp">
+        android:layout_marginTop="5dp"
+        android:padding="15dp">
 
         <ListView
             android:id="@+id/lista"
@@ -275,11 +289,13 @@
 
     <Button
         android:id="@+id/menu"
-        style="@style/MultiGradient"
-        android:layout_width="279dp"
+        android:background="@drawable/atras"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="5dp"
-        android:text="@string/menu" />
+        android:text="@string/menu"
+        android:drawableLeft="@drawable/menorque"
+         android:drawableStart="@drawable/menorque"
+        android:textColor="#FFFFFF" />
 
 </LinearLayout>

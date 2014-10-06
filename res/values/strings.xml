@@ -16,7 +16,7 @@
     <string name="_0">0</string>
     <string name="iva">IVA</string>
     <string name="guardar">Guardar</string>
-    <string name="menu">Menu</string>
+    <string name="menu">MENU</string>
     <string name="buscar_placa">Buscar placa</string>
     <string name="placa">Placa</string>
     <string name="cedula">Cedula</string>
@@ -36,7 +36,7 @@
     <string name="logo">logo</string>
     <string name="registrar_vehiculo">Registrar vehiculo</string>
     <string name="orden_de_compra">Orden de compra</string>
-    <string name="salir">Salir</string>
+    <string name="salir">SALIR</string>
     <string name="modificar">EDITAR</string>
     <string name="estado">E</string>
     <string name="syncro">S</string>
@@ -84,6 +84,13 @@
     <string name="atras">Atras</string>
     <string name="addt">Gestion Tecnico</string>
     <string name="adds">Gestion Servicio</string>
+    <string name="vehiculo">VEHICULO</string>
+    <string name="servicios">SERVICIOS</string>
+    <string name="detalles">DETALLES</string>
+    <string name="configurar">CONFIGURAR</string>
+    <string name="usuarios">USUARIOS</string>
+    <string name="tecnicos">TECNICOS</string>
+
     
 
 </resources>

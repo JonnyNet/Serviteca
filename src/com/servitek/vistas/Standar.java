@@ -38,18 +38,21 @@ public class Standar extends Activity implements OnClickListener{
 			Intent intent = new Intent(Standar.this, Vehiculo.class);
 			intent.putExtra("activity", activity);
 			startActivity(intent);
+			overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 			finish();
 			break;
 		case R.id.compras:
 			Intent ord = new Intent(Standar.this, Orden.class);
 			ord.putExtra("activity", activity);
 			startActivity(ord);
+			overridePendingTransition(R.anim.left_in, R.anim.left_out);
 			finish();
 			break;
 		case R.id.det:
 			Intent com = new Intent(Standar.this, Compra.class);
 			com.putExtra("activity", activity);
 			startActivity(com);
+			overridePendingTransition(R.anim.right_in, R.anim.right_out);
 			finish();
 			break;
 		case R.id.salir:

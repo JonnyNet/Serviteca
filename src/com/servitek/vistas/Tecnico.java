@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.widget.CursorAdapter;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -153,6 +154,7 @@ public class Tecnico extends Activity implements OnClickListener {
 		if (v == atras) {
 			Intent intent = new Intent(Tecnico.this, Config.class);
 			startActivity(intent);
+			overridePendingTransition(R.anim.right_in, R.anim.right_out);
 			finish();
 		}
 
@@ -235,6 +237,14 @@ public class Tecnico extends Activity implements OnClickListener {
 	protected void OculTeclado(View v) {
 		InputMethodManager tecladoVirtual = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 		tecladoVirtual.hideSoftInputFromWindow(v.getWindowToken(), 0);
+	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			return false;
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 
 }

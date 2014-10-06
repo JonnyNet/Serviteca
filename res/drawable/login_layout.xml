@@ -4,14 +4,15 @@
     <corners android:radius="25dp" />
     
     <gradient 
-        android:startColor="#0054CA"
-        android:centerColor="#0064F0"
-        android:endColor="#4391FE"
-        android:gradientRadius="180"/>
+        android:startColor="#303030"
+        android:centerColor="#464646"
+        android:endColor="#997F7F7E"
+        android:gradientRadius="360"
+        android:type="radial"/>
     
     <!-- Color y tamaño del borde si les hace falta. -->
     <stroke
         android:width="2dp"
-        android:color="#7B01F8" />
+        android:color="#000000" />
 
 </shape>
