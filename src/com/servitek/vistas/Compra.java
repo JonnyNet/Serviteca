@@ -1,59 +1,30 @@
 package com.servitek.vistas;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.database.Cursor;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.widget.SimpleCursorAdapter;
-import android.util.Log;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTabHost;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ListView;
-import android.widget.Spinner;
-import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
-import android.widget.TextView;
 
-import com.clases.controladores.Admin_BD;
-import com.clases.controladores.Dialogo;
-import com.clases.controladores.Util;
+import com.clases.controladores.ListenerFragment;
 import com.example.servitek.R;
-import com.servitek.adapter.CursorDiaAdapter;
-import com.servitek.adapter.FechaAdapter;
-import com.servitek.adapter.TecnicoAdacter;
-import com.bd.modelos.Item;
 
-public class Compra extends Activity implements OnClickListener,
-		OnItemClickListener {
+public class Compra extends FragmentActivity implements OnClickListener,
+		ListenerFragment {
 
-	private Admin_BD bd;
 	private Button menu;
-	private TabHost tabs;
-	private ListView ltab1, ltab2, ltab3;
-	private Spinner tecnico;
-	private EditText desde, hasta, desde2, hasta2;
-	private ImageButton buscar, buscar2;
-	private CursorDiaAdapter adapter;
-	private FechaAdapter fdate;
-	private TecnicoAdacter tec;
-	private boolean sw = true;
-	private Button d, d2, a, a2;
+	private FragmentTabHost tabs;
 	private String activity;
 
 	@Override
@@ -61,61 +32,26 @@ public class Compra extends Activity implements OnClickListener,
 		super.onCreate(savedInstanceState);
 		activity = getIntent().getStringExtra("activity");
 		setContentView(R.layout.archivos);
-		bd = new Admin_BD(this);
-		ltab1 = (ListView) findViewById(R.id.ltab1);
-		ltab2 = (ListView) findViewById(R.id.ltab2);
-		ltab3 = (ListView) findViewById(R.id.ltab3);
-		tecnico = (Spinner) findViewById(R.id.tecnicos);
-		tabs = (TabHost) findViewById(android.R.id.tabhost);
-		menu = (Button) findViewById(R.id.menu);
-		ltab1 = (ListView) findViewById(R.id.ltab1);
-		ltab2 = (ListView) findViewById(R.id.ltab2);
-		ltab3 = (ListView) findViewById(R.id.ltab3);
-		desde = (EditText) findViewById(R.id.desde);
-		hasta = (EditText) findViewById(R.id.hasta);
-		desde2 = (EditText) findViewById(R.id.desde2);
-		hasta2 = (EditText) findViewById(R.id.hasta2);
-		d = (Button) findViewById(R.id.d);
-		d2 = (Button) findViewById(R.id.d2);
-		a = (Button) findViewById(R.id.a);
-		a2 = (Button) findViewById(R.id.a2);
-
-		buscar = (ImageButton) findViewById(R.id.buscar);
-		buscar2 = (ImageButton) findViewById(R.id.buscar2);
-		init();
-	}
-
-	private void init() {
-		menu.setOnClickListener(this);
-		buscar.setOnClickListener(this);
-		buscar2.setOnClickListener(this);
-		d.setOnClickListener(this);
-		d2.setOnClickListener(this);
-		a.setOnClickListener(this);
-		a2.setOnClickListener(this);
-		ltab1.setOnItemClickListener(this);
-		ltab3.setOnItemClickListener(this);
-		hasta.setFocusable(false);
-		hasta2.setFocusable(false);
-		desde.setFocusable(false);
-		desde2.setFocusable(false);
 		Resources res = getResources();
-		tabs.setup();
 
-		TabHost.TabSpec spec = tabs.newTabSpec("mitab1");
-		spec.setContent(R.id.tab1);
-		spec.setIndicator("", res.getDrawable(R.drawable.icomsol));
-		tabs.addTab(spec);
+		menu = (Button) findViewById(R.id.menu);
+		menu.setOnClickListener(this);
+		tabs = (FragmentTabHost) findViewById(android.R.id.tabhost);
+		tabs.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
 
-		spec = tabs.newTabSpec("mitab2");
-		spec.setContent(R.id.tab2);
-		spec.setIndicator("", res.getDrawable(R.drawable.icomtec));
-		tabs.addTab(spec);
+		tabs.addTab(
+				tabs.newTabSpec("mitab1").setIndicator("",
+						res.getDrawable(R.drawable.icomsol)), Tab1.class, null);
 
-		spec = tabs.newTabSpec("mitab3");
-		spec.setContent(R.id.tab3);
-		spec.setIndicator("", res.getDrawable(R.drawable.icomcal));
-		tabs.addTab(spec);
+		tabs.addTab(
+				tabs.newTabSpec("mitab2").setIndicator("",
+						res.getDrawable(R.drawable.icomtec)), Tab2.class, null);
+
+		tabs.addTab(
+				tabs.newTabSpec("mitab3").setIndicator("",
+						res.getDrawable(R.drawable.icomcal)), Tab3.class, null);
+		
+		
 
 		tabs.setOnTabChangedListener(new OnTabChangeListener() {
 
@@ -124,71 +60,15 @@ public class Compra extends Activity implements OnClickListener,
 				if (tabId.equals("mitab1")) {
 
 				}
-
 			}
 		});
-
-		CargarCursorSpinner();
-		operacion();
-	}
-
-	private void CargarCursorSpinner() {
-		Cursor tipos = bd.Cursor("_id", "nomtec", "Tecnicos");
-		SimpleCursorAdapter adactador1 = new SimpleCursorAdapter(this,
-				android.R.layout.simple_spinner_dropdown_item, tipos,
-				new String[] { "nomtec" }, new int[] { android.R.id.text1 }, 0);
-		tecnico.setAdapter(adactador1);
-	}
-
-	private void ListaTabs1(Cursor c) {
-		if (c.moveToFirst()) {
-			if (adapter == null) {
-				adapter = new CursorDiaAdapter(Compra.this, R.layout.listdia,
-						c, new String[] { "placa", "norde", "fecha" },
-						new int[] { R.id.placa, R.id.norden, R.id.fecha }, bd);
-				ltab1.setAdapter(adapter);
-			}
-		} else {
-			Util.MensajeCorto(this, "No Hay Registros En Este Dia");
-		}
-
-	}
-
-	private void ListaTabs2(Cursor c) {
-		if (c.moveToFirst()) {
-			if (tec == null) {
-				ArrayList<Item> aux = List(c);
-				tec = new TecnicoAdacter(this, R.layout.listtecnico, aux);
-				ltab2.setAdapter(tec);
-			} else {
-				ArrayList<Item> aux = List(c);
-				tec.clear();
-				tec.addAll(aux);
-			}
-		} else {
-			Util.MensajeCorto(this, "No Hay Registros");
-		}
-
-	}
-
-	private void ListaTabs3(Cursor c) {
-		if (c.moveToFirst()) {
-			if (fdate == null) {
-				fdate = new FechaAdapter(this, c, bd);
-				ltab3.setAdapter(fdate);
-			} else {
-				fdate.changeCursor(c);
-			}
-		} else {
-			Util.MensajeCorto(this, "No Hay Registros");
-		}
 
 	}
 
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		bd.Cerrar();
+
 	}
 
 	@Override
@@ -199,166 +79,8 @@ public class Compra extends Activity implements OnClickListener,
 			overridePendingTransition(R.anim.left_in, R.anim.left_out);
 			finish();
 		}
-		if (v == d | v == d2) {
-			sw = true;
-			showDatePickerDialog();
-		}
-		if (v == a | v == a2) {
-			sw = false;
-			showDatePickerDialog();
-		}
-
-		if (v == buscar) {
-			if (!desde.getText().toString().equals("")
-					& !hasta.getText().toString().equals("")
-					& tecnico.getSelectedItemPosition() != 0) {
-				operacion();
-			} else
-				Util.MensajeCorto(this, "Llene las Fechas");
-
-		}
-		if (v == buscar2) {
-			if (!desde2.getText().toString().equals("")
-					& !hasta2.getText().toString().equals("")) {
-				operacion();
-			} else
-				Util.MensajeCorto(this, "Llene las Fechas");
-		}
-
 	}
 
-	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position,
-			long id) {
-		int key = parent.getId();
-		if (key == R.id.ltab1 | key == R.id.ltab3) {
-			new Dialogo(Compra.this, id, bd).show();
-		}
-
-	}
-
-	private void Fecha(int anio, int mes, int dia) {
-		String v = tabs.getCurrentTabTag();
-		if (v.equals("mitab2")) {
-			SetFecha(desde, hasta, anio, mes, dia);
-		} else {
-			SetFecha(desde2, hasta2, anio, mes, dia);
-		}
-
-	}
-
-	private void SetFecha(TextView desde, TextView hasta, int anio, int mes,
-			int dia) {
-		StringBuilder fecha;
-		String m = mes + "";
-		String d = dia + "";
-
-		if (mes < 10) {
-			m = "0" + mes;
-		}
-		if (dia < 10) {
-			d = "0" + mes;
-		}
-
-		fecha = new StringBuilder().append(anio).append("-").append(m)
-				.append("-").append(d).append(" ");
-
-		if (sw)
-			desde.setText(fecha);
-		else
-			hasta.setText(fecha);
-	}
-
-	public void showDatePickerDialog() {
-		DialogFragment newFragment = new DatePickerFragment();
-		newFragment.show(getFragmentManager(), "datePicker");
-	}
-
-	public class DatePickerFragment extends DialogFragment implements
-			DatePickerDialog.OnDateSetListener {
-
-		@Override
-		public Dialog onCreateDialog(Bundle savedInstanceState) {
-			final Calendar c = Calendar.getInstance();
-			int year = c.get(Calendar.YEAR);
-			int month = c.get(Calendar.MONTH);
-			int day = c.get(Calendar.DAY_OF_MONTH);
-			return new DatePickerDialog(getActivity(), this, year, month, day);
-		}
-
-		public void onDateSet(DatePicker view, int year, int month, int day) {
-			Fecha(year, month + 1, day);
-		}
-	}
-
-	private void operacion() {
-		final ProgressDialog pro = new ProgressDialog(Compra.this,
-				android.R.style.Theme_Holo_Dialog_MinWidth);
-		new AsyncTask<Void, Void, Cursor>() {
-
-			@Override
-			protected void onPreExecute() {
-				pro.setTitle("Buscando...");
-				pro.setMessage("Espere Porfavor");
-				pro.show();
-			}
-
-			@Override
-			protected Cursor doInBackground(Void... params) {
-				if (tabs.getCurrentTabTag().equals("mitab1")) {
-					Cursor c = bd.BuscarOrdenDia(Util.facha());
-					return c;
-				} else if (tabs.getCurrentTabTag().equals("mitab2")) {
-					Cursor c = bd.BuscarPorTecnico(tecnico
-							.getSelectedItemPosition(), desde.getText()
-							.toString(), hasta.getText().toString());
-					return c;
-				} else {
-					Cursor c = bd.BuscarPorFecha(desde2.getText().toString(),
-							hasta2.getText().toString());
-					return c;
-				}
-			}
-
-			@Override
-			protected void onPostExecute(Cursor result) {
-				pro.dismiss();
-				
-				if (tabs.getCurrentTabTag().equals("mitab1")) {
-					ListaTabs1(result);
-				} else if (tabs.getCurrentTabTag().equals("mitab2")) {
-					ListaTabs2(result);
-				} else {
-					ListaTabs3(result);
-				}
-				
-			}
-		}.execute();
-	}
-
-	private ArrayList<Item> List(Cursor c) {
-		Log.e("gkgkh", c.getCount() + "");
-		ArrayList<Item> list = new ArrayList<Item>();
-		for (int i = 0; i < c.getCount(); i++) {
-
-			String placa = c.getString(c.getColumnIndexOrThrow("placa"));
-			String cod = c.getString(c.getColumnIndexOrThrow("codser"));
-			Cursor movil = bd.BuscarPlaca(placa);
-			String cc = movil.getString(movil.getColumnIndexOrThrow("Codter"));
-			Cursor usuario = bd.BuscarCliente(cc);
-			Cursor servi = bd.Cursor2("Servicios", "codser", cod);
-			String cliente = usuario.getString(usuario.getColumnIndexOrThrow("Nomter"));
-			String servicio = servi.getString(servi.getColumnIndexOrThrow("nomser"));
-			String valor = c.getInt(c.getColumnIndexOrThrow("total")) + "";
-			String cant = c.getInt(c.getColumnIndexOrThrow("cantd")) + "";
-			String fecha = c.getString(c.getColumnIndexOrThrow("fecha"));
-			Item item = new Item(servicio, placa, valor, cant, cliente, fecha);
-			list.add(item);
-
-		}
-		return list;
-	}
-	
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -366,4 +88,37 @@ public class Compra extends Activity implements OnClickListener,
 		}
 		return super.onKeyDown(keyCode, event);
 	}
+
+	public class DatePickerFragment extends DialogFragment implements
+			DatePickerDialog.OnDateSetListener {
+		
+		String tab;
+		
+		public DatePickerFragment(String t) {
+			tab = t;
+		}
+
+		@Override
+		public Dialog onCreateDialog(Bundle savedInstanceState) {
+			final Calendar c = Calendar.getInstance();
+			int year = c.get(Calendar.YEAR);
+			int month = c.get(Calendar.MONTH);
+			int day = c.get(Calendar.DAY_OF_MONTH);
+			return new DatePickerDialog(getActivity(),
+					android.R.style.Theme_Holo_Dialog_MinWidth, this, year,
+					month, day);
+
+		}
+
+		public void onDateSet(DatePicker view, int year, int month, int day) {
+			
+		}
+	}
+
+	@Override
+	public void GetFecha(String tab) {
+		DialogFragment newFragment = new DatePickerFragment(tab);
+		newFragment.show(getFragmentManager(), "datePicker");
+	}
+
 }

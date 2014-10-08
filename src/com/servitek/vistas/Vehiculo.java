@@ -173,7 +173,7 @@ public class Vehiculo extends Activity implements OnClickListener {
 		case R.id.menu:
 			Intent intent = new Intent(activity);
 			startActivity(intent);
-			overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
+			overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 			finish();
 			break;
 		case R.id.btcolor:
@@ -229,22 +229,22 @@ public class Vehiculo extends Activity implements OnClickListener {
 				&& marca.getSelectedItemPosition() != 0
 				&& tipo.getSelectedItemPosition() != 0 && cc != 0) {
 
-			bd.RegistrarVehiculo(cedula.getText().toString(), nombre
-					.getText().toString(), direccion.getText().toString(),
-					celular.getText().toString(), "hola", mail.getText()
-							.toString(), placa.getText().toString(), marca
-							.getSelectedItemPosition(), cc , Integer.parseInt(modelo 
-									.getText().toString()), tipo
+			bd.RegistrarVehiculo(cedula.getText().toString(), nombre.getText()
+					.toString(), direccion.getText().toString(), celular
+					.getText().toString(), "hola", mail.getText().toString(),
+					placa.getText().toString(),
+					marca.getSelectedItemPosition(), cc, Integer
+							.parseInt(modelo.getText().toString()), tipo
 							.getSelectedItemPosition(), Util
 							.GetBytes(((BitmapDrawable) imagen.getDrawable())
 									.getBitmap()), Util
 							.GetBytes(((BitmapDrawable) imagen2.getDrawable())
 									.getBitmap()), Util
 							.GetBytes(((BitmapDrawable) imagen3.getDrawable())
-									.getBitmap())); 
-			
-				Util.MensajeCorto(this, "Registro Exitoso");
-				Limpiar();
+									.getBitmap()));
+
+			Util.MensajeCorto(this, "Registro Exitoso");
+			Limpiar();
 
 		} else {
 
@@ -256,8 +256,7 @@ public class Vehiculo extends Activity implements OnClickListener {
 		Cursor c = cur[0];
 		Cursor imgs = cur[1];
 		Cursor b = cur[2];
-		
-		
+
 		cedula.setText(c.getString(c.getColumnIndexOrThrow("Codter")));
 		String m = c.getString(3);
 		carcolor.setBackgroundColor(c.getInt(4));
@@ -297,8 +296,10 @@ public class Vehiculo extends Activity implements OnClickListener {
 				Cursor c = params[0];
 				Cursor[] cursor = new Cursor[3];
 				cursor[0] = params[0];
-				cursor[1] = bd.BuscarImagen(c.getString(c.getColumnIndexOrThrow("placa")));
-				cursor[2] = bd.BuscarCliente(c.getString(c.getColumnIndexOrThrow("Codter")));
+				cursor[1] = bd.BuscarImagen(c.getString(c
+						.getColumnIndexOrThrow("placa")));
+				cursor[2] = bd.BuscarCliente(c.getString(c
+						.getColumnIndexOrThrow("Codter")));
 				return cursor;
 			}
 
@@ -404,7 +405,8 @@ public class Vehiculo extends Activity implements OnClickListener {
 									log.putExtra("activity", activity);
 									dialog.cancel();
 									startActivity(log);
-									overridePendingTransition(R.anim.left_in, R.anim.left_out);
+									overridePendingTransition(R.anim.left_in,
+											R.anim.left_out);
 									finish();
 								}
 							});
@@ -425,8 +427,8 @@ public class Vehiculo extends Activity implements OnClickListener {
 			carcolor.setBackgroundColor(cc);
 		}
 	};
-	
-	private void Limpiar(){
+
+	private void Limpiar() {
 		placa.setText("");
 		cedula.setText("");
 		nombre.setText("");

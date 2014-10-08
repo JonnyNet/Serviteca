@@ -61,12 +61,9 @@ public class CursorDiaAdapter extends SimpleCursorAdapter {
 		orden.setText(norden);
 		TextView date = (TextView) v.findViewById(R.id.fecha);
 		date.setText(fecha);
-		
-		if (position % 2 == 0)
-			v.setBackgroundResource(R.drawable.odd_row);
-		else
-			v.setBackgroundResource(R.drawable.even_row);
-		
+
+		v.setBackgroundResource(R.drawable.listitem);
+
 		return v;
 	}
 
