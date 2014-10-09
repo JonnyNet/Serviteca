@@ -74,11 +74,10 @@ public class Admin_BD {
 			+ "bitmap3 BLOB not null)";
 
 	public static final String sql9 = "CREATE TABLE " + Tabla_Maeorden + " ( "
-			+ "norde Integer primary key, "
-			+ "placa varchar not null , " + "subtal Integer  not null, "
-			+ "iva	Integer null," + "valfact Integer  not null, "
-			+ "estado char not null, " + "syncro  Integer not null,"
-			+ "numfact char not null, "
+			+ "norde Integer primary key, " + "placa varchar not null , "
+			+ "subtal Integer  not null, " + "iva	Integer null,"
+			+ "valfact Integer  not null, " + "estado char not null, "
+			+ "syncro  Integer not null," + "numfact char not null, "
 			+ "fecha  TIMESTAMP NOT NULL DEFAULT current_timestamp )";
 
 	public static final String sql10 = "CREATE TABLE " + Tabla_Detaorden
@@ -166,8 +165,10 @@ public class Admin_BD {
 		String m = CodigoNombre("Mov_Marcas", marca);
 		String t = CodigoNombre("Mov_Clases", tipo);
 
-		syncro.NuevoCliente(cc, nombre, dir, tel, mail, placa,
-				Integer.parseInt(m), color, modelo, Integer.parseInt(t));
+		
+		  syncro.NuevoCliente(cc, nombre, dir, tel, mail, placa,
+		  Integer.parseInt(m), color, modelo, Integer.parseInt(t));
+		 
 
 		InsertarMovil(placa, cc, m, color, modelo, t);
 		FotoCarro(placa, image, image2, image3);
@@ -179,7 +180,7 @@ public class Admin_BD {
 	public long EditarCliente(String cc, String nombre, String dir, String tel,
 			String dane, String email, String placa) {
 
-		syncro.UpdateCliente(cc, nombre, dir, tel, dane, email, placa);
+		 syncro.UpdateCliente(cc, nombre, dir, tel, dane, email, placa);
 
 		Cursor c = BuscarCliente(cc);
 		if (c.moveToFirst()) {
@@ -343,16 +344,17 @@ public class Admin_BD {
 		bd.insert(Tabla_Maeorden, null, c);
 	}
 
-	public long BuscarOrden(String placa, String fecha) {
+	public Cursor BuscarOrden(String placa, String fecha) {
 		Cursor c = bd
 				.rawQuery(
-						" SELECT norde AS _id  FROM Mov_Maeorden WHERE placa =?  AND  estado =? AND fecha  LIKE '"
+						" SELECT norde FROM Mov_Maeorden WHERE placa =?  AND  estado =? AND fecha  LIKE '"
 								+ fecha + "%' ", new String[] { placa, "A", });
-		if (c.moveToFirst()) {
-			return c.getLong(0);
-		} else {
-			return -1;
-		}
+		return c;
+	}
+	
+	public Cursor Prueba() {
+		Cursor c = bd.rawQuery("SELECT * FROM Mov_Maeorden ", null);
+		return c;
 	}
 
 	public Cursor GetDetalles(long norde) {
@@ -365,7 +367,6 @@ public class Admin_BD {
 	public long OrdeneCompra(String placa, long cod, String[] datos) {
 		if (cod == 0) {
 			cod = NextOrden();
-			Log.i("dfhsdhsyheryhseryheryhrehryhrtyhrsty", cod+"");
 			InsertItemDetalle(placa, cod, datos);
 			InsertMaestroDetalles(cod, placa, Integer.parseInt(datos[4]),
 					Integer.parseInt(datos[5]), Integer.parseInt(datos[6]));
@@ -404,11 +405,11 @@ public class Admin_BD {
 						+ fecha + "%'", null);
 		if (c.moveToFirst() && c.getLong(0) != 0) {
 			long id = c.getLong(0);
-			Log.e("SI", id+"");
+			Log.e("SI", id + "");
 			return (id + 1);
 		} else {
 			long id = Util.NunOrden();
-			Log.e("NO", id+"");
+			Log.e("NO", id + "");
 			return id;
 		}
 	}
@@ -418,14 +419,14 @@ public class Admin_BD {
 		return bd.insert(Tabla_Detaorden, null, d);
 	}
 
-	private long InsertMaestroDetalles(long id, String placa, int subtal, int iva,
-			int valfact) {
+	private long InsertMaestroDetalles(long id, String placa, int subtal,
+			int iva, int valfact) {
 		ContentValues r = ContenedorMaestro(id, placa, subtal, iva, valfact);
 		return bd.insert(Tabla_Maeorden, null, r);
 	}
 
-	private ContentValues ContenedorMaestro(long id,String placa, int subtal, int iva,
-			int valfact) {
+	private ContentValues ContenedorMaestro(long id, String placa, int subtal,
+			int iva, int valfact) {
 		ContentValues d = new ContentValues();
 		d.put("norde", id);
 		d.put("placa", placa);
@@ -442,10 +443,11 @@ public class Admin_BD {
 			String[] datos) {
 		ContentValues d = new ContentValues();
 
-		syncro.ItemOrden(placa, id, Integer.parseInt(datos[0]),
-				Integer.parseInt(datos[2]), Integer.parseInt(datos[5]),
-				Integer.parseInt(datos[4]), Integer.parseInt(datos[6]),
-				datos[7]);
+		
+		  syncro.ItemOrden(placa, id, Integer.parseInt(datos[0]),
+		  Integer.parseInt(datos[2]), Integer.parseInt(datos[5]),
+		  Integer.parseInt(datos[4]), Integer.parseInt(datos[6]), datos[7]);
+		 
 
 		d.put("placa", placa);
 		d.put("norde", id);

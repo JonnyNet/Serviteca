@@ -48,7 +48,6 @@ public class Orden extends Activity implements OnClickListener {
 	private ListView lista;
 	private Admin_BD bd;
 	private BuscarItem buscar;
-	private ProgressDialog pd;
 	private Cursor s;
 	private ArrayList<Item> item;
 	private CampoItem adapter;
@@ -106,12 +105,13 @@ public class Orden extends Activity implements OnClickListener {
 				}
 				placa.setSelection(placa.getText().length());
 				if (aux.length() == 9) {
-					BuscarRegistro(aux);
+					Buscar(aux);
+					OcultaTeclado(placa);
 				}
 			}
 		});
 	}
-
+	
 	private void init() {
 		cedula = (EditText) findViewById(R.id.cedula);
 		nombre = (EditText) findViewById(R.id.nombre);
@@ -155,19 +155,65 @@ public class Orden extends Activity implements OnClickListener {
 		});
 
 	}
-
-	protected void BuscarRegistro(String aux) {
-		Cursor c = bd.BuscarPlaca(aux);
-		if (c.moveToFirst()) {
-			LlenarCampos(c);
-			placa.setFocusable(false);
-			OcultaTeclado(placa);
-			ComponentesActivar(true);
-			jj.execute(placa.getText().toString());
-		} else {
-			Util.MensajeCorto(Orden.this, "Esta placa no ha sido registrada");
-		}
-
+	
+	protected void Buscar(final String text){
+		final ProgressDialog pro = new ProgressDialog(this,
+				android.R.style.Theme_Holo_Dialog_MinWidth);
+		
+		new AsyncTask<Void, Void, ArrayList<Cursor>>(){
+			
+			@Override
+			protected void onPreExecute() {
+				pro.setTitle("Guardando...");
+				pro.setMessage("Espere Porfavor");
+				pro.setCancelable(false);
+				pro.show();
+			}
+			
+			@Override
+			protected ArrayList<Cursor> doInBackground(Void... params) {
+				ArrayList<Cursor> datos =  new ArrayList<Cursor>();
+				Cursor c = bd.BuscarPlaca(text);
+				
+				if (c.moveToFirst()) {
+					datos.add(c);
+					Cursor b = bd.BuscarCliente(c.getString(c.getColumnIndexOrThrow("Codter")));
+					datos.add(b);
+					Cursor imgs = bd.BuscarImagen(c.getString(c.getColumnIndexOrThrow("placa")));
+					datos.add(imgs);
+					Cursor cursor = bd.BuscarOrden(text,Util.facha());
+					if (cursor.moveToFirst()) {
+						datos.add(cursor);
+						long orden = Long.valueOf(cursor.getLong(0));
+						Cursor id = bd.GetDetalles(orden);
+						datos.add(id);
+					}
+				} 
+				return datos;
+			}
+			
+			@Override
+			protected void onPostExecute(ArrayList<Cursor> result) {
+				pro.dismiss();
+				if (result.size() > 0) {
+					LlenarCampos(result.get(0), result.get(1), result.get(2));
+					
+					if (result.size() > 3) {
+						Cursor cursor = result.get(3);
+						long orden = Long.valueOf(cursor.getLong(0));
+						Log.i("dgjssgj", orden+"");
+						cursor.close();
+						numorden.setText("" + orden);
+						Detalles(result.get(4));
+					}
+					
+				} else {
+					Util.MensajeCorto(Orden.this, "Esta placa no ha sido registrada");
+				}
+			}
+			
+		}.execute();
+		
 	}
 
 	protected void ComponentesActivar(boolean b) {
@@ -178,14 +224,17 @@ public class Orden extends Activity implements OnClickListener {
 
 	}
 
-	protected void LlenarCampos(Cursor c) {
-		Cursor imgs = bd.BuscarImagen(c.getString(c.getColumnIndexOrThrow("placa")));
+	protected void LlenarCampos(Cursor c, Cursor b, Cursor imgs) {
+		placa.setFocusable(false);
+		ComponentesActivar(true);
 		cedula.setText(c.getString(c.getColumnIndexOrThrow("Codter")));
-		Cursor b = bd.BuscarCliente(c.getString(c.getColumnIndexOrThrow("Codter")));
 		nombre.setText(b.getString(b.getColumnIndexOrThrow("Nomter")));
 		imagen.setImageBitmap(Util.GetImage(imgs.getBlob(imgs.getColumnIndexOrThrow("bitmap1"))));
 		imagen2.setImageBitmap(Util.GetImage(imgs.getBlob(imgs.getColumnIndexOrThrow("bitmap2"))));
 		imagen3.setImageBitmap(Util.GetImage(imgs.getBlob(imgs.getColumnIndexOrThrow("bitmap3"))));
+		imgs.close();
+		b.close();
+		c.close();
 	}
 
 	private void CargarSpinner() {
@@ -278,7 +327,9 @@ public class Orden extends Activity implements OnClickListener {
 	@Override
 	protected void onDestroy() {
 		try {
-
+			if(s != null){
+			s.close();
+			}
 			bd.Cerrar();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -296,37 +347,6 @@ public class Orden extends Activity implements OnClickListener {
 		super.onStop();
 	}
 
-	private AsyncTask<String, Void, Long> jj = new AsyncTask<String, Void, Long>() {
-
-		@Override
-		protected void onPreExecute() {
-			pd = ProgressDialog.show(Orden.this, "Buscando",
-					"Espere unos segundos...", true, false);
-		}
-
-		@Override
-		protected Long doInBackground(String... params) {
-			Long i = Long.valueOf(bd.BuscarOrden(placa.getText().toString(),
-					Util.facha()));
-			return i;
-		}
-
-		@Override
-		protected void onPostExecute(Long result) {
-			pd.dismiss();
-			if (result > 0) {
-				numorden.setText("" + result);
-				Detalles(bd.GetDetalles((long) result));
-			}
-		}
-
-		@Override
-		protected void onCancelled() {
-			Util.MensajeCorto(Orden.this, "Tarea cancelada");
-		}
-
-	};
-
 	protected void Detalles(Cursor c) {
 		while (c.moveToNext()) {
 			String[] str = new String[7];
@@ -340,6 +360,7 @@ public class Orden extends Activity implements OnClickListener {
 			str[6] = c.getInt(c.getColumnIndexOrThrow("total")) + "";
 			crearfila(str[0], str[1], str[2], str[3], str[4], str[5], str[6]);
 		}
+		c.close();
 	}
 
 	private void Reset() {

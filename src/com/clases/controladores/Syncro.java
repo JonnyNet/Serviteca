@@ -36,6 +36,7 @@ public class Syncro implements ListenerDB {
 			protected void onPreExecute() {
 				pro.setTitle("Guardando...");
 				pro.setMessage("Espere Porfavor");
+				pro.setCancelable(false);
 				pro.show();
 			}
 

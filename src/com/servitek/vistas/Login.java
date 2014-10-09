@@ -1,10 +1,10 @@
 package com.servitek.vistas;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -19,7 +19,7 @@ import com.clases.controladores.Util;
 import com.example.servitek.R;
 import com.servitek.adapter.AutoCompleteUser;
 
-public class Login extends ActionBarActivity implements OnClickListener {
+public class Login extends Activity implements OnClickListener {
 
 	private Button boton;
 	private EditText password;
@@ -39,7 +39,15 @@ public class Login extends ActionBarActivity implements OnClickListener {
 		me = (CheckBox) findViewById(R.id.check);
 		me.setOnClickListener(this);
 		db = new Admin_BD(this);
-
+		
+		/*Cursor b = db.Prueba();
+		b.moveToFirst();
+		Log.i("placa", b.getString(b.getColumnIndexOrThrow("placa")));
+		Cursor c =	db.BuscarOrden(b.getString(b.getColumnIndexOrThrow("placa")), Util.facha()); 
+		
+		if(c.moveToFirst())
+		Log.i("cursor", c.getLong(0)+"");*/
+		
 		user = (AutoCompleteTextView) findViewById(R.id.user);
 		password = (EditText) findViewById(R.id.pass);
 		boton = (Button) findViewById(R.id.bvehi);

@@ -31,6 +31,7 @@ public class FechaAdapter extends CursorAdapter{
 	@Override
 	public View newView(Context context, Cursor cursor, ViewGroup parent) {
 		View view = inflater.inflate(R.layout.listfecha, parent, false);
+		view.setBackgroundResource(R.drawable.listitem);
 		return view;
 	}
 

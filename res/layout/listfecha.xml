@@ -33,44 +33,50 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/orden_"
-            android:textSize="12sp" />
+            android:textSize="12sp" 
+            android:textColor="#FFFFFF" />
 
         <TextView
             android:id="@+id/orden"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:textColor="#FFFFFF" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/placa_"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            android:textColor="#FFFFFF" />
 
         <TextView
             android:id="@+id/placa"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:textColor="#FFFFFF" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/factura_"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            android:textColor="#FFFFFF" />
 
         <TextView
             android:id="@+id/factura"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:textColor="#FFFFFF" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginStart="10dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginStart="50dp"
         android:layout_weight="0"
         android:orientation="vertical" >
 
@@ -78,37 +84,43 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/subtal"
-            android:textSize="12sp" />
+            android:textSize="12sp" 
+            android:textColor="#FFFFFF" />
 
         <TextView
             android:id="@+id/subtal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:textColor="#FFFFFF" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/iva_"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            android:textColor="#FFFFFF" />
 
         <TextView
             android:id="@+id/iva"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp" />
+            android:textSize="18sp" 
+            android:textColor="#FFFFFF" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/vr_total_"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            android:textColor="#FFFFFF" />
 
         <TextView
             android:id="@+id/vtal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:textColor="#FFFFFF" />
     </LinearLayout>
 
     <LinearLayout
@@ -124,7 +136,8 @@
             android:id="@+id/fecha"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:textColor="#FFFFFF" />
     </LinearLayout>
 
 </LinearLayout>
