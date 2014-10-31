@@ -1,11 +1,11 @@
 package com.servitek.vistas;
 
+
 import com.clases.controladores.Dialogo;
 import com.clases.controladores.ListenerFragment;
 import com.clases.controladores.Util;
 import com.example.servitek.R;
 import com.servitek.adapter.CursorDiaAdapter;
-
 import android.support.v4.app.Fragment;
 import android.app.Activity;
 import android.database.Cursor;
@@ -54,7 +54,9 @@ public class Tab1 extends Fragment implements OnItemClickListener {
 		call = (ListenerFragment) activity;
 	}
 
-	public void ListaTabs1(Cursor c) {
+
+
+	public  void ListaTabs1(Cursor c) {
 		if (c.moveToFirst()) {
 			if (adapter == null) {
 				adapter = new CursorDiaAdapter(getActivity(), R.layout.listdia,
@@ -67,11 +69,12 @@ public class Tab1 extends Fragment implements OnItemClickListener {
 		}
 	}
 
+
+
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-		new Dialogo(getActivity(), id, call.DataBese()).show();
-		
+		new Dialogo(getActivity(), id, call.DataBese()).show();	
 	}
 
 }

@@ -33,10 +33,10 @@ import com.example.servitek.R;
 public class Compra extends FragmentActivity implements OnClickListener,
 		ListenerFragment {
 
-	private Admin_BD bd;
 	private Button menu;
 	private FragmentTabHost tabs;
 	private String activity;
+	private Admin_BD bd;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -53,18 +53,6 @@ public class Compra extends FragmentActivity implements OnClickListener,
 		tabs.addTab(AddTabs("mitab1", R.drawable.icomsol), Tab1.class, null);
 		tabs.addTab(AddTabs("mitab2", R.drawable.icomtec), Tab2.class, null);
 		tabs.addTab(AddTabs("mitab3", R.drawable.icomcal), Tab3.class, null);
-		
-		/*tabs.setOnTabChangedListener(new OnTabChangeListener() {
-
-			@Override
-			public void onTabChanged(String tabId) {
-				if (tabs.getCurrentTabTag().equals("mitab1")) {
-					Operacion(null, null, 0);
-					Log.i("tag", "mitab1");
-				}
-			}
-		});*/
-
 	}
 
 	private TabHost.TabSpec AddTabs(String tag, int drawable) {
@@ -81,6 +69,7 @@ public class Compra extends FragmentActivity implements OnClickListener,
 
 		spe.setIndicator(tabIndicator);
 		return spe;
+
 	}
 
 	@Override
@@ -139,12 +128,6 @@ public class Compra extends FragmentActivity implements OnClickListener,
 
 			}
 		}
-	}
-
-	@Override
-	public void GetFecha() {
-		DialogFragment newFragment = new DatePickerFragment();
-		newFragment.show(getFragmentManager(), "datePicker");
 	}
 
 	private Tab1 TabFragment1(String v) {
@@ -217,5 +200,13 @@ public class Compra extends FragmentActivity implements OnClickListener,
 	@Override
 	public Admin_BD DataBese() {
 		return bd;
+
+	}
+
+	@Override
+	public void GetFecha() {
+		DialogFragment newFragment = new DatePickerFragment();
+		newFragment.show(getFragmentManager(), "datePicker");
+
 	}
 }

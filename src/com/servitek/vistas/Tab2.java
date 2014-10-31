@@ -7,7 +7,6 @@ import com.clases.controladores.ListenerFragment;
 import com.clases.controladores.Util;
 import com.example.servitek.R;
 import com.servitek.adapter.TecnicoAdacter;
-
 import android.app.Activity;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -42,7 +41,6 @@ public class Tab2 extends Fragment implements OnClickListener {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.tab2, container, false);
-		
 		if (view != null) {
 			tecnico = (Spinner) view.findViewById(R.id.tecnicos);
 			desde = (Button) view.findViewById(R.id.d);
@@ -71,6 +69,7 @@ public class Tab2 extends Fragment implements OnClickListener {
 				new String[] { "nomtec" }, new int[] { android.R.id.text1 }, 0);
 		tecnico.setAdapter(adactador1);
 	}
+
 
 	public void ListaTabs2(Cursor c) {
 		if (c.moveToFirst()) {
@@ -121,11 +120,9 @@ public class Tab2 extends Fragment implements OnClickListener {
 		String f2 = hasta.getText().toString();
 		if (!f1.equals("Desde") && !f2.equals("Hasta") && tecnico.getSelectedItemPosition() != 0) {
 			call.Operacion(f1, f2, tecnico.getSelectedItemPosition());
-
 		} else {
 			Util.MensajeCorto(getActivity(), "Faltan campos requeridos");
 		}
-
 	}
 
 	public void Fecha(int year, int month, int day) {
@@ -142,12 +139,12 @@ public class Tab2 extends Fragment implements OnClickListener {
 			d = "" + day;
 
 		if (sw) {
+
 			String f1 = year + "-" + m + "-" + d;
 			 desde.setText(f1);
 		} else {
 			String f2 = year + "-" + m + "-" + d;
 			hasta.setText(f2);
-			
 		}
 	}
 
@@ -161,6 +158,7 @@ public class Tab2 extends Fragment implements OnClickListener {
 			call.GetFecha();
 			sw = false;
 		}
+
 
 		if (v == buscar)
 			Buscar();

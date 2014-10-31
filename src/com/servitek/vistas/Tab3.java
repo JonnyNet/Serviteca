@@ -9,7 +9,6 @@ import android.app.Activity;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -39,9 +38,9 @@ public class Tab3 extends Fragment implements OnClickListener {
 			desde = (Button) view.findViewById(R.id.d);
 			hasta = (Button) view.findViewById(R.id.h);
 			buscar = (Button) view.findViewById(R.id.buscar);
-			list = (ListView) view.findViewById(R.id.ltab3);
+			list = (ListView) view.findViewById(R.id.ltab3); 
 		}
-		
+
 		desde.setOnClickListener(this);
 		hasta.setOnClickListener(this);
 		buscar.setOnClickListener(this);
@@ -56,7 +55,6 @@ public class Tab3 extends Fragment implements OnClickListener {
 
 	public void ListaTabs3(Cursor c) {
 		if (c.moveToFirst()) {
-			Log.i("szghdf", "sjrjryir");
 			if (fdate == null) {
 				fdate = new FechaAdapter(getActivity(), c, call.DataBese());
 				list.setAdapter(fdate);
@@ -93,6 +91,7 @@ public class Tab3 extends Fragment implements OnClickListener {
 			d = "" + day;
 
 		if (sw) {
+
 			String f1 = year + "-" + m + "-" + d;
 			desde.setText(f1);
 		} else {
