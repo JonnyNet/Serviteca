@@ -9,88 +9,91 @@
         android:id="@+id/cabecera"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/tabla_celda_cabecera"
         android:weightSum="7" >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/tabla_celda_cabecera"
             android:gravity="center"
             android:text="@string/codigo"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:textColor="@color/normal_text" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/tabla_celda_cabecera"
             android:gravity="center"
             android:text="@string/servicio"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:textColor="@color/normal_text" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/tabla_celda_cabecera"
             android:gravity="center"
             android:text="@string/Can"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:textColor="@color/normal_text" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/tabla_celda_cabecera"
             android:gravity="center"
             android:text="@string/unidad"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:textColor="@color/normal_text" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/tabla_celda_cabecera"
             android:gravity="center"
             android:text="@string/precio"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:textColor="@color/normal_text" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/tabla_celda_cabecera"
             android:gravity="center"
             android:text="@string/iva"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:textColor="@color/normal_text" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/tabla_celda_cabecera"
             android:gravity="center"
             android:text="@string/total"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:textColor="@color/normal_text" />
     </TableRow>
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="133dp" >
+        android:layout_height="150dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp">
 
-        <TableLayout
-            android:id="@+id/tabladetalles"
-            android:layout_width="match_parent"
+        <ListView
+            android:id="@+id/lista"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:weightSum="7" >
-        </TableLayout>
-    </ScrollView>
+            android:dividerHeight="1dp" >
+        </ListView>
+    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent" 
+        android:layout_marginTop="5dp">
 
         <TextView
             android:layout_width="90dp"
@@ -100,7 +103,8 @@
             android:id="@+id/total"
             android:gravity="center"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignParentEnd="true" 
+            android:textColor="@color/normal_text"/>
         
     </RelativeLayout>
 

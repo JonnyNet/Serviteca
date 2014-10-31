@@ -1,11 +1,11 @@
 package com.servitek.vistas;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -23,19 +23,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FilterQueryProvider;
 import android.widget.Filterable;
-import android.widget.ImageView;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.clases.controladores.Admin_BD;
 import com.clases.controladores.Util;
 import com.example.servitek.R;
+import com.servitek.camara.ActivityCam;
+import com.servitek.camara.BitmapHelper;
 
-public class Tecnico extends Activity implements OnClickListener {
+public class Tecnico extends ActivityCam implements OnClickListener {
 
 	AutoCompleteTextView nombre;
 	EditText cedula, direccion, tel, email;
 	Button eliminar, editar, guardar, atras;
-	ImageView foto;
+	ImageButton foto;
 	AutoTecnico adapter;
 	Admin_BD db;
 
@@ -53,7 +55,7 @@ public class Tecnico extends Activity implements OnClickListener {
 		editar = (Button) findViewById(R.id.editar);
 		guardar = (Button) findViewById(R.id.guardar);
 		atras = (Button) findViewById(R.id.menu);
-		foto = (ImageView) findViewById(R.id.foto);
+		foto = (ImageButton) findViewById(R.id.foto);
 
 		eliminar.setOnClickListener(this);
 		editar.setOnClickListener(this);
@@ -148,7 +150,7 @@ public class Tecnico extends Activity implements OnClickListener {
 		}
 
 		if (v == foto) {
-
+			startCameraIntent();
 		}
 
 		if (v == atras) {
@@ -177,6 +179,24 @@ public class Tecnico extends Activity implements OnClickListener {
 		} else
 			Util.MensajeCorto(this, "Llene Todos Los Campos");
 
+	}
+	
+	
+	@Override
+	protected void onPhotoUriFound() {
+		Bitmap photo = BitmapHelper.readBitmap(this, photoUri);
+		if (photo != null) {
+			photo = BitmapHelper.shrinkBitmap(photo, 230, 90);
+			
+		}
+		if (preDefinedCameraUri != null
+				&& !preDefinedCameraUri.equals(photoUri)) {
+			BitmapHelper.deleteImageWithUriIfExists(preDefinedCameraUri, this);
+		}
+		if (photoUriIn3rdLocation != null) {
+			BitmapHelper
+					.deleteImageWithUriIfExists(photoUriIn3rdLocation, this);
+		}
 	}
 
 	public class AutoTecnico extends CursorAdapter implements Filterable {

@@ -1,6 +1,7 @@
 package com.clases.controladores;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -14,6 +15,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Bitmap.CompressFormat;
+import android.graphics.Matrix;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Message;
@@ -167,5 +169,17 @@ public class Util {
 	public static Bitmap GetImage(byte[] image) {
 		return BitmapFactory.decodeByteArray(image, 0, image.length);
 	}
+	
+	//////////////////////////////
+	
+	public static File createTemporaryFile(String part, String ext,
+            Context myContext) throws Exception {
+        File tempDir = myContext.getExternalCacheDir();
+        tempDir = new File(tempDir.getAbsolutePath() + "/temp/");
+        if (!tempDir.exists()) {
+            tempDir.mkdir();
+        }
+        return File.createTempFile(part, ext, tempDir);
+    }
 	
 }

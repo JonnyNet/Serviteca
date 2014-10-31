@@ -72,9 +72,7 @@
     <string name="crear">Crear</string>
     <string name="borrar">Eliminar</string>
     <string name="nuevo_usuario">Nuevo Usuario</string>
-    <string name="ip_">Ip:</string>
-    <string name="puerto_">Puerto:</string>
-    <string name="base_de_datos">Base de Datos</string>
+    <string name="base_de_datos">Servidor</string>
     <string name="n_tecnico">Nuevo Tecnico</string>
     <string name="n_servicio">Nuevo Servicio</string>
     <string name="consecutivo">No. Consecutivo Orden</string>
@@ -91,7 +89,13 @@
     <string name="usuarios">USUARIOS</string>
     <string name="tecnicos">TECNICOS</string>
     <string name="buscar">BUSCAR</string>
-
-    
+    <string name="namespace">Namespace</string>
+    <string name="url">Url</string>
+    <string name="error_sd_card_not_mounted">Externer Speicher wird vorausgesetzt. Vermutlich ist deine SD Karte derzeit nicht verfügbar.</string>
+    <string name="error_could_not_take_photo">Es ist ein Problem mit der Kamera aufgetreten. Diese Unannehmlichkeit tut uns sehr leid!</string>
+    <string name="activity_take_photo_start_camera_button">Foto schießen!</string>
+    <string name="title_activity_estacion">Estacion</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
 
 </resources>

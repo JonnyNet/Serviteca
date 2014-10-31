@@ -16,11 +16,14 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTabHost;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.TabHost.OnTabChangeListener;
+import android.widget.ImageView;
+import android.widget.TabHost;
+import android.widget.TabWidget;
 
 import com.clases.controladores.Admin_BD;
 import com.clases.controladores.ListenerFragment;
@@ -29,7 +32,7 @@ import com.example.servitek.R;
 
 public class Compra extends FragmentActivity implements OnClickListener,
 		ListenerFragment {
-	
+
 	private Admin_BD bd;
 	private Button menu;
 	private FragmentTabHost tabs;
@@ -40,41 +43,49 @@ public class Compra extends FragmentActivity implements OnClickListener,
 		super.onCreate(savedInstanceState);
 		activity = getIntent().getStringExtra("activity");
 		setContentView(R.layout.archivos);
-		Resources res = getResources();
+
 		bd = new Admin_BD(this);
 		menu = (Button) findViewById(R.id.menu);
 		menu.setOnClickListener(this);
 		tabs = (FragmentTabHost) findViewById(android.R.id.tabhost);
 		tabs.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
 
-		tabs.addTab(
-				tabs.newTabSpec("mitab1").setIndicator("",
-						res.getDrawable(R.drawable.icomsol)), Tab1.class, null);
-
-		tabs.addTab(
-				tabs.newTabSpec("mitab2").setIndicator("",
-						res.getDrawable(R.drawable.icomtec)), Tab2.class, null);
-
-		tabs.addTab(
-				tabs.newTabSpec("mitab3").setIndicator("",
-						res.getDrawable(R.drawable.icomcal)), Tab3.class, null);
-
-		tabs.setOnTabChangedListener(new OnTabChangeListener() {
+		tabs.addTab(AddTabs("mitab1", R.drawable.icomsol), Tab1.class, null);
+		tabs.addTab(AddTabs("mitab2", R.drawable.icomtec), Tab2.class, null);
+		tabs.addTab(AddTabs("mitab3", R.drawable.icomcal), Tab3.class, null);
+		
+		/*tabs.setOnTabChangedListener(new OnTabChangeListener() {
 
 			@Override
 			public void onTabChanged(String tabId) {
 				if (tabs.getCurrentTabTag().equals("mitab1")) {
-					Operacion(null, null, 0);	
+					Operacion(null, null, 0);
+					Log.i("tag", "mitab1");
 				}
 			}
-		});
+		});*/
 
+	}
+
+	private TabHost.TabSpec AddTabs(String tag, int drawable) {
+		Resources res = getResources();
+		TabHost.TabSpec spe = tabs.newTabSpec(tag);
+
+		TabWidget tw = (TabWidget) tabs.findViewById(android.R.id.tabs);
+		View tabIndicator = LayoutInflater.from(this).inflate(R.layout.tag, tw,
+				false);
+
+		ImageView icon = (ImageView) tabIndicator.findViewById(R.id.icon);
+		icon.setImageDrawable(res.getDrawable(drawable));
+		icon.setScaleType(ImageView.ScaleType.FIT_CENTER);
+
+		spe.setIndicator(tabIndicator);
+		return spe;
 	}
 
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-
 	}
 
 	@Override
@@ -120,12 +131,12 @@ public class Compra extends FragmentActivity implements OnClickListener,
 			String v = tabs.getCurrentTabTag();
 			if (v.equals("mitab2")) {
 				Tab2 tab2 = TabFragment2(v);
-				tab2.Fecha(year, month+1, day);
+				tab2.Fecha(year, month + 1, day);
 			}
-			if (v.equals("mitab3")){
+			if (v.equals("mitab3")) {
 				Tab3 tab3 = TabFragment3(v);
-				tab3.Fecha(year, month+1, day);
-				
+				tab3.Fecha(year, month + 1, day);
+
 			}
 		}
 	}
@@ -135,27 +146,28 @@ public class Compra extends FragmentActivity implements OnClickListener,
 		DialogFragment newFragment = new DatePickerFragment();
 		newFragment.show(getFragmentManager(), "datePicker");
 	}
-	
-	private Tab1 TabFragment1(String v){
+
+	private Tab1 TabFragment1(String v) {
 		FragmentManager fm = getSupportFragmentManager();
 		Tab1 tab1 = (Tab1) fm.findFragmentByTag(v);
 		return tab1;
 	}
-	
-	private Tab2 TabFragment2(String v){
+
+	private Tab2 TabFragment2(String v) {
 		FragmentManager fm = getSupportFragmentManager();
 		Tab2 tab2 = (Tab2) fm.findFragmentByTag(v);
 		return tab2;
 	}
-	
-	private Tab3 TabFragment3(String v){
+
+	private Tab3 TabFragment3(String v) {
 		FragmentManager fm = getSupportFragmentManager();
 		Tab3 tab3 = (Tab3) fm.findFragmentByTag(v);
 		return tab3;
 	}
-	
+
 	@Override
-	public void Operacion(final String desde ,final String hasta, final int tecnico) {
+	public void Operacion(final String desde, final String hasta,
+			final int tecnico) {
 		final ProgressDialog pro = new ProgressDialog(Compra.this,
 				android.R.style.Theme_Holo_Dialog_MinWidth);
 		new AsyncTask<Void, Void, Cursor>() {
@@ -177,7 +189,7 @@ public class Compra extends FragmentActivity implements OnClickListener,
 					Cursor c = bd.BuscarPorTecnico(tecnico, desde, hasta);
 					return c;
 				} else {
-					Cursor c = bd.BuscarPorFecha(desde,hasta);
+					Cursor c = bd.BuscarPorFecha(desde, hasta);
 					return c;
 				}
 			}
@@ -189,12 +201,12 @@ public class Compra extends FragmentActivity implements OnClickListener,
 				if (v.equals("mitab1")) {
 					Tab1 tab1 = TabFragment1(v);
 					tab1.ListaTabs1(result);
-					
+
 				} else if (tabs.getCurrentTabTag().equals("mitab2")) {
 					Tab2 tab2 = TabFragment2(v);
 					tab2.ListaTabs2(result);
-					
-				} else if(tabs.getCurrentTabTag().equals("mitab3")){
+
+				} else if (tabs.getCurrentTabTag().equals("mitab3")) {
 					Tab3 tab3 = TabFragment3(v);
 					tab3.ListaTabs3(result);
 				}

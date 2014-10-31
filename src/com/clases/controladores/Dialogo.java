@@ -1,28 +1,26 @@
 package com.clases.controladores;
 
-
-import com.bd.modelos.Campo;
+import java.util.ArrayList;
+import com.bd.modelos.Item;
 import com.example.servitek.R;
-
+import com.servitek.adapter.CampoItem;
 import android.app.Dialog;
 import android.content.Context;
 import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.widget.TableLayout;
-import android.widget.TableRow;
+import android.widget.ListView;
 import android.widget.TextView;
 
 public class Dialogo extends Dialog{
 
-	TableLayout tabla;
-	TableLayout.LayoutParams params;
 	TextView total;
 	long norden;
-	TableLayout.LayoutParams layoutFila;
+	ListView lista;
 	Admin_BD bd;
 	int tal = 0;
+	private ArrayList<Item> item;
+	private CampoItem adapter;
 	
 	public Dialogo(Context context, long cod, Admin_BD db) {
 		super(context,android.R.style.Theme_Holo_Dialog_MinWidth);
@@ -35,58 +33,57 @@ public class Dialogo extends Dialog{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.dialog);
-		tabla = (TableLayout) findViewById(R.id.tabladetalles);
+		lista = (ListView) findViewById(R.id.lista);
 		total = (TextView) findViewById(R.id.total);
-		layoutFila = new TableLayout.LayoutParams(
-				TableRow.LayoutParams.WRAP_CONTENT,
-				TableRow.LayoutParams.WRAP_CONTENT);
 		
-		fondo.start();	
+		item = new ArrayList<Item>();
+		adapter = new CampoItem(getContext(), item);
+		lista.setAdapter(adapter);
+		fondo();	
 	}
 	
-	private  Handler puente = new Handler() {
-		public void handleMessage(Message msg) {
-			crearfila((String[]) msg.obj);
-			total.setText("$"+tal);
-		}
-	};
 	
-	private Thread fondo = new Thread(new Runnable() {
-		@Override
-		public void run() {
-			Cursor c = bd.GetDetalles(norden);
-			Detalles(c);
-		}
-	});
+	private void fondo(){
+		new AsyncTask<Void, Void, Cursor>() {
+
+			@Override
+			protected Cursor doInBackground(Void... params) {
+				return bd.GetDetalles(norden);
+			}
+
+			@Override
+			protected void onPostExecute(Cursor result) {
+				Detalles(result);
+			}
+
+		}.execute();
+	}
 	
-	private void crearfila(String[] datos) {
-		TableRow fila = new TableRow(this.getContext());
-		fila.setLayoutParams(layoutFila);
-		for (int i1 = 0; i1 < datos.length; i1++) {
-			Campo aux = new Campo(this.getContext(), datos[i1]);
-			fila.addView(aux);
-		}
-		tabla.addView(fila);
+	private void crearfila(String codigo, String servicio, String cantidad,
+			String unidad, String precio, String iva, String total) {
+		Item object = new Item(codigo, servicio, cantidad, unidad, precio, iva,
+				total);
+		item.add(object);
+		adapter.notifyDataSetChanged();
 	}
 	
 	protected void Detalles(Cursor c) {
-		while (c.moveToNext()){
+		int valortotal = 0;
+		while (c.moveToNext()) {
 			String[] str = new String[7];
-            str[0] = c.getString(c.getColumnIndexOrThrow("codser"));
-            Cursor o = bd.BuscarServicio("codser",str[0]);
-            str[1] = o.getString(o.getColumnIndexOrThrow("nomser"));
-            str[2] = c.getInt(c.getColumnIndexOrThrow("cantd"))+"";
-            str[3] = o.getInt(o.getColumnIndexOrThrow("valser"))+"";
-            str[4] = c.getInt(c.getColumnIndexOrThrow("subtal"))+"";
-            str[5] = c.getInt(c.getColumnIndexOrThrow("iva"))+"";
-            str[6] = c.getInt(c.getColumnIndexOrThrow("total"))+"";
-            tal += c.getInt(c.getColumnIndexOrThrow("total"));
-            Message msg = new Message();
-			msg.obj = str;
-			puente.sendMessage(msg);           
-         }
+			str[0] = c.getString(c.getColumnIndexOrThrow("codser"));
+			Cursor o = bd.BuscarServicio("codser", str[0]);
+			str[1] = o.getString(o.getColumnIndexOrThrow("nomser"));
+			str[2] = c.getInt(c.getColumnIndexOrThrow("cantd")) + "";
+			str[3] = o.getInt(o.getColumnIndexOrThrow("valser")) + "";
+			str[4] = c.getInt(c.getColumnIndexOrThrow("subtal")) + "";
+			str[5] = c.getInt(c.getColumnIndexOrThrow("iva")) + "";
+			str[6] = c.getInt(c.getColumnIndexOrThrow("total")) + "";
+			valortotal = valortotal + c.getInt(c.getColumnIndexOrThrow("total"));
+			crearfila(str[0], str[1], str[2], str[3], str[4], str[5], str[6]);
+		}
+		c.close();
+		total.setText(valortotal+"");
 	}
-
-	
 
 }

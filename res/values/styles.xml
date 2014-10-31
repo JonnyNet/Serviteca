@@ -20,6 +20,11 @@
         <item name="android:textStyle">bold </item>
         <item name="android:typeface">sans</item>
     </style>
+    
+    <style name="butonimgs">
+        <item name="android:background">@drawable/imgbutton</item>
+        <item name="android:textColor">@drawable/selectcolorimg</item>
+    </style>
 
     <style name="tabla">
         <item name="android:lines">1</item>
@@ -28,7 +33,7 @@
     </style>
 
     <style name="MultiGradient">
-        <item name="android:background">@drawable/selector_multi_gradients</item>
+        <item name="android:background">@drawable/botonselect</item>
         <item name="android:padding">@dimen/button_padding</item>
         <item name="android:textColor">@drawable/selector_color</item>
     </style>
@@ -50,5 +55,4 @@
     <style name="Theme_Dialog_Translucent" parent="android:Theme.Dialog">
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
-    
 </resources>

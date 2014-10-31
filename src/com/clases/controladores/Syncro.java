@@ -11,17 +11,29 @@ import org.xmlpull.v1.XmlPullParserException;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 
 public class Syncro implements ListenerDB {
 
-	private final String namespace = "http://suarpe.com";
-	private final String url = "http://192.168.1.51:80/ServicioClientes.asmx";
+	private String namespace = "http://suarpe.com/";
+	private String url = "http://192.168.1.51:80/ServicioClientes.asmx";
+	
 	Context context;
 
 	public Syncro(Context c) {
 		context = c;
+		Preferencia();
+	}
+	
+	private void Preferencia() {
+		SharedPreferences bdsgl = context.getSharedPreferences("loginPrefs", Context.MODE_PRIVATE);
+		boolean savesql = bdsgl.getBoolean("save", false);
+		if (savesql) {
+			url = bdsgl.getString("url", "");
+			namespace = bdsgl.getString("namespace", "");
+		}
 	}
 
 	@Override

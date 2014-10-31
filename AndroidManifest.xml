@@ -10,6 +10,7 @@
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -50,7 +51,7 @@
         </activity>
         <activity
             android:name="com.servitek.vistas.Vehiculo"
-            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:label="Vehiculo"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" >
@@ -107,8 +108,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        
-         <activity
+        <activity
             android:name="com.servitek.vistas.RegistroUser"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:label="Registrar"
@@ -120,8 +120,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        
-         <activity
+        <activity
             android:name="com.servitek.vistas.Config"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:label="Configurar"
@@ -133,8 +132,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        
-         <activity
+        <activity
             android:name="com.servitek.vistas.Tecnico"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:label="Nuevo Tecnico"
@@ -146,8 +144,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        
-         <activity
+        <activity
             android:name="com.servitek.vistas.Servicios"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:label="Nuevo Servicio"
@@ -159,8 +156,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        
-         <activity
+        <activity
             android:name="com.servitek.vistas.Standar"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:label="Serviteca"
@@ -172,47 +168,14 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        
-         <activity
-            android:name="com.servitek.vistas.DatosDia"
-            android:configChanges="keyboard|keyboardHidden|orientation"
-            android:label="Serviteca"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" >
-            <intent-filter>
-                <action android:name="com.example.servitek.DatosDia" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
+        <activity
+            android:name="com.servitek.vistas.Estacion"
+            android:label="@string/title_activity_estacion"
+            android:parentActivityName="android.support.v7.app.ActionBarActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="android.support.v7.app.ActionBarActivity" />
         </activity>
-        
-         <activity
-            android:name="com.servitek.vistas.DatosFecha"
-            android:configChanges="keyboard|keyboardHidden|orientation"
-            android:label="Serviteca"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" >
-            <intent-filter>
-                <action android:name="com.example.servitek.DatosFecha" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        
-         <activity
-            android:name="com.servitek.vistas.ArchivoTec"
-            android:configChanges="keyboard|keyboardHidden|orientation"
-            android:label="Serviteca"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" >
-            <intent-filter>
-                <action android:name="com.example.servitek.ArchivoTec" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        
-         
     </application>
 
 </manifest>

@@ -4,8 +4,9 @@ import com.clases.controladores.Admin_BD;
 import com.clases.controladores.Util;
 import com.example.servitek.R;
 import com.servitek.adapter.BuscarItem;
+import com.servitek.camara.ActivityCam;
+import com.servitek.camara.BitmapHelper;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -34,21 +35,21 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-public class Vehiculo extends Activity implements OnClickListener {
+public class Vehiculo extends ActivityCam implements OnClickListener {
 	private EditText cedula, nombre, direccion, celular, modelo, mail;
 	private AutoCompleteTextView placa;
 	private Spinner tipo, marca;
 	private Button color, guardar, menu;
 	private ImageButton borrar, imagen, imagen2, imagen3;
-	private Intent camara;
 	private static TextView carcolor;
-	private final static int cons = 0;
 	private static int cc = 0;
 	private Admin_BD bd;
 	private boolean sw = true;
 	private BuscarItem buscar;
 	private int in = 0;
 	private String activity;
+	public static final int CAPTURE_IMAGE_THUMBNAIL_ACTIVITY_REQUEST_CODE = 1888;
+	Bitmap bitmap;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -160,15 +161,15 @@ public class Vehiculo extends Activity implements OnClickListener {
 		switch (key) {
 		case R.id.foto:
 			in = R.id.foto;
-			TomarFoto();
+			onStartCamera();
 			break;
 		case R.id.foto2:
 			in = R.id.foto2;
-			TomarFoto();
+			onStartCamera();
 			break;
 		case R.id.foto3:
 			in = R.id.foto3;
-			TomarFoto();
+			onStartCamera();
 			break;
 		case R.id.menu:
 			Intent intent = new Intent(activity);
@@ -198,12 +199,6 @@ public class Vehiculo extends Activity implements OnClickListener {
 			break;
 		}
 
-	}
-
-	private void TomarFoto() {
-		bd.Cerrar();
-		camara = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-		startActivityForResult(camara, cons);
 	}
 
 	private void Editar() {
@@ -333,24 +328,6 @@ public class Vehiculo extends Activity implements OnClickListener {
 		Util.GetColor(color);
 	}
 
-	@Override
-	protected void onActivityResult(int RequesCode, int ResultCode, Intent data) {
-		super.onActivityResult(RequesCode, ResultCode, data);
-		bd.Escribir();
-		if (ResultCode == Activity.RESULT_OK) {
-			Bundle ext = data.getExtras();
-			Bitmap bmt = (Bitmap) ext.get("data");
-			if (in == R.id.foto) {
-				imagen.setImageBitmap(bmt);
-			} else if (in == R.id.foto2) {
-				imagen2.setImageBitmap(bmt);
-			} else {
-				imagen3.setImageBitmap(bmt);
-			}
-
-		}
-	}
-
 	private void Buscar(String placa) {
 		final ProgressDialog pro = new ProgressDialog(Vehiculo.this,
 				android.R.style.Theme_Holo_Dialog_MinWidth);
@@ -360,6 +337,7 @@ public class Vehiculo extends Activity implements OnClickListener {
 			protected void onPreExecute() {
 				pro.setTitle("Buscando Vehiculo...");
 				pro.setMessage("Espere Porfavor");
+				pro.setCancelable(false);
 				pro.show();
 			}
 
@@ -439,10 +417,11 @@ public class Vehiculo extends Activity implements OnClickListener {
 		modelo.setText("");
 		tipo.setSelection(0);
 		marca.setSelection(0);
-		color.setBackgroundColor(Color.TRANSPARENT);
-		imagen.setBackgroundResource(R.drawable.ic_launcherg);
-		imagen2.setBackgroundResource(R.drawable.ic_launcherg);
-		imagen3.setBackgroundResource(R.drawable.ic_launcherg);
+		carcolor.setBackgroundColor(Color.TRANSPARENT);
+		imagen.setBackgroundResource(R.drawable.camara);
+		imagen2.setBackgroundResource(R.drawable.camara);
+		imagen3.setBackgroundResource(R.drawable.camara);
+		placa.setInputType(InputType.TYPE_CLASS_TEXT);
 	}
 
 	private void Reset() {
@@ -457,5 +436,32 @@ public class Vehiculo extends Activity implements OnClickListener {
 			return false;
 		}
 		return super.onKeyDown(keyCode, event);
+	}
+
+	public void onStartCamera() {
+		startCameraIntent();
+	}
+
+	@Override
+	protected void onPhotoUriFound() {
+		Bitmap photo = BitmapHelper.readBitmap(this, photoUri);
+		if (photo != null) {
+			photo = BitmapHelper.shrinkBitmap(photo, 230, 90);
+			if (in == R.id.foto) {
+				imagen.setImageBitmap(photo);
+			} else if (in == R.id.foto2) {
+				imagen2.setImageBitmap(photo);
+			} else {
+				imagen3.setImageBitmap(photo);
+			}
+		}
+		if (preDefinedCameraUri != null
+				&& !preDefinedCameraUri.equals(photoUri)) {
+			BitmapHelper.deleteImageWithUriIfExists(preDefinedCameraUri, this);
+		}
+		if (photoUriIn3rdLocation != null) {
+			BitmapHelper
+					.deleteImageWithUriIfExists(photoUriIn3rdLocation, this);
+		}
 	}
 }

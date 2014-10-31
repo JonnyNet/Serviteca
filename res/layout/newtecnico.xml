@@ -35,7 +35,7 @@
                 android:textStyle="bold" 
                 android:textColor="#FFFFFF"/>
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/foto"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
@@ -43,7 +43,9 @@
                 android:layout_marginTop="10dp"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/tecnico_"
-                android:src="@drawable/casco" />
+                android:src="@drawable/imagencamara"
+                android:background="@drawable/fotoimg"
+                android:padding="5dp" />
 
             <AutoCompleteTextView
                 android:id="@+id/nombre"

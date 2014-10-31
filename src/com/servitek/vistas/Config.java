@@ -10,14 +10,12 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 
-
-
 import com.clases.controladores.Util;
 import com.example.servitek.R;
 
 public class Config extends Activity implements OnClickListener {
 
-	EditText ip, puerto, user, pass, nombre;
+	EditText url, namespace;
 	Button menu, guardar, editar;
 	Button servicio, tecnico;
 	private SharedPreferences bdsgl;
@@ -27,12 +25,9 @@ public class Config extends Activity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.config);
-
-		ip = (EditText) findViewById(R.id.ip);
-		puerto = (EditText) findViewById(R.id.puerto);
-		nombre = (EditText) findViewById(R.id.nombre);
-		user = (EditText) findViewById(R.id.user);
-		pass = (EditText) findViewById(R.id.password);
+		
+		url = (EditText) findViewById(R.id.namespace);
+		namespace = (EditText) findViewById(R.id.puerto);
 
 		servicio = (Button) findViewById(R.id.servicio);
 		servicio.setOnClickListener(this);
@@ -48,17 +43,22 @@ public class Config extends Activity implements OnClickListener {
 
 		bdsgl = getSharedPreferences("loginPrefs", MODE_PRIVATE);
 		sqleditor = bdsgl.edit();
-
+		
 		boolean savesql = bdsgl.getBoolean("save", false);
+		if (!savesql) {
+			sqleditor.putString("url", "http://suarpe.com/");
+			sqleditor.putString("namespace", "http://192.168.1.51:80/ServicioClientes.asmx");
+			sqleditor.putBoolean("save", true);
+			sqleditor.commit();
+		}
+		
+		savesql = bdsgl.getBoolean("save", false);
 		Activar(!savesql);
 		if (savesql) {
-			ip.setText(bdsgl.getString("ip", ""));
-			puerto.setText(bdsgl.getString("puerto", ""));
-			nombre.setText(bdsgl.getString("nombre", ""));
-			user.setText(bdsgl.getString("user", ""));
-			pass.setText(bdsgl.getString("pass", ""));
+			url.setText(bdsgl.getString("url", ""));
+			namespace.setText(bdsgl.getString("namespace", ""));
+			guardar.setEnabled(false);
 		}
-
 	}
 
 	@Override
@@ -66,7 +66,8 @@ public class Config extends Activity implements OnClickListener {
 		if (v == menu) {
 			Intent intent = new Intent(Config.this, Accion.class);
 			startActivity(intent);
-			overridePendingTransition(R.anim.zoom_forward_in, R.anim.zoom_forward_out);
+			overridePendingTransition(R.anim.zoom_forward_in,
+					R.anim.zoom_forward_out);
 			finish();
 		}
 
@@ -86,24 +87,18 @@ public class Config extends Activity implements OnClickListener {
 		if (v == tecnico) {
 			Intent intent = new Intent(Config.this, Tecnico.class);
 			startActivity(intent);
-			overridePendingTransition(R.anim.left_in, R.anim.left_out); 
+			overridePendingTransition(R.anim.left_in, R.anim.left_out);
 			finish();
 		}
 
 	}
 
 	private void Guardar() {
-		if (!ip.getText().toString().equals("")
-				&& !puerto.getText().toString().equals("")
-				&& !nombre.getText().toString().equals("")
-				&& !user.getText().toString().equals("")
-				&& !pass.getText().toString().equals("")) {
+		if (!url.getText().toString().equals("")
+				&& !namespace.getText().toString().equals("")) {
 
-			sqleditor.putString("ip", ip.getText().toString());
-			sqleditor.putString("puerto", puerto.getText().toString());
-			sqleditor.putString("nombre", nombre.getText().toString());
-			sqleditor.putString("user", user.getText().toString());
-			sqleditor.putString("pass", pass.getText().toString());
+			sqleditor.putString("url", url.getText().toString());
+			sqleditor.putString("namespace", namespace.getText().toString());
 			sqleditor.putBoolean("save", true);
 			Activar(false);
 			sqleditor.commit();
@@ -112,12 +107,11 @@ public class Config extends Activity implements OnClickListener {
 	}
 
 	private void Activar(boolean b) {
-		ip.setFocusableInTouchMode(b);
-		puerto.setFocusableInTouchMode(b);
-		user.setFocusableInTouchMode(b);
-		pass.setFocusableInTouchMode(b);
+		url.setFocusableInTouchMode(b);
+		namespace.setFocusableInTouchMode(b);
+		guardar.setEnabled(b);
 	}
-	
+
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {

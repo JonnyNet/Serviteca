@@ -7,11 +7,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ImageButton;
+import android.widget.Button;
 
 public class Standar extends Activity implements OnClickListener{
 	
-	ImageButton vehiculo, detalles, compras, salir;
+	Button vehiculo, detalles, compras, salir;
 	private static final String activity = "com.example.servitek.Standar";
 
 	@Override
@@ -20,13 +20,13 @@ public class Standar extends Activity implements OnClickListener{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.accionesstandar);
 		
-		vehiculo = (ImageButton) findViewById(R.id.vehiculo);
+		vehiculo = (Button) findViewById(R.id.vehiculo);
 		vehiculo.setOnClickListener(this);
-		compras = (ImageButton) findViewById(R.id.compras);
+		compras = (Button) findViewById(R.id.compras);
 		compras.setOnClickListener(this);
-		detalles = (ImageButton) findViewById(R.id.det);
+		detalles = (Button) findViewById(R.id.det);
 		detalles.setOnClickListener(this);
-		salir = (ImageButton) findViewById(R.id.salir);
+		salir = (Button) findViewById(R.id.salir);
 		salir.setOnClickListener(this);
 	}
 	

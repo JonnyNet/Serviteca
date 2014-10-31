@@ -19,7 +19,7 @@ import com.clases.controladores.Util;
 import com.example.servitek.R;
 import com.servitek.adapter.AutoCompleteUser;
 
-public class Login extends Activity implements OnClickListener {
+public class Login extends Activity implements OnClickListener { 
 
 	private Button boton;
 	private EditText password;
