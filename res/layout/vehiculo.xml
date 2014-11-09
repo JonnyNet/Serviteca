@@ -11,8 +11,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" 
         android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:layout_marginTop="15dp">
+        android:paddingRight="15dp">
 
         <RelativeLayout
             android:layout_width="fill_parent"
@@ -27,7 +26,7 @@
                 android:completionThreshold="1"
                 android:hint="@string/placa"
                 android:maxLength="9"
-                android:textSize="60sp"
+                android:textSize="50sp"
                 android:textStyle="bold" />
 
             <ImageButton
@@ -131,14 +130,14 @@
         <Spinner
             android:id="@+id/marcas"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_weight="1"
             android:background="@drawable/spinner_select" />
 
         <Spinner
             android:id="@+id/tipos"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_weight="1"
             android:background="@drawable/spinner_select" />
     </LinearLayout>
@@ -155,7 +154,7 @@
         <ImageButton
             android:id="@+id/foto"
             android:layout_width="250sp"
-            android:layout_height="250dp"
+            android:layout_height="230dp"
             android:layout_gravity="center_horizontal"
             android:layout_weight="1"
             android:adjustViewBounds="true"
@@ -170,7 +169,7 @@
         <ImageButton
             android:id="@+id/foto2"
             android:layout_width="250sp"
-            android:layout_height="250dp"
+            android:layout_height="230dp"
             android:layout_gravity="center_horizontal"
             android:layout_weight="1"
             android:adjustViewBounds="true"
@@ -184,7 +183,7 @@
         <ImageButton
             android:id="@+id/foto3"
             android:layout_width="250sp"
-            android:layout_height="250dp"
+            android:layout_height="230dp"
             android:layout_gravity="center_horizontal"
             android:layout_weight="1"
             android:adjustViewBounds="true"
@@ -219,7 +218,7 @@
     <Button
         android:id="@+id/menu"
         android:layout_width="fill_parent"
-        android:layout_height="60sp"
+        android:layout_height="60dp"
         android:background="@drawable/atras"
         android:drawableLeft="@drawable/menorque" 
         android:drawableStart="@drawable/menorque"

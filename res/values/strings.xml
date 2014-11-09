@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Servitek</string>
+    <string name="app_name">Serviteca</string>
     <string name="Nombre">Nombre:</string>
     <string name="Cedula">Cedula:</string>
     <string name="codigo">CODIGO</string>
@@ -37,6 +37,7 @@
     <string name="registrar_vehiculo">Registrar vehiculo</string>
     <string name="orden_de_compra">Orden de compra</string>
     <string name="salir">SALIR</string>
+    <string name="logout">LOGOUT</string>
     <string name="modificar">EDITAR</string>
     <string name="estado">E</string>
     <string name="syncro">S</string>
@@ -97,4 +98,6 @@
     <string name="title_activity_estacion">Estacion</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="addmarca">Agregar Marca de Vehiculo</string>
+    <string name="copy">Copyright © by MobilSoft SAS.</string>
 </resources>

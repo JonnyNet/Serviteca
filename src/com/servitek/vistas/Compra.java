@@ -24,6 +24,7 @@ import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TabWidget;
+import android.widget.TextView;
 
 import com.clases.controladores.Admin_BD;
 import com.clases.controladores.ListenerFragment;
@@ -50,12 +51,12 @@ public class Compra extends FragmentActivity implements OnClickListener,
 		tabs = (FragmentTabHost) findViewById(android.R.id.tabhost);
 		tabs.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
 
-		tabs.addTab(AddTabs("mitab1", R.drawable.icomsol), Tab1.class, null);
-		tabs.addTab(AddTabs("mitab2", R.drawable.icomtec), Tab2.class, null);
-		tabs.addTab(AddTabs("mitab3", R.drawable.icomcal), Tab3.class, null);
+		tabs.addTab(AddTabs("mitab1", R.drawable.icomsol,"Hoy"), Tab1.class, null);
+		tabs.addTab(AddTabs("mitab2", R.drawable.icomtec, "Tecnico"), Tab2.class, null);
+		tabs.addTab(AddTabs("mitab3", R.drawable.icomcal, "Fecha"), Tab3.class, null);
 	}
 
-	private TabHost.TabSpec AddTabs(String tag, int drawable) {
+	private TabHost.TabSpec AddTabs(String tag, int drawable, String nombre) {
 		Resources res = getResources();
 		TabHost.TabSpec spe = tabs.newTabSpec(tag);
 
@@ -66,6 +67,9 @@ public class Compra extends FragmentActivity implements OnClickListener,
 		ImageView icon = (ImageView) tabIndicator.findViewById(R.id.icon);
 		icon.setImageDrawable(res.getDrawable(drawable));
 		icon.setScaleType(ImageView.ScaleType.FIT_CENTER);
+		
+		TextView text = (TextView) tabIndicator.findViewById(R.id.text);
+		text.setText(nombre);
 
 		spe.setIndicator(tabIndicator);
 		return spe;

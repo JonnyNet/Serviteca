@@ -4,10 +4,13 @@ import com.example.servitek.R;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class Standar extends Activity implements OnClickListener{
 	
@@ -19,6 +22,9 @@ public class Standar extends Activity implements OnClickListener{
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.accionesstandar);
+		
+		TextView url = (TextView) findViewById(R.id.url);
+		url.setText(Html.fromHtml("<a href="+GetUrl()+">www.mobilsoftsas.com</a>"));
 		
 		vehiculo = (Button) findViewById(R.id.vehiculo);
 		vehiculo.setOnClickListener(this);
@@ -63,5 +69,14 @@ public class Standar extends Activity implements OnClickListener{
 			break;
 		}
 
+	}
+	
+	public  String GetUrl(){
+		return "http://www.mobilsoftsas.com/";
+	}
+	
+	public void Click_Url(View v){
+		Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(GetUrl()));
+		startActivity(browserIntent);
 	}
 }
