@@ -6,37 +6,54 @@
     android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin" >
+    android:paddingRight="@dimen/activity_horizontal_margin" >
 
     <ImageView
         android:id="@+id/logo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:contentDescription="@string/logo_app"
-        android:src="@drawable/logo" />
+        android:src="@drawable/logolubriwash" />
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/loginl"
         android:layout_width="fill_parent"
         android:layout_height="300dp"
         android:layout_centerVertical="true"
-        android:background="@drawable/login_layout"
-        android:orientation="vertical" >
+        android:background="@drawable/login_layout" >
 
         <TextView
+            android:id="@+id/sing"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="30dp"
+            android:layout_marginStart="35dp"
             android:paddingTop="20dp"
-            android:layout_marginLeft="35dp"
-            android:layout_marginStart="35dp" 
             android:text="@string/sing_in"
             android:textColor="#FFA200"
             android:textSize="50sp" />
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="35dp"
+            android:layout_toLeftOf="@id/sing"
+            android:layout_toStartOf="@id/sing"
+            android:contentDescription="@string/salir"
+            android:onClick="Click_Salir"
+            android:src="@drawable/fin" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_below="@id/sing"
             android:gravity="center_vertical"
             android:orientation="vertical"
             android:paddingLeft="30dp"
@@ -62,32 +79,57 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content" >
 
                 <CheckBox
                     android:id="@+id/check"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:checked="false" 
-                    android:text="@string/remenber_me"
-                    android:textColor="#FFC155"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                    android:button="@drawable/check_box"/>
+                    android:layout_marginTop="15dp"
+                    android:button="@drawable/check_box"
+                    android:checked="false"
+                    android:text="@string/remenber_me"
+                    android:textColor="#FFC155" />
 
                 <Button
                     android:id="@+id/bvehi"
                     style="@style/MultiGradient"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
                     android:layout_marginTop="10dp"
                     android:onClick="alarma"
                     android:text="@string/entrar" />
             </RelativeLayout>
         </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_vertical"
+        android:orientation="vertical" 
+        android:onClick="Click_Url">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@string/copy"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/url"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp" />
     </LinearLayout>
 
 </RelativeLayout>

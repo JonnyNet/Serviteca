@@ -186,8 +186,8 @@ public class Tecnico extends ActivityCam implements OnClickListener {
 	protected void onPhotoUriFound() {
 		Bitmap photo = BitmapHelper.readBitmap(this, photoUri);
 		if (photo != null) {
-			photo = BitmapHelper.shrinkBitmap(photo, 230, 90);
-			
+			photo = BitmapHelper.shrinkBitmap(photo, 180, 0);
+			foto.setImageBitmap(photo);
 		}
 		if (preDefinedCameraUri != null
 				&& !preDefinedCameraUri.equals(photoUri)) {

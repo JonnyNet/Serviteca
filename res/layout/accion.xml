@@ -10,12 +10,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:contentDescription="@string/logo"
-        android:src="@drawable/logo2" />
+        android:src="@drawable/logolubriwashp" />
 
     <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="70dp" >
+        android:layout_height="0dp"
+        android:layout_weight="0.1"
+        android:layout_marginTop="50dp" >
 
         <TableRow
             android:paddingLeft="15dp"
@@ -23,34 +24,33 @@
 
             <Button
                 android:id="@+id/vehiculo"
+                style="@style/butonimgs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="30dp"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
                 android:layout_weight="1"
-                style="@style/butonimgs"
                 android:contentDescription="@string/registrar_vehiculo"
                 android:drawableTop="@drawable/auto"
                 android:text="@string/vehiculo"
-                android:typeface="monospace" 
-                android:textSize="20sp"/>
-            
+                android:textSize="20sp"
+                android:typeface="monospace" />
+
             <Button
                 android:id="@+id/compras"
+                style="@style/butonimgs"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
                 android:layout_marginStart="30dp"
                 android:layout_weight="1"
-                style="@style/butonimgs"
                 android:contentDescription="@string/orden_de_compra"
                 android:drawableTop="@drawable/cartvacio"
                 android:text="@string/servicios"
-                android:typeface="sans"
-                android:textSize="20sp" />
-
+                android:textSize="20sp"
+                android:typeface="sans" />
         </TableRow>
 
         <TableRow
@@ -60,33 +60,33 @@
 
             <Button
                 android:id="@+id/det"
+                style="@style/butonimgs"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="30dp"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
                 android:layout_weight="1"
-                style="@style/butonimgs"
                 android:contentDescription="@string/detalles_de_compra"
                 android:drawableTop="@drawable/ver"
-                android:text="@string/detalles"				android:textSize="20sp"
+                android:text="@string/detalles"
+                android:textSize="20sp"
                 android:typeface="sans" />
 
             <Button
                 android:id="@+id/config"
+                style="@style/butonimgs"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
                 android:layout_marginStart="30dp"
                 android:layout_weight="1"
-                style="@style/butonimgs"
                 android:contentDescription="@string/config"
                 android:drawableTop="@drawable/configuraciones"
                 android:text="@string/configurar"
-                android:typeface="sans"
-                android:textSize="20sp" />
-
+                android:textSize="20sp"
+                android:typeface="sans" />
         </TableRow>
 
         <TableRow
@@ -96,34 +96,57 @@
 
             <Button
                 android:id="@+id/user"
+                style="@style/butonimgs"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="30dp"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
                 android:layout_weight="1"
-                style="@style/butonimgs"
                 android:contentDescription="@string/detalles_de_compra"
                 android:drawableTop="@drawable/usuarios"
                 android:text="@string/usuarios"
-                android:typeface="sans" 
-                android:textSize="20sp"/>
+                android:textSize="20sp"
+                android:typeface="sans" />
 
             <Button
                 android:id="@+id/salir"
+                style="@style/butonimgs"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
                 android:layout_marginStart="30dp"
                 android:layout_weight="1"
-                style="@style/butonimgs"
                 android:contentDescription="@string/config"
                 android:drawableTop="@drawable/logout"
-                android:text="@string/salir"
-                android:typeface="sans"
-                android:textSize="20sp" />
-
+                android:text="@string/logout"
+                android:textSize="20sp"
+                android:typeface="sans" />
         </TableRow>
     </TableLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" 
+        android:onClick="Click_Url">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@string/copy"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/url"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp" />
+    </LinearLayout>
+
 </LinearLayout>
