@@ -11,41 +11,42 @@
         android:layout_weight="0.1"
         android:orientation="vertical"
         android:paddingLeft="15dp"
-        android:paddingRight="15dp" >
+        android:paddingRight="15dp" 
+        android:layout_marginTop="10dp">
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:contentDescription="@string/logo"
-            android:src="@drawable/logolubriwashp" />
+            android:src="@drawable/logo2" />
 
-        <LinearLayout
+       <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="40dp"
             android:background="@drawable/lineas"
             android:orientation="vertical"
-            android:paddingLeft="30dp"
-            android:paddingRight="30dp"
-            android:paddingTop="15dp"
-            android:paddingBottom="20dp" >
+            android:padding="30dp" >
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:text="@string/base_de_datos"
-                android:textColor="#FFFFFF"
-                android:textSize="30sp"
-                android:textStyle="bold" />
+                android:textSize="50sp"
+                android:textStyle="bold" 
+                android:textColor="#FFFFFF" />
 
+
+            
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="30dp"
                 android:text="@string/url"
-                android:textColor="#FFFFFF"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textSize="30sp"
+                android:textStyle="bold" 
+                android:textColor="#FFFFFF" />
 
             <EditText
                 android:id="@+id/puerto"
@@ -55,15 +56,15 @@
                 android:background="@drawable/edittext_select"
                 android:inputType="number"
                 android:textSize="20sp" />
-
+            
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="30dp"
                 android:text="@string/namespace"
-                android:textColor="#FFFFFF"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textSize="30sp"
+                android:textStyle="bold" 
+                android:textColor="#FFFFFF" />
 
             <EditText
                 android:id="@+id/namespace"
@@ -74,90 +75,42 @@
                 android:inputType="text"
                 android:textSize="20sp" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:orientation="horizontal"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp" >
-
-                <Button
-                    android:id="@+id/editar"
-                    style="@style/MultiGradient"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_weight="1"
-                    android:text="@string/editar" />
-
-                <Button
-                    android:id="@+id/guardar"
-                    style="@style/MultiGradient"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_weight="1"
-                    android:text="@string/guardar" />
-            </LinearLayout>
+            
         </LinearLayout>
-
-        <TableLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/lineas"
-            android:orientation="horizontal"
-            android:paddingLeft="30dp"
-            android:paddingRight="30dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="30dp" >
-
-            <TableRow>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" 
-                    android:text="@string/addmarca" 
-                    android:textColor="#FFFFFF"
-                    android:textStyle="bold"/>
-            </TableRow>
-
-            <TableRow android:weightSum="10" >
-
-                <EditText
-                    android:id="@+id/marcas"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_weight="9"
-                    android:background="@drawable/edittext_select"
-                    android:inputType="textCapWords" />
-
-                <ImageButton
-                    android:id="@+id/addmarca"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginStart="5dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/botonselect"
-                    android:contentDescription="@string/marca_"
-                    android:onClick="AgregarMarca"
-                    android:padding="2dp"
-                    android:src="@drawable/guardar" />
-            </TableRow>
-        </TableLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="30dp"
+            android:orientation="horizontal"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp" >
+
+            <Button
+                android:id="@+id/editar"
+                style="@style/MultiGradient"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_weight="1"
+                android:text="@string/editar" />
+
+            <Button
+                android:id="@+id/guardar"
+                style="@style/MultiGradient"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_weight="1"
+                android:text="@string/guardar" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
             android:orientation="horizontal"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
@@ -165,31 +118,31 @@
 
             <Button
                 android:id="@+id/servicio"
-                style="@style/butonimgs"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
+                style="@style/butonimgs"
                 android:contentDescription="@string/registrar_vehiculo"
                 android:drawableTop="@drawable/servicio"
-                android:text="@string/servicios"
+                android:text="@string/servicios" 
                 android:textColor="#FFFFFF"
-                android:textSize="20sp" />
+                android:textSize="20sp"/>
 
             <Button
                 android:id="@+id/tecnico"
-                style="@style/butonimgs"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginStart="20dp"
                 android:layout_weight="1"
+                style="@style/butonimgs"
                 android:contentDescription="@string/orden_de_compra"
-                android:drawableTop="@drawable/casco"
-                android:text="@string/tecnicos"
+                android:drawableTop="@drawable/casco" 
                 android:textColor="#FFFFFF"
-                android:textSize="20sp" />
+                android:text="@string/tecnicos" 
+                android:textSize="20sp"/>
         </LinearLayout>
     </LinearLayout>
 

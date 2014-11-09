@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:contentDescription="@string/logo"
-            android:src="@drawable/logolubriwashp"
+            android:src="@drawable/logo2"
             android:layout_marginTop="10dp" />
 
         <LinearLayout

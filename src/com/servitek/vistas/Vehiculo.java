@@ -280,10 +280,10 @@ public class Vehiculo extends ActivityCam implements OnClickListener {
 		new AsyncTask<Cursor, Void, Cursor[]>() {
 
 			@Override
-			protected void onPreExecute() {    
+			protected void onPreExecute() {
 				pro.setTitle("Buscando Vehiculo...");
 				pro.setMessage("Espere Porfavor");
-				pro.setCancelable(false);    
+				pro.setCancelable(false);
 				pro.show();
 			}
 
@@ -418,9 +418,9 @@ public class Vehiculo extends ActivityCam implements OnClickListener {
 		tipo.setSelection(0);
 		marca.setSelection(0);
 		carcolor.setBackgroundColor(Color.TRANSPARENT);
-		imagen.setBackgroundResource(R.drawable.imagencamara);
-		imagen2.setBackgroundResource(R.drawable.imagencamara);
-		imagen3.setBackgroundResource(R.drawable.imagencamara);
+		imagen.setBackgroundResource(R.drawable.camara);
+		imagen2.setBackgroundResource(R.drawable.camara);
+		imagen3.setBackgroundResource(R.drawable.camara);
 		placa.setInputType(InputType.TYPE_CLASS_TEXT);
 	}
 
@@ -446,7 +446,7 @@ public class Vehiculo extends ActivityCam implements OnClickListener {
 	protected void onPhotoUriFound() {
 		Bitmap photo = BitmapHelper.readBitmap(this, photoUri);
 		if (photo != null) {
-			photo = BitmapHelper.shrinkBitmap(photo, 300, 0);
+			photo = BitmapHelper.shrinkBitmap(photo, 230, 90);
 			if (in == R.id.foto) {
 				imagen.setImageBitmap(photo);
 			} else if (in == R.id.foto2) {

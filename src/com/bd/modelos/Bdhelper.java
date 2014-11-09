@@ -25,13 +25,14 @@ public class Bdhelper extends SQLiteOpenHelper {
 			db.execSQL(Admin_BD.sql1);
 			db.execSQL(Admin_BD.sql2);
 			db.execSQL(Admin_BD.sql3);
+			db.execSQL(Admin_BD.sql4);
 			db.execSQL(Admin_BD.sql5);
+			db.execSQL(Admin_BD.sql6);
 			db.execSQL(Admin_BD.sql7);
 			db.execSQL(Admin_BD.sql8);
 			db.execSQL(Admin_BD.sql9);
 			db.execSQL(Admin_BD.sql10);
 			db.execSQL(Admin_BD.sql11);
-
 
 			CargarTipos(db);
 			CargarMarcas(db);
@@ -58,21 +59,38 @@ public class Bdhelper extends SQLiteOpenHelper {
 	}
 
 	private void CargarMarcas(SQLiteDatabase db) {
-		db.execSQL("INSERT INTO Mov_Marcas (_id, nombre) VALUES (100, 'Marca')");
+		db.execSQL("INSERT INTO Mov_Marcas (codmarca,nombre) VALUES ('0', 'Marca')");
+		db.execSQL("INSERT INTO Mov_Marcas (codmarca,nombre) VALUES ('54565', 'Masda')");
+		db.execSQL("INSERT INTO Mov_Marcas (codmarca,nombre) VALUES ('45654', 'Jeep')");
+		db.execSQL("INSERT INTO Mov_Marcas (codmarca,nombre) VALUES ('56555', 'Zusuki')");
+		db.execSQL("INSERT INTO Mov_Marcas (codmarca,nombre) VALUES ('13562', 'Gmc')");
+		db.execSQL("INSERT INTO Mov_Marcas (codmarca,nombre) VALUES ('86455', 'Hyunday')");
+		db.execSQL("INSERT INTO Mov_Marcas (codmarca,nombre) VALUES ('64568', 'Vmw')");
+
 	}
 
 	private void CargarTipos(SQLiteDatabase db) {
-		db.execSQL("INSERT INTO Mov_Clases (_id ,Nomclase) VALUES (200, 'Tipo')");
-		db.execSQL("INSERT INTO Mov_Clases (Nomclase) VALUES ('Camion')");
-		db.execSQL("INSERT INTO Mov_Clases (Nomclase) VALUES ('Automovil')");
-		db.execSQL("INSERT INTO Mov_Clases (Nomclase) VALUES ('Camioneta')");
-		db.execSQL("INSERT INTO Mov_Clases (Nomclase) VALUES ('Buseta')");
-		db.execSQL("INSERT INTO Mov_Clases (Nomclase) VALUES ('Moto')");
-		db.execSQL("INSERT INTO Mov_Clases (Nomclase) VALUES ('Taxi')");
+		db.execSQL("INSERT INTO Mov_Clases (codclase,Nomclase) VALUES ('0', 'Tipo')");
+		db.execSQL("INSERT INTO Mov_Clases (codclase,Nomclase) VALUES ('456', 'Camion')");
+		db.execSQL("INSERT INTO Mov_Clases (codclase,Nomclase) VALUES ('789', 'Ahutomovil')");
+		db.execSQL("INSERT INTO Mov_Clases (codclase,Nomclase) VALUES ('123', 'Camioneta')");
+		db.execSQL("INSERT INTO Mov_Clases (codclase,Nomclase) VALUES ('654', 'Tractor')");
+		db.execSQL("INSERT INTO Mov_Clases (codclase,Nomclase) VALUES ('987', 'Buseta')");
 	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
+		db.execSQL("DROP TABLE IF EXISTS Clientes");
+		db.execSQL("DROP TABLE IF EXISTS Vehiculos");
+		db.execSQL("DROP TABLE IF EXISTS Tecnicos");
+		db.execSQL("DROP TABLE IF EXISTS Servicios");
+		db.execSQL("DROP TABLE IF EXISTS Productos");
+		db.execSQL("DROP TABLE IF EXISTS Mov_Marcas");
+		db.execSQL("DROP TABLE IF EXISTS Mov_Colores");
+		db.execSQL("DROP TABLE IF EXISTS Mov_Clases");
+		db.execSQL("DROP TABLE IF EXISTS Mov_Imagenes");
+		onCreate(db);
 
 	}
 

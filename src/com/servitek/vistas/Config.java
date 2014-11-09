@@ -1,24 +1,21 @@
 package com.servitek.vistas;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.clases.controladores.Admin_BD;
 import com.clases.controladores.Util;
 import com.example.servitek.R;
 
 public class Config extends Activity implements OnClickListener {
 
-	EditText url, namespace,marca;
+	EditText url, namespace;
 	Button menu, guardar, editar;
 	Button servicio, tecnico;
 	private SharedPreferences bdsgl;
@@ -36,8 +33,6 @@ public class Config extends Activity implements OnClickListener {
 		servicio.setOnClickListener(this);
 		tecnico = (Button) findViewById(R.id.tecnico);
 		tecnico.setOnClickListener(this);
-		
-		marca = (EditText) findViewById(R.id.marcas);
 
 		menu = (Button) findViewById(R.id.menu);
 		menu.setOnClickListener(this);
@@ -113,7 +108,7 @@ public class Config extends Activity implements OnClickListener {
 
 	private void Activar(boolean b) {
 		url.setFocusableInTouchMode(b);
-		namespace.setFocusableInTouchMode(b);      
+		namespace.setFocusableInTouchMode(b);
 		guardar.setEnabled(b);
 	}
 
@@ -124,23 +119,5 @@ public class Config extends Activity implements OnClickListener {
 		}
 		return super.onKeyDown(keyCode, event);
 	}
-	
-	public void AgregarMarca(View v){
-		if (!marca.getText().toString().trim().equals("")) {
-			Admin_BD db = new Admin_BD(this);
-			db.AddMarca(marca.getText().toString().trim());
-			marca.setText("");
-			OculTeclado(v);
-			Util.MensajeCorto(this, "Marca Guardada con Exito");
-		}else{
-			Util.MensajeCorto(this, "Campo Nueva Marca Vacio");
-		}
-	}
-	
-	protected void OculTeclado(View v) {
-		InputMethodManager tecladoVirtual = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-		tecladoVirtual.hideSoftInputFromWindow(v.getWindowToken(), 0);
-	}
 
 }
-

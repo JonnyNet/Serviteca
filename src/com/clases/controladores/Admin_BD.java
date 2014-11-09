@@ -14,7 +14,9 @@ public class Admin_BD {
 	private static final String Tabla_Movil = "Vehiculos";
 	private static final String Tabla_Tecnicos = "Tecnicos";
 	private static final String Tabla_Servicios = "Servicios";
+	private static final String Tabla_Productos = "Productos";
 	private static final String Tabla_Marcas = "Mov_Marcas";
+	private static final String Tabla_Colores = "Mov_Colores";
 	private static final String Tabla_Clases = "Mov_Clases";
 	private static final String Tabla_Imagen = "Mov_Imagenes";
 	private static final String Tabla_Maeorden = "Mov_Maeorden";
@@ -30,9 +32,9 @@ public class Admin_BD {
 
 	public static final String sql1 = "CREATE TABLE " + Tabla_Movil + " ( "
 			+ "placa  Varchar primary key not null , "
-			+ "Codter	Varchar not null, " + "Codmarca Integer not null, "
+			+ "Codter	Varchar not null, " + "Codmarca Char not null, "
 			+ "Codcolor Integer not null, " + "Modelo	Integer  null, "
-			+ "Codclase Integer not null," + "syncro	Integer  not null, "
+			+ "Codclase Char not null," + "syncro	Integer  not null, "
 			+ "fecha_ingreso TIMESTAMP NOT NULL DEFAULT current_timestamp )";
 
 	public static final String sql2 = "CREATE TABLE " + Tabla_Tecnicos + " ( "
@@ -49,11 +51,22 @@ public class Admin_BD {
 			+ "ivaser	Integer not null, " + "tasacomis	Integer not null, "
 			+ "codins	char  null, " + "concesion char null )";
 
+	public static final String sql4 = "CREATE TABLE " + Tabla_Productos + " ( "
+			+ "codins	char  primary key not null , "
+			+ "Nomins  Varchar  not null, " + "codinterfase char not null,"
+			+ "precio_publico Integer not null, " + "ivains	Integer not null )";
+
 	public static final String sql5 = "CREATE TABLE " + Tabla_Marcas + " ( "
-			+ "_id  integer primary key autoincrement, " + "nombre	Varchar not null)";
+			+ "_id  integer primary key autoincrement, "
+			+ "codmarca  Varchar not null, " + "nombre	Varchar not null)";
+
+	public static final String sql6 = "CREATE TABLE " + Tabla_Colores + " ( "
+			+ "codcolor  char primary key not null , "
+			+ "Nomcolor	Varchar not null)";
 
 	public static final String sql7 = "CREATE TABLE " + Tabla_Clases + " ( "
-			+ "_id  integer primary key autoincrement, " + "Nomclase	Varchar not null)";
+			+ "_id  integer primary key autoincrement, "
+			+ "codclase  char  not null , " + "Nomclase	Varchar not null)";
 
 	public static final String sql8 = "CREATE TABLE " + Tabla_Imagen + " ( "
 			+ "placa  Varchar primary key not null , "
@@ -114,7 +127,7 @@ public class Admin_BD {
 	}
 
 	private ContentValues ContenedorMovil(String placa, String cc,
-			int marca, int color, int modelo, int tipo) {
+			String marca, int color, int modelo, String tipo) {
 		ContentValues valores = new ContentValues();
 		valores.put("placa", placa);
 		valores.put("Codter", cc);
@@ -136,8 +149,8 @@ public class Admin_BD {
 		return v;
 	}
 
-	private long InsertarMovil(String placa, String cc, int marca,
-			int color, int modelo, int tipo) {
+	private long InsertarMovil(String placa, String cc, String marca,
+			int color, int modelo, String tipo) {
 		ContentValues datos = ContenedorMovil(placa, cc, marca, color, modelo,
 				tipo);
 		long v = bd.insert(Tabla_Movil, null, datos);
@@ -149,11 +162,12 @@ public class Admin_BD {
 			int color, int modelo, int tipo, byte[] image, byte[] image2,
 			byte[] image3) {
 
-		int m = CodigoNombre("Mov_Marcas", marca,100);
-		int t = CodigoNombre("Mov_Clases", tipo,200);
-		Log.i(tag, ""+t);
+		String m = CodigoNombre("Mov_Marcas", marca);
+		String t = CodigoNombre("Mov_Clases", tipo);
+
+		
 		  syncro.NuevoCliente(cc, nombre, dir, tel, mail, placa,
-		  m, color, modelo,t);
+		  Integer.parseInt(m), color, modelo, Integer.parseInt(t));
 		 
 
 		InsertarMovil(placa, cc, m, color, modelo, t);
@@ -209,11 +223,11 @@ public class Admin_BD {
 
 	// buscar nombre y id de los servicios, tecnicos, marca, tipo
 
-	public int CodigoNombre(String tabla, int id, int cod) {
+	public String CodigoNombre(String tabla, int id) {
 		Cursor c = bd.rawQuery("SELECT * FROM " + tabla + " WHERE _id =?",
-				new String[] { (id+cod) + "" });
+				new String[] { id + "" });
 		c.moveToFirst();
-		return c.getInt(0);
+		return c.getString(1);
 	}
 
 	public String NombreTecnico(int id) {
@@ -632,14 +646,6 @@ public class Admin_BD {
 
 	public void EliminarTecnico(String cedula) {
 		bd.delete(Tabla_Tecnicos, " codtec =? ", new String[] { cedula });
-	}
-	
-	///agregar marcas de vehiculos a la base de datos
-	
-	public void AddMarca(String marca){
-		ContentValues valor = new ContentValues();
-		valor.put("nombre", marca);
-		bd.insert(Tabla_Marcas, null, valor);
 	}
 
 	// metodos para apertura y cierre de la base de datos

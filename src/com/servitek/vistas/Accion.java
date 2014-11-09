@@ -6,14 +6,11 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.text.Html;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.TextView;
 
 public class Accion extends Activity implements OnClickListener {
 
@@ -24,9 +21,6 @@ public class Accion extends Activity implements OnClickListener {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.accion);
-		
-		TextView url = (TextView) findViewById(R.id.url);
-		url.setText(Html.fromHtml("<a href="+GetUrl()+">www.mobilsoftsas.com</a>"));
 
 		vehiculo = (Button) findViewById(R.id.vehiculo);
 		vehiculo.setOnClickListener(this);
@@ -84,7 +78,6 @@ public class Accion extends Activity implements OnClickListener {
 			startActivity(us);
 			overridePendingTransition(R.anim.zoom_forward_in,
 					R.anim.zoom_forward_out);
-			finish();
 			break;
 		}
 
@@ -115,15 +108,6 @@ public class Accion extends Activity implements OnClickListener {
 			return true;
 		}
 		return super.onKeyDown(keyCode, event);
-	}
-	
-	public  String GetUrl(){
-		return "http://www.mobilsoftsas.com/";
-	}
-	
-	public void Click_Url(View v){
-		Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(GetUrl()));
-		startActivity(browserIntent);
 	}
 
 }

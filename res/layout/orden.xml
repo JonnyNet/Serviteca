@@ -3,14 +3,14 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@drawable/fondoapp1"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/form"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingLeft="15dp"
+        android:orientation="vertical" 
+        android:paddingLeft="15dp" 
         android:paddingRight="15dp" >
 
         <RelativeLayout
@@ -65,7 +65,7 @@
             android:id="@+id/fotoscarro"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
             android:orientation="horizontal"
             android:weightSum="3" >
 
@@ -74,42 +74,42 @@
                 android:layout_width="200sp"
                 android:layout_height="200dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="5dp"
-                android:layout_marginStart="5dp"
                 android:layout_weight="1"
                 android:adjustViewBounds="true"
-                android:background="@drawable/fotoimg"
+                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:contentDescription="@string/todo"
+                android:src="@drawable/ic_launcherg"
                 android:padding="2dp"
-                android:src="@drawable/ic_launcherg" />
+                android:background="@drawable/fotoimg"/>
 
             <ImageView
                 android:id="@+id/foto2"
                 android:layout_width="200sp"
                 android:layout_height="200dp"
                 android:layout_gravity="center_horizontal"
+                android:layout_weight="1"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
-                android:layout_weight="1"
                 android:adjustViewBounds="true"
-                android:background="@drawable/fotoimg"
                 android:contentDescription="@string/todo"
+                android:src="@drawable/ic_launcherg" 
                 android:padding="2dp"
-                android:src="@drawable/ic_launcherg" />
+                android:background="@drawable/fotoimg"/>
 
             <ImageView
                 android:id="@+id/foto3"
                 android:layout_width="200sp"
                 android:layout_height="200dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginEnd="5dp"
-                android:layout_marginRight="5dp"
                 android:layout_weight="1"
+                android:layout_marginRight="5dp"
+                android:layout_marginEnd="5dp" 
                 android:adjustViewBounds="true"
-                android:background="@drawable/fotoimg"
                 android:contentDescription="@string/todo"
+                android:src="@drawable/ic_launcherg"
                 android:padding="2dp"
-                android:src="@drawable/ic_launcherg" />
+                android:background="@drawable/fotoimg"/>
         </LinearLayout>
 
         <LinearLayout
@@ -122,14 +122,14 @@
             <Spinner
                 android:id="@+id/tecnicos"
                 android:layout_width="wrap_content"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/spinner_select" />
 
             <Spinner
                 android:id="@+id/servi"
                 android:layout_width="wrap_content"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/spinner_select" />
         </LinearLayout>
@@ -146,7 +146,8 @@
                 android:layout_marginTop="3dp"
                 android:background="@drawable/edittext_select"
                 android:hint="@string/cantidad"
-                android:inputType="number" />
+                android:inputType="number" 
+                />
 
             <TextView
                 android:id="@+id/Precio"
@@ -155,18 +156,18 @@
                 android:layout_marginLeft="25dp"
                 android:layout_marginStart="25dp"
                 android:layout_marginTop="3dp"
-                android:text="@string/_0"
-                android:textColor="#FFFFFF" />
+                android:textColor="#FFFFFF"
+                android:text="@string/_0" />
 
             <ImageButton
                 android:id="@+id/agregar"
-                android:layout_width="60dp"
+                android:layout_width="50dp"
                 android:layout_height="40dp"
                 android:layout_marginLeft="40dp"
                 android:layout_marginStart="40dp"
-                android:background="@drawable/imgbutton"
                 android:contentDescription="@string/Carrito"
-                android:src="@drawable/com" />
+                android:src="@drawable/com" 
+                android:background="@drawable/imgbutton"/>
         </LinearLayout>
     </LinearLayout>
 
@@ -177,15 +178,15 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="3dp"
         android:orientation="horizontal"
-        android:paddingLeft="15dp"
+        android:paddingLeft="15dp" 
         android:paddingRight="15dp" >
 
         <TextView
             style="@style/AppTheme"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:text="@string/No"
-            android:textColor="#FFFFFF" />
+            android:text="@string/No" 
+            android:textColor="#FFFFFF"/>
 
         <TextView
             android:id="@+id/numorden"
@@ -201,11 +202,11 @@
         android:id="@+id/cabecera"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/tabla_celda_cabecera"
-        android:weightSum="7" >
+        android:weightSum="7" 
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+                    android:background="@drawable/tabla_celda_cabecera">
 
         <TextView
             android:layout_width="wrap_content"
@@ -213,8 +214,8 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/codigo"
-            android:textColor="@color/normal_text"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:textColor="@color/normal_text" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -222,8 +223,8 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/servicio"
-            android:textColor="@color/normal_text"
-            android:textSize="15sp" />
+            android:textSize="15sp" 
+            android:textColor="@color/normal_text"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -231,8 +232,8 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/Can"
-            android:textColor="@color/normal_text"
-            android:textSize="15sp" />
+            android:textSize="15sp" 
+            android:textColor="@color/normal_text"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -240,8 +241,8 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/unidad"
-            android:textColor="@color/normal_text"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:textColor="@color/normal_text" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -249,8 +250,8 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/precio"
-            android:textColor="@color/normal_text"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:textColor="@color/normal_text" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -258,8 +259,8 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/iva"
-            android:textColor="@color/normal_text"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:textColor="@color/normal_text" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -267,17 +268,17 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/total"
-            android:textColor="@color/normal_text"
-            android:textSize="15sp" />
+            android:textSize="15sp" 
+            android:textColor="@color/normal_text"/>
     </TableRow>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="5dp"
         android:layout_weight="0.1"
         android:orientation="horizontal"
-        android:padding="15dp" >
+        android:layout_marginTop="5dp"
+        android:padding="15dp">
 
         <ListView
             android:id="@+id/lista"
@@ -289,13 +290,13 @@
 
     <Button
         android:id="@+id/menu"
+        android:background="@drawable/atras"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:background="@drawable/atras"
-        android:drawableLeft="@drawable/menorque"
-        android:drawableStart="@drawable/menorque"
         android:text="@string/menu"
+        android:drawableLeft="@drawable/menorque"
+         android:drawableStart="@drawable/menorque"
         android:textColor="#FFFFFF" />
 
 </LinearLayout>

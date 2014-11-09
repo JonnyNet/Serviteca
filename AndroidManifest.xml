@@ -14,14 +14,13 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/iconapp"
+        android:icon="@drawable/icono"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        
         <service
             android:name=".SyncroServer"
             android:exported="false"
-            android:icon="@drawable/iconapp"
+            android:icon="@drawable/icono"
             android:process=":my_process" >
             <intent-filter>
                 <action android:name="SyncroServer" >
@@ -98,6 +97,18 @@
             </intent-filter>
         </activity>
         <activity
+            android:name="com.servitek.vistas.Editar"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:label="Editar"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" >
+            <intent-filter>
+                <action android:name="com.example.servitek.EDITAR" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name="com.servitek.vistas.RegistroUser"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:label="Registrar"
@@ -153,6 +164,45 @@
             android:windowSoftInputMode="stateHidden" >
             <intent-filter>
                 <action android:name="com.example.servitek.Standar" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+         <activity
+            android:name="com.servitek.vistas.DatosDia"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:label="Serviteca"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" >
+            <intent-filter>
+                <action android:name="com.example.servitek.DatosDia" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+         <activity
+            android:name="com.servitek.vistas.DatosFecha"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:label="Serviteca"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" >
+            <intent-filter>
+                <action android:name="com.example.servitek.DatosFecha" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+         <activity
+            android:name="com.servitek.vistas.ArchivoTec"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:label="Serviteca"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" >
+            <intent-filter>
+                <action android:name="com.example.servitek.ArchivoTec" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

@@ -50,7 +50,7 @@
                 android:layout_height="fill_parent"
                 android:background="@drawable/imgbutton"
                 android:contentDescription="@string/Fecha"
-                android:drawableTop="@drawable/buscar"
+                android:drawableTop="@drawable/abc_ic_search"
                 android:paddingTop="10dp"
                 android:text="@string/buscar"
                 android:textSize="20sp" />

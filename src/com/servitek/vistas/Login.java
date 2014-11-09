@@ -4,10 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.Html;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -15,7 +13,6 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.clases.controladores.Admin_BD;
 import com.clases.controladores.Util;
@@ -42,11 +39,6 @@ public class Login extends Activity implements OnClickListener {
 		me = (CheckBox) findViewById(R.id.check);
 		me.setOnClickListener(this);
 		db = new Admin_BD(this);
-		
-		
-		TextView url = (TextView) findViewById(R.id.url);
-		url.setText(Html.fromHtml("<a href="+GetUrl()+">www.mobilsoftsas.com</a>"));
-		
 		
 		/*Cursor b = db.Prueba();
 		b.moveToFirst();
@@ -167,19 +159,5 @@ public class Login extends Activity implements OnClickListener {
 			Util.MensajeCorto(this, "Usuario NO Registrado");
 		return saveLogin;
 
-	}
-	
-	public void Click_Salir(View v){
-		finish();
-	}
-	
-
-	public  String GetUrl(){
-		return "http://www.mobilsoftsas.com/";
-	}
-	
-	public void Click_Url(View v){
-		Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(GetUrl()));
-		startActivity(browserIntent);
 	}
 }
