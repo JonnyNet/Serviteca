@@ -47,14 +47,7 @@ public class Login extends Activity implements OnClickListener {
 		TextView url = (TextView) findViewById(R.id.url);
 		url.setText(Html.fromHtml("<a href="+GetUrl()+">www.mobilsoftsas.com</a>"));
 		
-		
-		/*Cursor b = db.Prueba();
-		b.moveToFirst();
-		Log.i("placa", b.getString(b.getColumnIndexOrThrow("placa")));
-		Cursor c =	db.BuscarOrden(b.getString(b.getColumnIndexOrThrow("placa")), Util.facha()); 
-		
-		if(c.moveToFirst())
-		Log.i("cursor", c.getLong(0)+"");*/
+
 		
 		user = (AutoCompleteTextView) findViewById(R.id.user);
 		password = (EditText) findViewById(R.id.pass);
@@ -99,10 +92,8 @@ public class Login extends Activity implements OnClickListener {
 			public void afterTextChanged(Editable s) {
 				if (saveLogin == true) {
 					if (s.toString().equals(
-							loginPreferences.getString("username", ""))) {
-						password.setText(loginPreferences.getString("password",
-								""));
-						me.setChecked(true);
+							loginPreferences.getString("username", ""))) {password.setText(loginPreferences.getString("password",""));
+							me.setChecked(true);
 					} else {
 						password.setText("");
 						me.setChecked(false);

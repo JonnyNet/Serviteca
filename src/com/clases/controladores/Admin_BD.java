@@ -22,17 +22,17 @@ public class Admin_BD {
 	private static final String Tabla_Login = "Login";
 
 	public static final String sql0 = "CREATE TABLE " + Tabla_Cliente + " ( "
-			+ "Codter varchar primary key not null , "
-			+ "Nomter	Varchar not null, " + "Dirter	Varchar null, "
-			+ "Telter	Varchar null, " + "Coddane varchar null, "
-			+ "Email	varchar null ," + "syncro	Integer  not null, "
+			+ "id integer primary key autoincrement, "
+			+ "Codter varchar  not null , " + "Nomter	Varchar not null, "
+			+ "Dirter	Varchar null, " + "Telter	Varchar null, "
+			+ "Email	varchar null ,"
 			+ "fecha_ingreso TIMESTAMP NOT NULL DEFAULT current_timestamp )";
 
 	public static final String sql1 = "CREATE TABLE " + Tabla_Movil + " ( "
 			+ "placa  Varchar primary key not null , "
 			+ "Codter	Varchar not null, " + "Codmarca Integer not null, "
-			+ "Codcolor Integer not null, " + "Modelo	Integer  null, "
-			+ "Codclase Integer not null," + "syncro	Integer  not null, "
+			+ "Codcolor Varchar, " + "Modelo Integer  null, "
+			+ "Codclase Integer," 
 			+ "fecha_ingreso TIMESTAMP NOT NULL DEFAULT current_timestamp )";
 
 	public static final String sql2 = "CREATE TABLE " + Tabla_Tecnicos + " ( "
@@ -45,15 +45,15 @@ public class Admin_BD {
 	public static final String sql3 = "CREATE TABLE " + Tabla_Servicios + " ( "
 			+ "_id  integer primary key autoincrement, "
 			+ "codser char  not null , " + "nomser varchar  not null, "
-			+ "codcue char null, " + "valser Integer not null, "
-			+ "ivaser	Integer not null, " + "tasacomis	Integer not null, "
-			+ "codins	char  null, " + "concesion char null )";
+			+ "valser Integer not null)";
 
 	public static final String sql5 = "CREATE TABLE " + Tabla_Marcas + " ( "
-			+ "_id  integer primary key autoincrement, " + "nombre	Varchar not null)";
+			+ "_id  integer primary key autoincrement, "
+			+ "nombre	Varchar not null)";
 
 	public static final String sql7 = "CREATE TABLE " + Tabla_Clases + " ( "
-			+ "_id  integer primary key autoincrement, " + "Nomclase	Varchar not null)";
+			+ "_id  integer primary key autoincrement, "
+			+ "Nomclase	Varchar not null)";
 
 	public static final String sql8 = "CREATE TABLE " + Tabla_Imagen + " ( "
 			+ "placa  Varchar primary key not null , "
@@ -83,6 +83,8 @@ public class Admin_BD {
 			+ "email Varchar not null, " + "tipo Integer not null, "
 			+ "foto BLOB null,"
 			+ "fecha  TIMESTAMP NOT NULL DEFAULT current_timestamp)";
+	
+	
 
 	private Bdhelper helper;
 	private SQLiteDatabase bd;
@@ -93,51 +95,48 @@ public class Admin_BD {
 	public Admin_BD(Context c) {
 		helper = new Bdhelper(c);
 		bd = helper.getWritableDatabase();
-		syncro = new Syncro(c);
+		syncro = new Syncro(c,null);
 	}
 
 	// contenedores de valores para el registro del vehiculo y cliente en la
 	// classe vehiculo
 
 	private ContentValues ContenedorCliente(String cc, String nombre,
-			String dir, String tel, String coddane, String mail) {
+			String dir, String tel,  String mail) {
 		ContentValues valores = new ContentValues();
 		valores.put("Codter", cc);
 		valores.put("Nomter", nombre);
 		valores.put("Dirter", dir);
 		valores.put("Telter", tel);
-		valores.put("coddane", coddane);
 		valores.put("email", mail);
-		valores.put("syncro", 0);
 		return valores;
 
 	}
 
-	private ContentValues ContenedorMovil(String placa, String cc,
-			int marca, int color, int modelo, int tipo) {
+	private ContentValues ContenedorMovil(String placa, String cc, int marca,
+			String color, int modelo, int tipo) {
 		ContentValues valores = new ContentValues();
 		valores.put("placa", placa);
 		valores.put("Codter", cc);
 		valores.put("Codmarca", marca);
-		valores.put("Codcolor", color);
+		valores.put("Codcolor", color+"");
 		valores.put("Modelo", modelo);
 		valores.put("Codclase", tipo);
-		valores.put("syncro", 0);
 		return valores;
 	}
 
 	// registro de vehiculo y cleinte
 
-	private long InsertarCliente(String cc, String nombre, String dir,
-			String tel, String coddane, String mail) {
-		ContentValues datos = ContenedorCliente(cc, nombre, dir, tel, coddane,
+	public long InsertarCliente(String cc, String nombre, String dir,
+			String tel, String mail) {
+		ContentValues datos = ContenedorCliente(cc, nombre, dir, tel,
 				mail);
 		long v = bd.insert(Tabla_Cliente, null, datos);
 		return v;
 	}
 
-	private long InsertarMovil(String placa, String cc, int marca,
-			int color, int modelo, int tipo) {
+	public long InsertarMovil(String placa, String cc, int marca, String color,
+			int modelo, int tipo) {
 		ContentValues datos = ContenedorMovil(placa, cc, marca, color, modelo,
 				tipo);
 		long v = bd.insert(Tabla_Movil, null, datos);
@@ -146,38 +145,37 @@ public class Admin_BD {
 
 	public void RegistrarVehiculo(String cc, String nombre, String dir,
 			String tel, String coddane, String mail, String placa, int marca,
-			int color, int modelo, int tipo, byte[] image, byte[] image2,
+			String color, int modelo, int tipo, byte[] image, byte[] image2,
 			byte[] image3) {
 
-		int m = CodigoNombre("Mov_Marcas", marca,100);
-		int t = CodigoNombre("Mov_Clases", tipo,200);
-		Log.i(tag, ""+t);
-		  syncro.NuevoCliente(cc, nombre, dir, tel, mail, placa,
-		  m, color, modelo,t);
-		 
+		int m = CodigoNombre("Mov_Marcas", marca, 100);
+		int t = CodigoNombre("Mov_Clases", tipo, 200);
+		Log.i(tag, "" + t);
+		syncro.NuevoCliente(cc, nombre, dir, tel, mail, placa, m, color,
+				modelo, t);
 
 		InsertarMovil(placa, cc, m, color, modelo, t);
 		FotoCarro(placa, image, image2, image3);
-		InsertarCliente(cc, nombre, dir, tel, coddane, mail);
+		InsertarCliente(cc, nombre, dir, tel, mail);
 
 	}
 
 	// editar datos del cliente
 	public long EditarCliente(String cc, String nombre, String dir, String tel,
-			String dane, String email, String placa) {
+			String email, String placa) {
 
-		 syncro.UpdateCliente(cc, nombre, dir, tel, dane, email, placa);
+		syncro.UpdateCliente(cc, nombre, dir, tel, email, placa);
 
 		Cursor c = BuscarCliente(cc);
 		if (c.moveToFirst()) {
 			return bd.update(Tabla_Cliente,
-					ContenedorCliente(cc, nombre, dir, tel, dane, email),
+					ContenedorCliente(cc, nombre, dir, tel, email),
 					"Codter =? ", new String[] { cc });
 		} else {
 			ContentValues valor = new ContentValues();
 			valor.put("Codter", cc);
 			bd.update(Tabla_Movil, valor, "placa =?", new String[] { placa });
-			return InsertarCliente(cc, nombre, dir, tel, dane, email);
+			return InsertarCliente(cc, nombre, dir, tel, email);
 		}
 	}
 
@@ -211,7 +209,7 @@ public class Admin_BD {
 
 	public int CodigoNombre(String tabla, int id, int cod) {
 		Cursor c = bd.rawQuery("SELECT * FROM " + tabla + " WHERE _id =?",
-				new String[] { (id+cod) + "" });
+				new String[] { (id + cod) + "" });
 		c.moveToFirst();
 		return c.getInt(0);
 	}
@@ -337,7 +335,7 @@ public class Admin_BD {
 								+ fecha + "%' ", new String[] { placa, "A", });
 		return c;
 	}
-	
+
 	public Cursor Prueba() {
 		Cursor c = bd.rawQuery("SELECT * FROM Mov_Maeorden ", null);
 		return c;
@@ -429,11 +427,10 @@ public class Admin_BD {
 			String[] datos) {
 		ContentValues d = new ContentValues();
 
-		
-		  syncro.ItemOrden(placa, id, Integer.parseInt(datos[0]),
-		  Integer.parseInt(datos[2]), Integer.parseInt(datos[5]),
-		  Integer.parseInt(datos[4]), Integer.parseInt(datos[6]), datos[7]);
-		 
+		syncro.ItemOrden(placa, id, Integer.parseInt(datos[0]),
+				Integer.parseInt(datos[2]), Integer.parseInt(datos[5]),
+				Integer.parseInt(datos[4]), Integer.parseInt(datos[6]),
+				datos[7]);
 
 		d.put("placa", placa);
 		d.put("norde", id);
@@ -633,10 +630,10 @@ public class Admin_BD {
 	public void EliminarTecnico(String cedula) {
 		bd.delete(Tabla_Tecnicos, " codtec =? ", new String[] { cedula });
 	}
-	
-	///agregar marcas de vehiculos a la base de datos
-	
-	public void AddMarca(String marca){
+
+	// /agregar marcas de vehiculos a la base de datos
+
+	public void AddMarca(String marca) {
 		ContentValues valor = new ContentValues();
 		valor.put("nombre", marca);
 		bd.insert(Tabla_Marcas, null, valor);

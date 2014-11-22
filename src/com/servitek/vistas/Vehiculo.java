@@ -206,7 +206,7 @@ public class Vehiculo extends ActivityCam implements OnClickListener {
 				&& !nombre.getText().toString().equals("")) {
 			if (bd.EditarCliente(cedula.getText().toString(), nombre.getText()
 					.toString(), direccion.getText().toString(), celular
-					.getText().toString(), "hola", mail.getText().toString(),
+					.getText().toString(),  mail.getText().toString(),
 					placa.getText().toString()) != -1) {
 				Util.MensajeCorto(this, "Edicion Exitosa");
 				Reset();
@@ -228,7 +228,7 @@ public class Vehiculo extends ActivityCam implements OnClickListener {
 					.toString(), direccion.getText().toString(), celular
 					.getText().toString(), "hola", mail.getText().toString(),
 					placa.getText().toString(),
-					marca.getSelectedItemPosition(), cc, Integer
+					marca.getSelectedItemPosition(), cc+"", Integer
 							.parseInt(modelo.getText().toString()), tipo
 							.getSelectedItemPosition(), Util
 							.GetBytes(((BitmapDrawable) imagen.getDrawable())
@@ -254,8 +254,14 @@ public class Vehiculo extends ActivityCam implements OnClickListener {
 
 		cedula.setText(c.getString(c.getColumnIndexOrThrow("Codter")));
 		String m = c.getString(3);
-		carcolor.setBackgroundColor(c.getInt(4));
-		modelo.setText(c.getString(5));
+		
+		try {
+			int col = Integer.parseInt(c.getString(c.getColumnIndexOrThrow("Codcolor")));
+			carcolor.setBackgroundColor(col);
+		} catch (Exception e) {
+			carcolor.setText(c.getString(c.getColumnIndexOrThrow("Codcolor")));
+		}
+		modelo.setText(c.getString(c.getColumnIndexOrThrow("Modelo")));
 		String t = c.getString(6);
 		nombre.setText(b.getString(b.getColumnIndexOrThrow("Nomter")));
 		direccion.setText(b.getString(b.getColumnIndexOrThrow("Dirter")));
